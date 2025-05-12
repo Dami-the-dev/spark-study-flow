@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Palette, Font, Moon, Sun, User } from 'lucide-react';
+import { Palette, Type, Moon, Sun, User } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const Settings: React.FC = () => {
@@ -158,7 +158,7 @@ const Settings: React.FC = () => {
           {/* Font Settings */}
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
             <div className="flex items-center gap-2 mb-4">
-              <Font size={20} />
+              <Type size={20} />
               <h2 className="text-xl font-semibold">Typography</h2>
             </div>
             
