@@ -21,16 +21,13 @@ const HeroSection: React.FC = () => {
               <Button size="lg" className="sm:w-auto" asChild>
                 <Link to="/signup">Get Started</Link>
               </Button>
-              <Button size="lg" variant="outline" className="sm:w-auto" asChild>
-                <Link to="/tour">Take a Tour</Link>
-              </Button>
             </div>
           </div>
           <div className="relative">
             <div className="relative z-10 animate-fade-in">
               <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                alt="Student using laptop with AI study tools" 
+                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                alt="Students collaborating on laptops" 
                 className="rounded-lg shadow-xl max-w-full h-auto"
               />
               <div className="absolute -bottom-6 -right-6 bg-accent rounded-full p-4 shadow-lg">

@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import HeroSection from '@/components/HeroSection';
-import TestimonialsSection from '@/components/TestimonialsSection';
+import ResourcesSection from '@/components/ResourcesSection';
 import CTASection from '@/components/CTASection';
 
 const Index: React.FC = () => {
@@ -12,7 +12,7 @@ const Index: React.FC = () => {
       <Navbar />
       <div className="pt-16 flex-grow">
         <HeroSection />
-        <TestimonialsSection />
+        <ResourcesSection />
         <CTASection />
       </div>
       <Footer />

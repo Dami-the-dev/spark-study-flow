@@ -16,6 +16,7 @@ import StudyPlanner from "./pages/StudyPlanner";
 import QuizArena from "./pages/QuizArena";
 import Support from "./pages/Support";
 import About from "./pages/About";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -133,6 +134,11 @@ const App = () => {
               <Route path="/dashboard/support" element={
                 <ProtectedRoute>
                   <Support />
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/settings" element={
+                <ProtectedRoute>
+                  <Settings />
                 </ProtectedRoute>
               } />
               

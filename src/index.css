@@ -86,6 +86,31 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+  
+  /* Theme color customizations */
+  [data-theme-color="purple"] {
+    --primary: 270 50% 60%;
+    --primary-hover: 270 50% 50%;
+  }
+  
+  [data-theme-color="green"] {
+    --primary: 142 70% 45%;
+    --primary-hover: 142 70% 35%;
+  }
+  
+  [data-theme-color="blue"] {
+    --primary: 214 100% 50%;
+    --primary-hover: 214 100% 40%;
+  }
+  
+  /* Font customizations */
+  [data-font="serif"] {
+    font-family: Georgia, Times, 'Times New Roman', serif;
+  }
+  
+  [data-font="sans"] {
+    font-family: Arial, Helvetica, sans-serif;
+  }
 }
 
 @layer base {
@@ -95,6 +120,7 @@
 
   body {
     @apply bg-background text-foreground font-inter;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -118,4 +144,34 @@
   .card-hover {
     @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
   }
+}
+
+/* Dark mode transitions */
+.dark body {
+  @apply bg-gray-900 text-gray-100;
+}
+
+.dark .bg-white {
+  @apply bg-gray-800;
+}
+
+.dark .border-gray-100 {
+  @apply border-gray-700;
+}
+
+.dark .text-gray-700 {
+  @apply text-gray-300;
+}
+
+.dark .bg-gray-50 {
+  @apply bg-gray-900;
+}
+
+.dark .text-gray-600 {
+  @apply text-gray-400;
+}
+
+/* Smooth transitions for theme changes */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
