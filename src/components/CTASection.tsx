@@ -19,7 +19,7 @@ const CTASection: React.FC = () => {
               <Link to="/signup">Get Started for Free</Link>
             </Button>
             <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10" asChild>
-              <Link to="/pricing">View Pricing</Link>
+              <Link to="/dashboard">Explore Dashboard</Link>
             </Button>
           </div>
         </div>

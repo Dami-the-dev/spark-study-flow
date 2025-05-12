@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, MessageSquare, Book, Calendar, Award, Settings } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Book, Calendar, Award, Settings, HelpCircle } from 'lucide-react';
 
 interface SidebarItemProps {
   icon: React.ReactNode;
@@ -31,7 +31,7 @@ const DashboardSidebar: React.FC = () => {
   return (
     <div className="w-64 border-r border-gray-200 h-screen bg-white">
       <div className="flex items-center py-6 px-6 border-b">
-        <span className="text-xl font-bold text-primary font-poppins">edu<span className="text-secondary">spark</span></span>
+        <NavLink to="/" className="text-xl font-bold text-primary font-poppins">edu<span className="text-secondary">spark</span></NavLink>
       </div>
       <div className="py-6 px-3">
         <nav className="space-y-2">
@@ -59,6 +59,11 @@ const DashboardSidebar: React.FC = () => {
             icon={<Award size={18} />} 
             label="Quiz Arena" 
             to="/dashboard/quiz" 
+          />
+          <SidebarItem 
+            icon={<HelpCircle size={18} />} 
+            label="Support" 
+            to="/dashboard/support" 
           />
           <SidebarItem 
             icon={<Settings size={18} />} 

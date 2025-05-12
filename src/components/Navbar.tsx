@@ -17,8 +17,8 @@ const Navbar: React.FC = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
           <div className="space-x-6">
-            <Link to="/features" className="text-gray-700 hover:text-primary transition-colors">Features</Link>
-            <Link to="/pricing" className="text-gray-700 hover:text-primary transition-colors">Pricing</Link>
+            <Link to="/dashboard" className="text-gray-700 hover:text-primary transition-colors">Dashboard</Link>
+            <Link to="/dashboard/ai-assistant" className="text-gray-700 hover:text-primary transition-colors">AI Assistant</Link>
             <Link to="/about" className="text-gray-700 hover:text-primary transition-colors">About</Link>
           </div>
           <div className="space-x-3">
@@ -44,8 +44,8 @@ const Navbar: React.FC = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white py-4 px-6 shadow-lg animate-fade-in">
           <div className="flex flex-col space-y-4">
-            <Link to="/features" className="text-gray-700 hover:text-primary py-2">Features</Link>
-            <Link to="/pricing" className="text-gray-700 hover:text-primary py-2">Pricing</Link>
+            <Link to="/dashboard" className="text-gray-700 hover:text-primary py-2">Dashboard</Link>
+            <Link to="/dashboard/ai-assistant" className="text-gray-700 hover:text-primary py-2">AI Assistant</Link>
             <Link to="/about" className="text-gray-700 hover:text-primary py-2">About</Link>
             <Button variant="outline" className="w-full" asChild>
               <Link to="/login">Login</Link>
