@@ -38,7 +38,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, to }) => {
         <NavLink
           to={to}
           className={({ isActive }) => 
-            `flex w-full items-center gap-2 rounded-lg ${
+            `flex w-full items-center gap-2 rounded-lg p-2 ${
               isActive 
                 ? 'bg-primary text-white font-medium' 
                 : 'text-gray-700 hover:bg-gray-100'
@@ -65,7 +65,7 @@ const DashboardSidebar: React.FC = () => {
             edu<span className="text-secondary">spark</span>
           </NavLink>
           <SidebarTrigger>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="text-black">
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle Menu</span>
             </Button>
@@ -73,8 +73,8 @@ const DashboardSidebar: React.FC = () => {
         </div>
       )}
 
-      <div className="flex h-screen">
-        <Sidebar collapsible="offcanvas" className="border-r border-gray-200">
+      <div className="flex h-screen w-full">
+        <Sidebar className="border-r border-gray-200 bg-white text-gray-800 z-40">
           <SidebarHeader className="p-4 border-b">
             {!isMobile && (
               <NavLink to="/" className="text-xl font-bold text-primary font-poppins">
