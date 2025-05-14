@@ -1,2 +1,13 @@
 
 /* Reset to avoid conflicts with tailwind */
+body {
+  margin: 0;
+  padding: 0;
+  color: #333;
+  background-color: #f9fafb;
+}
+
+/* Ensure text visibility */
+h1, h2, h3, h4, h5, h6, p, span, a, li, td, th {
+  color: inherit;
+}
