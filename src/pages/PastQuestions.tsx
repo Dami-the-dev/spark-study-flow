@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Download, PlayCircle, CheckCircle } from 'lucide-react';
+import { Download, PlayCircle } from 'lucide-react';
 
 const PastQuestions: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -126,9 +126,6 @@ const PastQuestions: React.FC = () => {
                   </Button>
                   <Button size="sm">
                     <PlayCircle size={14} className="mr-1" /> Practice
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <CheckCircle size={14} className="mr-1" /> Mark Complete
                   </Button>
                 </CardFooter>
               </Card>
