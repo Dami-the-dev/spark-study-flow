@@ -9,17 +9,18 @@ const Dashboard: React.FC = () => {
   const userName = auth.user?.name || 'Student';
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
       <DashboardSidebar />
       
-      <div className="flex-1 overflow-auto">
-        <div className="p-8">
-          <h1 className="text-3xl font-bold mb-6">Welcome back, {userName}!</h1>
+      <div className="flex-1 overflow-auto pt-16 md:pt-0">
+        <div className="p-4 md:p-8">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Welcome back, {userName}!</h1>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-              <h2 className="text-xl font-bold mb-3">Today's Planner</h2>
-              <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
+            {/* Today's Planner Card */}
+            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
+              <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3">Today's Planner</h2>
+              <div className="space-y-2 md:space-y-3">
                 <div className="flex items-center justify-between pb-2 border-b">
                   <span>📚 Math Review</span>
                   <span className="text-primary font-medium">9:00 AM</span>
@@ -39,71 +40,74 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-              <h2 className="text-xl font-bold mb-3">Stats This Week</h2>
-              <div className="h-40 flex items-center justify-center">
-                <div className="w-full flex items-end justify-around h-32">
+            {/* Stats Card */}
+            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
+              <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3">Stats This Week</h2>
+              <div className="h-32 md:h-40 flex items-center justify-center">
+                <div className="w-full flex items-end justify-around h-full">
                   <div className="flex flex-col items-center">
-                    <div className="bg-primary h-16 w-8 rounded-t-md"></div>
+                    <div className="bg-primary h-16 w-6 md:w-8 rounded-t-md"></div>
                     <span className="text-xs mt-1">Mon</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="bg-primary h-24 w-8 rounded-t-md"></div>
+                    <div className="bg-primary h-24 w-6 md:w-8 rounded-t-md"></div>
                     <span className="text-xs mt-1">Tue</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="bg-primary h-12 w-8 rounded-t-md"></div>
+                    <div className="bg-primary h-12 w-6 md:w-8 rounded-t-md"></div>
                     <span className="text-xs mt-1">Wed</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="bg-primary h-28 w-8 rounded-t-md"></div>
+                    <div className="bg-primary h-28 w-6 md:w-8 rounded-t-md"></div>
                     <span className="text-xs mt-1">Thu</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="bg-primary h-20 w-8 rounded-t-md"></div>
+                    <div className="bg-primary h-20 w-6 md:w-8 rounded-t-md"></div>
                     <span className="text-xs mt-1">Fri</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="bg-primary h-8 w-8 rounded-t-md"></div>
+                    <div className="bg-primary h-8 w-6 md:w-8 rounded-t-md"></div>
                     <span className="text-xs mt-1">Sat</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="bg-primary h-4 w-8 rounded-t-md"></div>
+                    <div className="bg-primary h-4 w-6 md:w-8 rounded-t-md"></div>
                     <span className="text-xs mt-1">Sun</span>
                   </div>
                 </div>
               </div>
-              <div className="text-center text-sm text-gray-500 mt-2">
+              <div className="text-center text-xs md:text-sm text-gray-500 mt-2">
                 Study hours tracked: 18.5h
               </div>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-              <h2 className="text-xl font-bold mb-3">Quick Access</h2>
-              <div className="grid grid-cols-2 gap-3">
-                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-3 rounded-md flex flex-col items-center justify-center">
-                  <span className="text-2xl mb-1">💬</span>
-                  <span className="text-sm">Ask AI</span>
+            {/* Quick Access Card */}
+            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
+              <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3">Quick Access</h2>
+              <div className="grid grid-cols-2 gap-2 md:gap-3">
+                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-2 md:p-3 rounded-md flex flex-col items-center justify-center">
+                  <span className="text-xl md:text-2xl mb-1">💬</span>
+                  <span className="text-xs md:text-sm">Ask AI</span>
                 </button>
-                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-3 rounded-md flex flex-col items-center justify-center">
-                  <span className="text-2xl mb-1">📄</span>
-                  <span className="text-sm">Summarize PDF</span>
+                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-2 md:p-3 rounded-md flex flex-col items-center justify-center">
+                  <span className="text-xl md:text-2xl mb-1">📄</span>
+                  <span className="text-xs md:text-sm">Summarize PDF</span>
                 </button>
-                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-3 rounded-md flex flex-col items-center justify-center">
-                  <span className="text-2xl mb-1">🎮</span>
-                  <span className="text-sm">Resume Quiz</span>
+                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-2 md:p-3 rounded-md flex flex-col items-center justify-center">
+                  <span className="text-xl md:text-2xl mb-1">🎮</span>
+                  <span className="text-xs md:text-sm">Resume Quiz</span>
                 </button>
-                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-3 rounded-md flex flex-col items-center justify-center">
-                  <span className="text-2xl mb-1">📚</span>
-                  <span className="text-sm">Past Questions</span>
+                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-2 md:p-3 rounded-md flex flex-col items-center justify-center">
+                  <span className="text-xl md:text-2xl mb-1">📚</span>
+                  <span className="text-xs md:text-sm">Past Questions</span>
                 </button>
               </div>
             </div>
           </div>
           
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-            <h2 className="text-xl font-bold mb-4">Upcoming Deadlines</h2>
-            <table className="w-full">
+          {/* Upcoming Deadlines Table */}
+          <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100 overflow-x-auto">
+            <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-4">Upcoming Deadlines</h2>
+            <table className="w-full min-w-[500px]">
               <thead>
                 <tr className="text-left text-gray-500 border-b">
                   <th className="pb-2">Subject</th>
