@@ -1,0 +1,11 @@
+
+{
+  "appId": "app.lovable.439efd9607af4243ba5b6cc0b7f03d59",
+  "appName": "spark-study-flow",
+  "webDir": "dist",
+  "server": {
+    "url": "https://439efd96-07af-4243-ba5b-6cc0b7f03d59.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  },
+  "bundledWebRuntime": false
+}
