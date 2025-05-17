@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { Input } from '@/components/ui/input';
@@ -7,6 +6,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Download, PlayCircle } from 'lucide-react';
+import jsPDF from 'jspdf';
+
+interface QuestionPack {
+  id: number;
+  title: string;
+  year: string;
+  difficulty: string;
+  questions: number;
+  completed: boolean;
+}
 
 const PastQuestions: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,7 +24,7 @@ const PastQuestions: React.FC = () => {
   const [difficulty, setDifficulty] = useState('');
 
   // Mock question packs data
-  const questionPacks = [
+  const questionPacks: QuestionPack[] = [
     {
       id: 1,
       title: 'Mathematics Calculus',
@@ -49,6 +58,23 @@ const PastQuestions: React.FC = () => {
       completed: false,
     },
   ];
+
+  const handleDownloadPdf = (pack: QuestionPack) => {
+    const doc = new jsPDF();
+    
+    doc.setFontSize(18);
+    doc.text(pack.title, 20, 20);
+    
+    doc.setFontSize(12);
+    doc.text(`Year: ${pack.year}`, 20, 30);
+    doc.text(`Difficulty: ${pack.difficulty}`, 20, 40);
+    doc.text(`Number of Questions: ${pack.questions}`, 20, 50);
+    
+    // Placeholder for actual questions
+    doc.text("Actual questions would be listed here...", 20, 60);
+    
+    doc.save(`${pack.title.replace(/\s+/g, '_')}_${pack.year}.pdf`);
+  };
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -121,8 +147,8 @@ const PastQuestions: React.FC = () => {
                   )}
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button variant="outline" size="sm">
-                    <Download size={14} className="mr-1" /> Download
+                  <Button variant="outline" size="sm" onClick={() => handleDownloadPdf(pack)}>
+                    <Download size={14} className="mr-1" /> Download PDF
                   </Button>
                   <Button size="sm">
                     <PlayCircle size={14} className="mr-1" /> Practice
