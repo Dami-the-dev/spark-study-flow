@@ -17,6 +17,8 @@ import QuizArena from "./pages/QuizArena";
 import Support from "./pages/Support";
 import About from "./pages/About";
 import Settings from "./pages/Settings";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 const queryClient = new QueryClient();
 
@@ -104,6 +106,9 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/about" element={<About />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/support" element={<Support />} />
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={

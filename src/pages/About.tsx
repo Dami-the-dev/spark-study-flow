@@ -1,70 +1,104 @@
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Users, Target, Award, Heart, BookOpen, Lightbulb, Rocket } from 'lucide-react';
 
 const About: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
-      <div className="pt-16 flex-grow">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold mb-8 text-primary">About Us</h1>
-            
-            <div className="prose prose-lg max-w-none">
-              <p className="text-lg mb-6">
-                Welcome to Eduspark – your partner in making learning accessible, simple, and engaging. 
-                We are a group of passionate individuals committed to transforming the way students 
-                experience education. Our mission? To simplify the educational system and provide 
-                every student with the tools they need to succeed, regardless of their background or circumstances.
-              </p>
+      
+      <main className="flex-1 pt-20">
+        <section className="py-16 bg-gradient-to-b from-primary/5 to-transparent">
+          <div className="container mx-auto text-center px-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">About Study Spark</h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Born from a developer's passion to bridge the gap in student learning and make quality education accessible to everyone.
+            </p>
+          </div>
+        </section>
+
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <Card className="max-w-4xl mx-auto">
+              <CardHeader>
+                <CardTitle className="text-3xl flex items-center gap-2">
+                  <Lightbulb className="h-8 w-8 text-primary" />
+                  Our Story
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-lg text-muted-foreground">
+                <p>
+                  Study Spark was created by a developer who experienced firsthand the challenges students face in their educational journey. After struggling with fragmented study tools, inefficient learning methods, and a lack of personalized support, the idea was born to create a comprehensive platform that brings everything a student needs into one place.
+                </p>
+                <p>
+                  We recognized a significant gap: students were juggling multiple apps for studying, planning, practicing, and getting help. They needed AI tutors that actually understood educational context, quiz systems that adapted to their level, and study planners that actually worked. Most importantly, they needed a platform that could grow with them through their entire academic journey.
+                </p>
+                <p>
+                  Study Spark was built to solve these problems. We combined cutting-edge AI technology with tried-and-true educational methodologies to create a platform that doesn't just help students study—it helps them learn how to learn better.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">What Drives Us</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Card>
+                <CardHeader>
+                  <Target className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle>Our Mission</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    To bridge the educational gap by providing students with comprehensive, AI-powered study tools that make learning effective and accessible.
+                  </p>
+                </CardContent>
+              </Card>
               
-              <h2 className="text-2xl font-bold mt-10 mb-4 text-primary">Our Mission</h2>
-              <p className="text-lg mb-6">
-                In today's world, education should be accessible to all. We believe every student—whether 
-                in the classroom or online—deserves the resources to reach their full potential. That's why 
-                we've come together to create a platform that empowers students through AI-powered tools, 
-                personalized study plans, quizzes, and resources that make learning smarter and more effective.
-              </p>
+              <Card>
+                <CardHeader>
+                  <Rocket className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle>Our Vision</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    A world where every student has access to personalized learning support that adapts to their unique needs.
+                  </p>
+                </CardContent>
+              </Card>
               
-              <h2 className="text-2xl font-bold mt-10 mb-4 text-primary">Our Story</h2>
-              <p className="text-lg mb-6">
-                We started this journey out of a shared frustration with traditional learning methods that 
-                often feel outdated and disconnected from today's student needs. We are a team of educators, 
-                developers, and innovators who believe that learning should be engaging, interactive, and most 
-                importantly, personalized. From brainstorming ideas in classrooms to coding late into the night, 
-                we've worked tirelessly to create a platform that makes studying feel less like a chore and more 
-                like an exciting opportunity for growth.
-              </p>
+              <Card>
+                <CardHeader>
+                  <Award className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle>Our Values</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Innovation in education, commitment to excellence, and student-first design.
+                  </p>
+                </CardContent>
+              </Card>
               
-              <h2 className="text-2xl font-bold mt-10 mb-4 text-primary">Our Vision</h2>
-              <p className="text-lg mb-6">
-                Our vision is simple: Simplify education for the average student. We aim to bridge the gap 
-                between students and quality resources, offering a space where learning becomes intuitive, 
-                tailored, and enjoyable. By harnessing the power of AI, we want to build an educational ecosystem 
-                where every student has access to tools that support their unique learning journey.
-              </p>
-              
-              <h2 className="text-2xl font-bold mt-10 mb-4 text-primary">Our Values</h2>
-              <ul className="list-disc pl-5 mb-6 space-y-2">
-                <li className="text-lg"><strong className="text-primary">Accessibility:</strong> We believe in removing barriers to learning and ensuring that quality education is within everyone's reach.</li>
-                <li className="text-lg"><strong className="text-primary">Innovation:</strong> Constantly evolving, we integrate the latest technologies and educational methods to stay ahead of the curve.</li>
-                <li className="text-lg"><strong className="text-primary">Collaboration:</strong> Education is a shared experience, and we work closely with students, educators, and developers to create solutions that work.</li>
-                <li className="text-lg"><strong className="text-primary">Empathy:</strong> We understand the challenges students face, and we aim to design with their best interests at heart, ensuring that our platform is user-friendly and supportive.</li>
-              </ul>
-              
-              <h2 className="text-2xl font-bold mt-10 mb-4 text-primary">Meet the Team</h2>
-              <p className="text-lg mb-10">
-                Our team is made up of a diverse group of people, united by a single purpose: to simplify the 
-                learning experience. We bring together expertise in education, technology, and design, each 
-                contributing unique skills to make this platform the best it can be. While we might have different 
-                backgrounds, we share one goal: empowering students everywhere to reach their fullest potential.
-              </p>
+              <Card>
+                <CardHeader>
+                  <Heart className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle>Our Promise</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Continuous improvement and unwavering dedication to helping students succeed.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
+
       <Footer />
     </div>
   );

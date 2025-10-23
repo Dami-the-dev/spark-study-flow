@@ -1,0 +1,4 @@
+project_id = "eteqojfuqunhjtoplrhj"
+
+[functions.educational-chat]
+verify_jwt = false

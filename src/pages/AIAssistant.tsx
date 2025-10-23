@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { streamChat } from '@/utils/streamChat';
+import { useToast } from '@/hooks/use-toast';
+import { Loader2 } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -22,47 +25,82 @@ const AIAssistant: React.FC = () => {
     },
   ]);
   const [inputMessage, setInputMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
-  const handleSendMessage = () => {
-    if (!inputMessage.trim()) return;
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSendMessage = async () => {
+    if (!inputMessage.trim() || isLoading) return;
     
+    const userMsg = inputMessage.trim();
     const newUserMessage: Message = {
-      id: messages.length + 1,
-      text: inputMessage,
+      id: Date.now(),
+      text: userMsg,
       sender: 'user',
       timestamp: new Date(),
     };
     
-    setMessages([...messages, newUserMessage]);
+    setMessages(prev => [...prev, newUserMessage]);
     setInputMessage('');
-    
-    // Simulate AI response after a short delay
-    // In a real application, you would send `inputMessage` to an AI model
-    // and set a system prompt like:
-    // "You are an AI study assistant. Your purpose is strictly educational.
-    //  Be empathetic, encouraging, and motivating. Help students understand
-    //  concepts and stay positive about their learning journey."
-    setTimeout(() => {
-      let aiTextResponse = "I'm here to help you with your studies! ";
-      // Simple logic to make the AI sound a bit more empathetic based on input
-      if (inputMessage.toLowerCase().includes("struggling") || inputMessage.toLowerCase().includes("hard") || inputMessage.toLowerCase().includes("confused")) {
-        aiTextResponse += "It's okay to find things challenging; that's part of learning. We can break it down together. ";
-      } else if (inputMessage.toLowerCase().includes("thank you") || inputMessage.toLowerCase().includes("thanks")) {
-        aiTextResponse = "You're very welcome! Keep up the great work. I'm always here if you need more help. ";
-      } else {
-        aiTextResponse += "Let's explore that. Remember, every question is a step towards understanding. ";
-      }
-      aiTextResponse += "How can I assist you further in your educational journey today?";
+    setIsLoading(true);
 
-      const aiResponse: Message = {
-        id: messages.length + 2, // Ensure unique ID
-        text: aiTextResponse,
-        sender: 'ai',
-        timestamp: new Date(),
-      };
-      
-      setMessages(prevMessages => [...prevMessages, aiResponse]);
-    }, 1000);
+    let assistantContent = '';
+    const tempAssistantId = Date.now() + 1;
+
+    try {
+      await streamChat({
+        messages: [...messages, newUserMessage].map(m => ({
+          role: m.sender === 'user' ? 'user' : 'assistant',
+          content: m.text
+        })),
+        onDelta: (chunk) => {
+          assistantContent += chunk;
+          setMessages(prev => {
+            const lastMsg = prev[prev.length - 1];
+            if (lastMsg?.sender === 'ai' && lastMsg.id === tempAssistantId) {
+              return prev.map(m => 
+                m.id === tempAssistantId 
+                  ? { ...m, text: assistantContent }
+                  : m
+              );
+            }
+            return [...prev, {
+              id: tempAssistantId,
+              text: assistantContent,
+              sender: 'ai' as const,
+              timestamp: new Date(),
+            }];
+          });
+        },
+        onDone: () => {
+          setIsLoading(false);
+        },
+        onError: (error) => {
+          toast({
+            title: "Error",
+            description: error,
+            variant: "destructive",
+          });
+          setIsLoading(false);
+        }
+      });
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -83,22 +121,21 @@ const AIAssistant: React.FC = () => {
               >
                 <Card className={`max-w-[80%] ${
                   message.sender === 'user' 
-                    ? 'bg-primary text-white' 
-                    : 'bg-white'
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'bg-card'
                 }`}>
-                  <CardContent className="p-4 flex">
+                  <CardContent className="p-4 flex gap-2">
                     {message.sender === 'ai' && (
-                      <Avatar className="h-8 w-8 mr-2">
-                        <AvatarImage src="/placeholder.svg" alt="AI" />
-                        <AvatarFallback>AI</AvatarFallback>
+                      <Avatar className="h-8 w-8 shrink-0">
+                        <AvatarFallback className="bg-primary text-primary-foreground">AI</AvatarFallback>
                       </Avatar>
                     )}
-                    <div>
-                      <p>{message.text}</p>
-                      <p className={`text-xs mt-1 ${
+                    <div className="flex-1">
+                      <p className="whitespace-pre-wrap break-words">{message.text}</p>
+                      <p className={`text-xs mt-2 ${
                         message.sender === 'user' 
-                          ? 'text-white/70' 
-                          : 'text-gray-500'
+                          ? 'text-primary-foreground/70' 
+                          : 'text-muted-foreground'
                       }`}>
                         {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </p>
@@ -123,10 +160,21 @@ const AIAssistant: React.FC = () => {
                 }
               }}
               className="flex-1"
+              disabled={isLoading}
             />
-            <Button onClick={handleSendMessage}>Send</Button>
+            <Button onClick={handleSendMessage} disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Sending
+                </>
+              ) : (
+                'Send'
+              )}
+            </Button>
           </div>
         </div>
+        <div ref={messagesEndRef} />
       </div>
     </div>
   );
