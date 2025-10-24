@@ -1,17 +1,16 @@
-
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, LogOut } from 'lucide-react';
-import { AuthContext } from '@/App';
+import { useAuth } from '@/hooks/useAuth';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await signOut();
     navigate('/');
   };
 
@@ -26,7 +25,7 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center space-x-8">
           <div className="space-x-6">
             <Link to="/about" className="text-gray-700 hover:text-primary transition-colors">About</Link>
-            {isLoggedIn ? (
+            {user ? (
               <>
                 <Link to="/dashboard" className="text-gray-700 hover:text-primary transition-colors">Dashboard</Link>
                 <Link to="/dashboard/ai-assistant" className="text-gray-700 hover:text-primary transition-colors">AI Assistant</Link>
@@ -34,7 +33,7 @@ const Navbar: React.FC = () => {
             ) : null}
           </div>
           <div className="space-x-3">
-            {isLoggedIn ? (
+            {user ? (
               <Button variant="outline" onClick={handleLogout}>
                 <LogOut size={16} className="mr-2" /> Logout
               </Button>
@@ -66,7 +65,7 @@ const Navbar: React.FC = () => {
           <div className="flex flex-col space-y-4">
             <Link to="/about" className="text-gray-700 hover:text-primary py-2" onClick={() => setIsMenuOpen(false)}>About</Link>
             
-            {isLoggedIn ? (
+            {user ? (
               <>
                 <Link to="/dashboard" className="text-gray-700 hover:text-primary py-2" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
                 <Link to="/dashboard/ai-assistant" className="text-gray-700 hover:text-primary py-2" onClick={() => setIsMenuOpen(false)}>AI Assistant</Link>

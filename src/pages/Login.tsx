@@ -1,49 +1,36 @@
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { AuthContext } from '@/App';
-import { toast } from '@/components/ui/sonner';
+import { useAuth } from '@/hooks/useAuth';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useContext(AuthContext);
+  const { signIn, user } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Basic validation
-    if (!email || !password) {
-      toast.error("Please fill in all fields");
+    try {
+      await signIn(email, password);
+    } catch (error) {
+      console.error('Login error:', error);
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-    if (!email.includes('@')) {
-      toast.error("Please enter a valid email address");
-      setIsLoading(false);
-      return;
-    }
-
-    // Simulate API call delay
-    setTimeout(() => {
-      try {
-        login(email, password);
-        toast.success("Login successful!");
-        navigate('/dashboard');
-      } catch (error) {
-        toast.error("Login failed. Please check your credentials.");
-      } finally {
-        setIsLoading(false);
-      }
-    }, 1000);
   };
 
   return (

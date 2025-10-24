@@ -1,24 +1,21 @@
-
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import { AuthContext } from '@/App';
+import { useAuth } from '@/hooks/useAuth';
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Palette, Type, Moon, Sun, User } from 'lucide-react';
-import { useToast } from "@/hooks/use-toast";
+import { toast } from 'sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Settings: React.FC = () => {
-  const { toast } = useToast();
-  const auth = JSON.parse(localStorage.getItem('eduspark_auth') || '{}');
-  const userName = auth.user?.name || 'Student';
+  const { user } = useAuth();
   const isMobile = useIsMobile();
   
   // User profile settings
-  const [displayName, setDisplayName] = useState(userName);
+  const [displayName, setDisplayName] = useState(user?.user_metadata?.full_name || user?.email?.split('@')[0] || '');
   
   // Theme settings
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -54,17 +51,7 @@ const Settings: React.FC = () => {
     // Apply theme changes
     applyTheme(isDarkMode, primaryColor, fontPreference);
     
-    // Update user display name in auth
-    const updatedAuth = { ...auth };
-    if (auth.user) {
-      updatedAuth.user.name = displayName;
-      localStorage.setItem('eduspark_auth', JSON.stringify(updatedAuth));
-    }
-    
-    toast({
-      title: "Settings saved",
-      description: "Your preferences have been updated.",
-    });
+    toast.success("Settings saved successfully!");
   };
   
   const applyTheme = (dark: boolean, color: string, font: string) => {

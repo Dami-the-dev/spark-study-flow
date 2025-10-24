@@ -1,80 +1,110 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Download, PlayCircle } from 'lucide-react';
-import jsPDF from 'jspdf';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { Loader2, PlayCircle } from 'lucide-react';
 
-interface QuestionPack {
-  id: number;
-  title: string;
-  year: string;
+interface PastQuestion {
+  id: string;
+  exam_name: string;
+  year: number;
+  subject: string;
+  question: string;
+  options: string[];
+  correct_answer: string;
+  explanation: string;
   difficulty: string;
-  questions: number;
-  completed: boolean;
 }
 
 const PastQuestions: React.FC = () => {
+  const [questions, setQuestions] = useState<PastQuestion[]>([]);
+  const [filteredQuestions, setFilteredQuestions] = useState<PastQuestion[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [course, setCourse] = useState('');
-  const [year, setYear] = useState('');
-  const [difficulty, setDifficulty] = useState('');
+  const [examFilter, setExamFilter] = useState('');
+  const [yearFilter, setYearFilter] = useState('');
+  const [subjectFilter, setSubjectFilter] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  // Mock question packs data
-  const questionPacks: QuestionPack[] = [
-    {
-      id: 1,
-      title: 'Mathematics Calculus',
-      year: '2023',
-      difficulty: 'Medium',
-      questions: 45,
-      completed: false,
-    },
-    {
-      id: 2,
-      title: 'Physics Mechanics',
-      year: '2022',
-      difficulty: 'Hard',
-      questions: 30,
-      completed: true,
-    },
-    {
-      id: 3,
-      title: 'Chemistry Organic',
-      year: '2023',
-      difficulty: 'Easy',
-      questions: 35,
-      completed: false,
-    },
-    {
-      id: 4,
-      title: 'Biology Cell Structure',
-      year: '2021',
-      difficulty: 'Medium',
-      questions: 40,
-      completed: false,
-    },
-  ];
+  useEffect(() => {
+    loadQuestions();
+  }, []);
 
-  const handleDownloadPdf = (pack: QuestionPack) => {
-    const doc = new jsPDF();
-    
-    doc.setFontSize(18);
-    doc.text(pack.title, 20, 20);
-    
-    doc.setFontSize(12);
-    doc.text(`Year: ${pack.year}`, 20, 30);
-    doc.text(`Difficulty: ${pack.difficulty}`, 20, 40);
-    doc.text(`Number of Questions: ${pack.questions}`, 20, 50);
-    
-    // Placeholder for actual questions
-    doc.text("Actual questions would be listed here...", 20, 60);
-    
-    doc.save(`${pack.title.replace(/\s+/g, '_')}_${pack.year}.pdf`);
+  useEffect(() => {
+    filterQuestions();
+  }, [questions, searchTerm, examFilter, yearFilter, subjectFilter]);
+
+  const loadQuestions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('past_questions')
+        .select('*')
+        .order('year', { ascending: false });
+
+      if (error) throw error;
+      const formattedData = (data || []).map(q => ({
+        ...q,
+        options: q.options as string[]
+      }));
+      setQuestions(formattedData);
+      setFilteredQuestions(formattedData);
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to load questions');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const filterQuestions = () => {
+    let filtered = questions;
+
+    if (searchTerm) {
+      filtered = filtered.filter(q => 
+        q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        q.subject.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (examFilter) {
+      filtered = filtered.filter(q => q.exam_name === examFilter);
+    }
+
+    if (yearFilter) {
+      filtered = filtered.filter(q => q.year.toString() === yearFilter);
+    }
+
+    if (subjectFilter) {
+      filtered = filtered.filter(q => q.subject === subjectFilter);
+    }
+
+    setFilteredQuestions(filtered);
+  };
+
+  const getUniqueValues = <K extends keyof PastQuestion>(key: K): PastQuestion[K][] => {
+    return [...new Set(questions.map(q => q[key]))];
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  // Group questions by exam and year
+  const groupedQuestions = filteredQuestions.reduce((acc, q) => {
+    const key = `${q.exam_name} ${q.year}`;
+    if (!acc[key]) {
+      acc[key] = { exam: q.exam_name, year: q.year, questions: [] };
+    }
+    acc[key].questions.push(q);
+    return acc;
+  }, {} as Record<string, { exam: string; year: number; questions: PastQuestion[] }>);
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -84,88 +114,93 @@ const PastQuestions: React.FC = () => {
           <h1 className="text-2xl font-bold mb-6">Past Question Bank</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div>
-              <Input 
-                placeholder="Search questions..." 
-                value={searchTerm} 
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+            <Input 
+              placeholder="Search questions..." 
+              value={searchTerm} 
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             
-            <Select value={course} onValueChange={setCourse}>
+            <Select value={examFilter} onValueChange={setExamFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Select Course" />
+                <SelectValue placeholder="Select Exam" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="math">Mathematics</SelectItem>
-                <SelectItem value="physics">Physics</SelectItem>
-                <SelectItem value="chemistry">Chemistry</SelectItem>
-                <SelectItem value="biology">Biology</SelectItem>
+                <SelectItem value="">All Exams</SelectItem>
+                {getUniqueValues('exam_name').map((exam) => (
+                  <SelectItem key={String(exam)} value={String(exam)}>{String(exam)}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
             
-            <Select value={year} onValueChange={setYear}>
+            <Select value={yearFilter} onValueChange={setYearFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="Select Year" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="2023">2023</SelectItem>
-                <SelectItem value="2022">2022</SelectItem>
-                <SelectItem value="2021">2021</SelectItem>
-                <SelectItem value="2020">2020</SelectItem>
+                <SelectItem value="">All Years</SelectItem>
+                {getUniqueValues('year').map((year) => (
+                  <SelectItem key={String(year)} value={String(year)}>{String(year)}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
             
-            <Select value={difficulty} onValueChange={setDifficulty}>
+            <Select value={subjectFilter} onValueChange={setSubjectFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Difficulty" />
+                <SelectValue placeholder="Select Subject" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="easy">Easy</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="hard">Hard</SelectItem>
+                <SelectItem value="">All Subjects</SelectItem>
+                {getUniqueValues('subject').map((subject) => (
+                  <SelectItem key={String(subject)} value={String(subject)}>{String(subject)}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {questionPacks.map((pack) => (
-              <Card key={pack.id}>
+            {Object.values(groupedQuestions).map((group) => (
+              <Card key={`${group.exam}-${group.year}`}>
                 <CardHeader className="pb-2">
                   <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg font-semibold">{pack.title}</CardTitle>
-                    <Badge variant={pack.difficulty === 'Hard' ? 'destructive' : (pack.difficulty === 'Medium' ? 'default' : 'outline')}>
-                      {pack.difficulty}
-                    </Badge>
+                    <CardTitle className="text-lg font-semibold">
+                      {group.exam} {group.year}
+                    </CardTitle>
+                    <Badge>{group.questions.length} questions</Badge>
                   </div>
-                  <div className="text-sm text-gray-500">Year: {pack.year}</div>
+                  <div className="text-sm text-gray-500">
+                    Subjects: {[...new Set(group.questions.map(q => q.subject))].join(', ')}
+                  </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm">{pack.questions} questions</p>
-                  {pack.completed && (
-                    <Badge variant="outline" className="mt-2 bg-green-50 text-green-700">Completed</Badge>
-                  )}
+                  <div className="space-y-2">
+                    {group.questions.slice(0, 3).map((q) => (
+                      <div key={q.id} className="text-sm text-gray-600 truncate">
+                        • {q.question}
+                      </div>
+                    ))}
+                    {group.questions.length > 3 && (
+                      <div className="text-sm text-gray-400">
+                        +{group.questions.length - 3} more questions
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
-                <CardFooter className="flex justify-between">
-                  <Button variant="outline" size="sm" onClick={() => handleDownloadPdf(pack)}>
-                    <Download size={14} className="mr-1" /> Download PDF
-                  </Button>
-                  <Button size="sm">
-                    <PlayCircle size={14} className="mr-1" /> Practice
+                <CardFooter>
+                  <Button className="w-full">
+                    <PlayCircle size={14} className="mr-1" /> Practice Now
                   </Button>
                 </CardFooter>
               </Card>
             ))}
           </div>
-          
-          <div className="mt-8 text-center">
-            <div className="text-sm font-semibold mb-2">Your Achievement Badges</div>
-            <div className="flex justify-center gap-2">
-              <Badge className="bg-yellow-500 hover:bg-yellow-600">Quick Solver</Badge>
-              <Badge className="bg-blue-500 hover:bg-blue-600">5-Day Streak</Badge>
-              <Badge className="bg-purple-500 hover:bg-purple-600">Math Master</Badge>
-            </div>
-          </div>
+
+          {filteredQuestions.length === 0 && (
+            <Card>
+              <CardContent className="pt-6">
+                <p className="text-center text-gray-500">No questions found matching your filters.</p>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>

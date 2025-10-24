@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { streamChat } from '@/utils/streamChat';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 
 interface Message {
@@ -27,7 +27,6 @@ const AIAssistant: React.FC = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -84,21 +83,13 @@ const AIAssistant: React.FC = () => {
           setIsLoading(false);
         },
         onError: (error) => {
-          toast({
-            title: "Error",
-            description: error,
-            variant: "destructive",
-          });
+          toast.error(error);
           setIsLoading(false);
         }
       });
     } catch (error) {
       console.error('Error sending message:', error);
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("Failed to send message. Please try again.");
       setIsLoading(false);
     }
   };
@@ -109,7 +100,7 @@ const AIAssistant: React.FC = () => {
       <div className="flex-1 flex flex-col">
         <div className="p-4 border-b bg-white">
           <h1 className="text-2xl font-bold">AI Study Assistant</h1>
-          <p className="text-gray-600">Ask anything (educational), summarize a topic, or plan your study week...</p>
+          <p className="text-gray-600">Ask anything educational, summarize a topic, or plan your study week...</p>
         </div>
         
         <div className="flex-1 overflow-y-auto p-4">

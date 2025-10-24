@@ -1,12 +1,46 @@
-
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import { AuthContext } from '@/App';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
+import { Loader2 } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
-  const { isLoggedIn } = useContext(AuthContext);
-  const auth = JSON.parse(localStorage.getItem('eduspark_auth') || '{}');
-  const userName = auth.user?.name || 'Student';
+  const { user } = useAuth();
+  const [studySessions, setStudySessions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Student';
+
+  useEffect(() => {
+    if (user) {
+      loadStudySessions();
+    }
+  }, [user]);
+
+  const loadStudySessions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('study_sessions')
+        .select('*')
+        .eq('user_id', user?.id)
+        .order('session_date', { ascending: false })
+        .limit(7);
+
+      if (error) throw error;
+      setStudySessions(data || []);
+    } catch (error) {
+      console.error('Error loading study sessions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">

@@ -1,13 +1,13 @@
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from '@/components/ui/checkbox';
-import { AuthContext } from '@/App';
-import { toast } from '@/components/ui/sonner';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
 
 const Signup: React.FC = () => {
   const [firstName, setFirstName] = useState('');
@@ -16,51 +16,43 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { signup } = useContext(AuthContext);
+  const { signUp, user } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     
-    // Basic validation
     if (!firstName || !lastName || !email || !password) {
       toast.error("Please fill in all fields");
-      setIsLoading(false);
-      return;
-    }
-
-    if (!email.includes('@')) {
-      toast.error("Please enter a valid email address");
-      setIsLoading(false);
       return;
     }
 
     if (password.length < 6) {
       toast.error("Password must be at least 6 characters long");
-      setIsLoading(false);
       return;
     }
 
     if (!agreedToTerms) {
       toast.error("You must agree to the terms and conditions");
-      setIsLoading(false);
       return;
     }
 
-    // Simulate API call delay - in a real app this would be a call to your backend
-    setTimeout(() => {
-      try {
-        // This would register the user and send email notification
-        signup(email, password, firstName, lastName);
-        toast.success("Account created successfully!");
-        navigate('/dashboard');
-      } catch (error) {
-        toast.error("Registration failed. Please try again.");
-      } finally {
-        setIsLoading(false);
-      }
-    }, 1000);
+    setIsLoading(true);
+    
+    try {
+      const fullName = `${firstName} ${lastName}`;
+      await signUp(email, password, fullName);
+    } catch (error) {
+      console.error('Signup error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

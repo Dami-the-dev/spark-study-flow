@@ -1,33 +1,123 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Progress } from '@/components/ui/progress';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Calendar as CalendarIcon, Bell } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
+import { Plus, Loader2, Trash2 } from 'lucide-react';
+import { format } from 'date-fns';
+
+interface StudyPlan {
+  id: string;
+  title: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  subjects: string[];
+}
 
 const StudyPlanner: React.FC = () => {
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  
-  // Mock study tasks
-  const subjects = [
-    { name: 'Mathematics', progress: 75 },
-    { name: 'Physics', progress: 40 },
-    { name: 'Chemistry', progress: 90 },
-    { name: 'Biology', progress: 60 },
-  ];
-  
-  // Mock scheduled tasks
-  const scheduledTasks = [
-    { id: 1, title: 'Calculus Revision', subject: 'Mathematics', time: '10:00 AM - 12:00 PM', date: new Date() },
-    { id: 2, title: 'Physics Problem Set', subject: 'Physics', time: '2:00 PM - 4:00 PM', date: new Date() },
-    { id: 3, title: 'Chemistry Lab Report', subject: 'Chemistry', time: '5:00 PM - 6:30 PM', date: new Date() },
-  ];
+  const { user } = useAuth();
+  const [plans, setPlans] = useState<StudyPlan[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [startDate, setStartDate] = useState<Date | undefined>(new Date());
+  const [endDate, setEndDate] = useState<Date | undefined>(new Date());
+  const [subjects, setSubjects] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      loadPlans();
+    }
+  }, [user]);
+
+  const loadPlans = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('study_plans')
+        .select('*')
+        .eq('user_id', user?.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      const formattedData = (data || []).map(p => ({
+        ...p,
+        subjects: p.subjects as string[]
+      }));
+      setPlans(formattedData);
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to load study plans');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreatePlan = async () => {
+    if (!title || !startDate || !endDate) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from('study_plans').insert({
+        user_id: user?.id,
+        title,
+        description,
+        start_date: format(startDate, 'yyyy-MM-dd'),
+        end_date: format(endDate, 'yyyy-MM-dd'),
+        subjects: subjects.split(',').map(s => s.trim()).filter(Boolean),
+      });
+
+      if (error) throw error;
+
+      toast.success('Study plan created successfully!');
+      setIsDialogOpen(false);
+      resetForm();
+      loadPlans();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to create study plan');
+    }
+  };
+
+  const handleDeletePlan = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('study_plans')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      toast.success('Study plan deleted');
+      loadPlans();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to delete plan');
+    }
+  };
+
+  const resetForm = () => {
+    setTitle('');
+    setDescription('');
+    setStartDate(new Date());
+    setEndDate(new Date());
+    setSubjects('');
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -36,174 +126,131 @@ const StudyPlanner: React.FC = () => {
         <div className="py-6 px-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">Study Planner</h1>
-            <Dialog>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button>
-                  <Plus className="mr-2 h-4 w-4" /> Add Task
+                  <Plus className="mr-2 h-4 w-4" /> Create Plan
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Add Study Task</DialogTitle>
+                  <DialogTitle>Create Study Plan</DialogTitle>
                   <DialogDescription>
-                    Create a new study task for your planner.
+                    Plan your study schedule and track your progress.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid gap-2">
-                    <label htmlFor="task-title">Task Title</label>
-                    <Input id="task-title" placeholder="Enter task title" />
+                    <Label htmlFor="title">Plan Title</Label>
+                    <Input
+                      id="title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      placeholder="e.g., Final Exam Preparation"
+                    />
                   </div>
                   <div className="grid gap-2">
-                    <label htmlFor="subject">Subject</label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select subject" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="mathematics">Mathematics</SelectItem>
-                        <SelectItem value="physics">Physics</SelectItem>
-                        <SelectItem value="chemistry">Chemistry</SelectItem>
-                        <SelectItem value="biology">Biology</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Label htmlFor="description">Description</Label>
+                    <Textarea
+                      id="description"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder="Describe your study goals..."
+                    />
                   </div>
                   <div className="grid gap-2">
-                    <label>Date</label>
-                    <div className="border rounded-md p-2">
+                    <Label htmlFor="subjects">Subjects (comma-separated)</Label>
+                    <Input
+                      id="subjects"
+                      value={subjects}
+                      onChange={(e) => setSubjects(e.target.value)}
+                      placeholder="e.g., Mathematics, Physics, Chemistry"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="grid gap-2">
+                      <Label>Start Date</Label>
                       <Calendar
                         mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        className="p-3 pointer-events-auto"
+                        selected={startDate}
+                        onSelect={setStartDate}
+                        className="rounded-md border"
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label>End Date</Label>
+                      <Calendar
+                        mode="single"
+                        selected={endDate}
+                        onSelect={setEndDate}
+                        className="rounded-md border"
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <label htmlFor="start-time">Start Time</label>
-                      <Input id="start-time" type="time" />
-                    </div>
-                    <div>
-                      <label htmlFor="end-time">End Time</label>
-                      <Input id="end-time" type="time" />
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <input type="checkbox" id="reminder" />
-                    <label htmlFor="reminder">Set Reminder</label>
-                  </div>
                 </div>
                 <DialogFooter>
-                  <Button type="submit">Save Task</Button>
+                  <Button onClick={handleCreatePlan}>Create Plan</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
           </div>
 
-          <Tabs defaultValue="calendar">
-            <TabsList className="mb-4">
-              <TabsTrigger value="calendar">
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                Calendar View
-              </TabsTrigger>
-              <TabsTrigger value="progress">
-                <Bell className="mr-2 h-4 w-4" />
-                Subject Progress
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="calendar" className="space-y-4">
-              <Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {plans.map((plan) => (
+              <Card key={plan.id}>
                 <CardHeader>
-                  <CardTitle>Today's Schedule</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4">
-                    {scheduledTasks.map((task) => (
-                      <div key={task.id} className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200">
-                        <div>
-                          <h3 className="font-medium">{task.title}</h3>
-                          <p className="text-sm text-gray-500">{task.subject} · {task.time}</p>
-                        </div>
-                        <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">Edit</Button>
-                          <Button size="sm" variant="secondary">
-                            <Bell size={14} className="mr-1" />
-                            Remind
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="flex justify-between items-start">
+                    <CardTitle className="text-lg">{plan.title}</CardTitle>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDeletePlan(plan.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle>Monthly Calendar</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Calendar 
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    className="p-3 pointer-events-auto"
-                  />
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="progress" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Subject Progress</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    {subjects.map((subject, index) => (
-                      <div key={index}>
-                        <div className="flex justify-between mb-1">
-                          <span className="font-medium">{subject.name}</span>
-                          <span className="text-sm text-gray-500">{subject.progress}%</span>
-                        </div>
-                        <Progress value={subject.progress} className="h-2" />
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle>Reminders Settings</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-0.5">
-                        <div className="font-medium">Email Reminders</div>
-                        <div className="text-sm text-gray-500">Receive study plan reminders via email</div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <input type="checkbox" checked id="email-reminders" className="ml-auto" />
-                      </div>
+                  <p className="text-sm text-gray-600 mb-4">{plan.description}</p>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Start:</span>
+                      <span>{format(new Date(plan.start_date), 'MMM dd, yyyy')}</span>
                     </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-0.5">
-                        <div className="font-medium">SMS Notifications</div>
-                        <div className="text-sm text-gray-500">Get text messages for upcoming study sessions</div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <input type="checkbox" id="sms-reminders" className="ml-auto" />
-                      </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">End:</span>
+                      <span>{format(new Date(plan.end_date), 'MMM dd, yyyy')}</span>
                     </div>
+                    {plan.subjects && plan.subjects.length > 0 && (
+                      <div className="mt-2">
+                        <span className="text-gray-500">Subjects:</span>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {plan.subjects.map((subject, idx) => (
+                            <span
+                              key={idx}
+                              className="px-2 py-1 bg-primary/10 text-primary rounded text-xs"
+                            >
+                              {subject}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
-          </Tabs>
+            ))}
+          </div>
+
+          {plans.length === 0 && (
+            <Card>
+              <CardContent className="pt-6">
+                <p className="text-center text-gray-500">
+                  No study plans yet. Create your first plan to get started!
+                </p>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>
