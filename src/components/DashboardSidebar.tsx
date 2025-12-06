@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -9,7 +8,9 @@ import {
   Award,
   Settings,
   HelpCircle,
-  Menu
+  Menu,
+  X,
+  GraduationCap
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
@@ -18,23 +19,25 @@ interface NavItemProps {
   icon: React.ReactNode;
   label: string;
   to: string;
+  onClick?: () => void;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ icon, label, to }) => {
+const NavItem: React.FC<NavItemProps> = ({ icon, label, to, onClick }) => {
   return (
     <li className="mb-1">
       <NavLink
         to={to}
+        onClick={onClick}
         className={({ isActive }) => 
           `flex items-center gap-2 rounded-lg p-3 ${
             isActive 
-              ? 'bg-primary text-white font-medium' 
-              : 'text-gray-700 hover:bg-gray-100'
+              ? 'bg-primary text-primary-foreground font-medium' 
+              : 'text-foreground hover:bg-muted'
           }`
         }
       >
         <span className="shrink-0">{icon}</span>
-        <span>{label}</span>
+        <span className="text-sm">{label}</span>
       </NavLink>
     </li>
   );
@@ -42,143 +45,112 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, to }) => {
 
 const DashboardSidebar: React.FC = () => {
   const isMobile = useIsMobile();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeSidebar = () => setIsOpen(false);
+
+  const navItems = (
+    <ul className="space-y-1">
+      <NavItem 
+        icon={<LayoutDashboard size={18} />} 
+        label="Dashboard" 
+        to="/dashboard"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<MessageSquare size={18} />} 
+        label="AI Assistant" 
+        to="/dashboard/ai-assistant"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<Book size={18} />} 
+        label="Past Questions" 
+        to="/dashboard/past-questions"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<GraduationCap size={18} />} 
+        label="My Courses" 
+        to="/dashboard/my-courses"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<Calendar size={18} />} 
+        label="Study Planner" 
+        to="/dashboard/planner"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<Award size={18} />} 
+        label="Quiz Arena" 
+        to="/dashboard/quiz"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<HelpCircle size={18} />} 
+        label="Support" 
+        to="/dashboard/support"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<Settings size={18} />} 
+        label="Settings" 
+        to="/dashboard/settings"
+        onClick={closeSidebar}
+      />
+    </ul>
+  );
   
   return (
     <>
       {/* Mobile header */}
       {isMobile && (
-        <div className="fixed top-0 left-0 z-50 w-full bg-white border-b p-4 flex items-center justify-between">
-          <NavLink to="/" className="text-xl font-bold text-primary font-poppins">
+        <div className="fixed top-0 left-0 z-50 w-full bg-background border-b p-3 flex items-center justify-between">
+          <NavLink to="/" className="text-lg font-bold text-primary font-poppins">
             edu<span className="text-secondary">spark</span>
           </NavLink>
           <Button 
             variant="ghost" 
             size="icon"
-            className="text-black md:hidden"
-            onClick={() => {
-              // Toggle mobile menu visibility
-              const sidebar = document.getElementById('mobile-sidebar');
-              if (sidebar) {
-                sidebar.classList.toggle('hidden');
-              }
-            }}
+            onClick={() => setIsOpen(!isOpen)}
           >
-            <Menu className="h-5 w-5" />
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             <span className="sr-only">Toggle Menu</span>
           </Button>
         </div>
       )}
 
-      {/* Sidebar for mobile (initially hidden) */}
-      {isMobile && (
-        <div 
-          id="mobile-sidebar" 
-          className="fixed inset-0 z-40 hidden"
-        >
+      {/* Mobile sidebar overlay */}
+      {isMobile && isOpen && (
+        <div className="fixed inset-0 z-40">
           <div 
             className="absolute inset-0 bg-black/50"
-            onClick={() => {
-              const sidebar = document.getElementById('mobile-sidebar');
-              if (sidebar) {
-                sidebar.classList.add('hidden');
-              }
-            }}
-          ></div>
-          <div className="absolute left-0 top-0 h-full w-64 bg-white shadow-lg">
+            onClick={closeSidebar}
+          />
+          <div className="absolute left-0 top-0 h-full w-64 bg-background shadow-lg animate-in slide-in-from-left duration-200">
             <div className="p-4 border-b">
-              <NavLink to="/" className="text-xl font-bold text-primary font-poppins">
+              <NavLink to="/" className="text-lg font-bold text-primary font-poppins" onClick={closeSidebar}>
                 edu<span className="text-secondary">spark</span>
               </NavLink>
             </div>
             <nav className="p-4">
-              <ul className="space-y-1">
-                <NavItem 
-                  icon={<LayoutDashboard size={18} />} 
-                  label="Dashboard" 
-                  to="/dashboard" 
-                />
-                <NavItem 
-                  icon={<MessageSquare size={18} />} 
-                  label="AI Assistant" 
-                  to="/dashboard/ai-assistant" 
-                />
-                <NavItem 
-                  icon={<Book size={18} />} 
-                  label="Past Questions" 
-                  to="/dashboard/past-questions" 
-                />
-                <NavItem 
-                  icon={<Calendar size={18} />} 
-                  label="Study Planner" 
-                  to="/dashboard/planner" 
-                />
-                <NavItem 
-                  icon={<Award size={18} />} 
-                  label="Quiz Arena" 
-                  to="/dashboard/quiz" 
-                />
-                <NavItem 
-                  icon={<HelpCircle size={18} />} 
-                  label="Support" 
-                  to="/dashboard/support" 
-                />
-                <NavItem 
-                  icon={<Settings size={18} />} 
-                  label="Settings" 
-                  to="/dashboard/settings" 
-                />
-              </ul>
+              {navItems}
             </nav>
           </div>
         </div>
       )}
       
-      {/* Desktop sidebar (always visible) */}
+      {/* Desktop sidebar */}
       {!isMobile && (
-        <div className="min-h-screen w-64 border-r border-gray-200 bg-white">
+        <div className="min-h-screen w-56 lg:w-64 border-r border-border bg-background shrink-0">
           <div className="p-4 border-b">
-            <NavLink to="/" className="text-xl font-bold text-primary font-poppins">
+            <NavLink to="/" className="text-lg lg:text-xl font-bold text-primary font-poppins">
               edu<span className="text-secondary">spark</span>
             </NavLink>
           </div>
-          <nav className="p-4">
-            <ul className="space-y-1">
-              <NavItem 
-                icon={<LayoutDashboard size={18} />} 
-                label="Dashboard" 
-                to="/dashboard" 
-              />
-              <NavItem 
-                icon={<MessageSquare size={18} />} 
-                label="AI Assistant" 
-                to="/dashboard/ai-assistant" 
-              />
-              <NavItem 
-                icon={<Book size={18} />} 
-                label="Past Questions" 
-                to="/dashboard/past-questions" 
-              />
-              <NavItem 
-                icon={<Calendar size={18} />} 
-                label="Study Planner" 
-                to="/dashboard/planner" 
-              />
-              <NavItem 
-                icon={<Award size={18} />} 
-                label="Quiz Arena" 
-                to="/dashboard/quiz" 
-              />
-              <NavItem 
-                icon={<HelpCircle size={18} />} 
-                label="Support" 
-                to="/dashboard/support" 
-              />
-              <NavItem 
-                icon={<Settings size={18} />} 
-                label="Settings" 
-                to="/dashboard/settings" 
-              />
-            </ul>
+          <nav className="p-3 lg:p-4">
+            {navItems}
           </nav>
         </div>
       )}
