@@ -14,6 +14,109 @@ export type Database = {
   }
   public: {
     Tables: {
+      custom_course_materials: {
+        Row: {
+          course_id: string
+          created_at: string
+          description: string | null
+          id: string
+          material_type: string
+          title: string
+          url: string | null
+        }
+        Insert: {
+          course_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          material_type: string
+          title: string
+          url?: string | null
+        }
+        Update: {
+          course_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          material_type?: string
+          title?: string
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "custom_course_materials_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "custom_courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      custom_course_questions: {
+        Row: {
+          answer: string | null
+          course_id: string
+          created_at: string
+          id: string
+          question: string
+          source_url: string | null
+        }
+        Insert: {
+          answer?: string | null
+          course_id: string
+          created_at?: string
+          id?: string
+          question: string
+          source_url?: string | null
+        }
+        Update: {
+          answer?: string | null
+          course_id?: string
+          created_at?: string
+          id?: string
+          question?: string
+          source_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "custom_course_questions_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "custom_courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      custom_courses: {
+        Row: {
+          course_code: string | null
+          course_name: string
+          created_at: string
+          description: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          course_code?: string | null
+          course_name: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          course_code?: string | null
+          course_name?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       past_questions: {
         Row: {
           correct_answer: string
