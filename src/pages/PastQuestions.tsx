@@ -120,36 +120,36 @@ const PastQuestions: React.FC = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             
-            <Select value={examFilter} onValueChange={setExamFilter}>
+            <Select value={examFilter || "all"} onValueChange={(v) => setExamFilter(v === "all" ? "" : v)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select Exam" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Exams</SelectItem>
+                <SelectItem value="all">All Exams</SelectItem>
                 {getUniqueValues('exam_name').map((exam) => (
                   <SelectItem key={String(exam)} value={String(exam)}>{String(exam)}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
             
-            <Select value={yearFilter} onValueChange={setYearFilter}>
+            <Select value={yearFilter || "all"} onValueChange={(v) => setYearFilter(v === "all" ? "" : v)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select Year" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Years</SelectItem>
+                <SelectItem value="all">All Years</SelectItem>
                 {getUniqueValues('year').map((year) => (
                   <SelectItem key={String(year)} value={String(year)}>{String(year)}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
             
-            <Select value={subjectFilter} onValueChange={setSubjectFilter}>
+            <Select value={subjectFilter || "all"} onValueChange={(v) => setSubjectFilter(v === "all" ? "" : v)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select Subject" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Subjects</SelectItem>
+                <SelectItem value="all">All Subjects</SelectItem>
                 {getUniqueValues('subject').map((subject) => (
                   <SelectItem key={String(subject)} value={String(subject)}>{String(subject)}</SelectItem>
                 ))}
