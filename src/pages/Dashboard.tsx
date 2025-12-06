@@ -43,12 +43,12 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
+    <div className="flex flex-col md:flex-row min-h-screen bg-background">
       <DashboardSidebar />
       
       <div className="flex-1 overflow-auto pt-16 md:pt-0">
         <div className="p-4 md:p-8">
-          <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">Welcome back, {userName}!</h1>
+          <h1 className="text-xl md:text-3xl font-bold mb-4 md:mb-6">Welcome back, {userName}!</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
             {/* Today's Planner Card */}

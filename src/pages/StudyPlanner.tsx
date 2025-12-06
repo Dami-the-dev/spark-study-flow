@@ -120,19 +120,19 @@ const StudyPlanner: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-background">
       <DashboardSidebar />
-      <div className="flex-1 overflow-auto">
-        <div className="py-6 px-8">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold">Study Planner</h1>
+      <div className="flex-1 overflow-auto pt-16 md:pt-0">
+        <div className="py-4 px-4 md:py-6 md:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <h1 className="text-xl md:text-2xl font-bold">Study Planner</h1>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button>
                   <Plus className="mr-2 h-4 w-4" /> Create Plan
                 </Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="max-w-[95vw] sm:max-w-lg max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle>Create Study Plan</DialogTitle>
                   <DialogDescription>

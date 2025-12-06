@@ -19,6 +19,7 @@ import About from "./pages/About";
 import Settings from "./pages/Settings";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import MyCourses from "./pages/MyCourses";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,11 @@ const App = () => {
               <Route path="/dashboard/past-questions" element={
                 <ProtectedRoute>
                   <PastQuestions />
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/my-courses" element={
+                <ProtectedRoute>
+                  <MyCourses />
                 </ProtectedRoute>
               } />
               <Route path="/dashboard/planner" element={
