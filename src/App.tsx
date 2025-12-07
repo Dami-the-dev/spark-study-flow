@@ -13,7 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import AIAssistant from "./pages/AIAssistant";
 import PastQuestions from "./pages/PastQuestions";
 import StudyPlanner from "./pages/StudyPlanner";
-import QuizArena from "./pages/QuizArena";
+import SuccessStories from "./pages/SuccessStories";
 import Support from "./pages/Support";
 import About from "./pages/About";
 import Settings from "./pages/Settings";
@@ -39,6 +39,7 @@ const App = () => {
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/support" element={<Support />} />
+              <Route path="/success-stories" element={<SuccessStories />} />
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={
@@ -64,11 +65,6 @@ const App = () => {
               <Route path="/dashboard/planner" element={
                 <ProtectedRoute>
                   <StudyPlanner />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/quiz" element={
-                <ProtectedRoute>
-                  <QuizArena />
                 </ProtectedRoute>
               } />
               <Route path="/dashboard/support" element={

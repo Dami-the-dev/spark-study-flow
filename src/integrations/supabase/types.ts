@@ -158,26 +158,35 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_level: number | null
           avatar_url: string | null
           created_at: string | null
+          custom_avatar: string | null
           full_name: string | null
           id: string
+          reading_hours: number | null
           updated_at: string | null
           username: string | null
         }
         Insert: {
+          avatar_level?: number | null
           avatar_url?: string | null
           created_at?: string | null
+          custom_avatar?: string | null
           full_name?: string | null
           id: string
+          reading_hours?: number | null
           updated_at?: string | null
           username?: string | null
         }
         Update: {
+          avatar_level?: number | null
           avatar_url?: string | null
           created_at?: string | null
+          custom_avatar?: string | null
           full_name?: string | null
           id?: string
+          reading_hours?: number | null
           updated_at?: string | null
           username?: string | null
         }

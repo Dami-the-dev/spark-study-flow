@@ -82,12 +82,6 @@ const DashboardSidebar: React.FC = () => {
         onClick={closeSidebar}
       />
       <NavItem 
-        icon={<Award size={18} />} 
-        label="Quiz Arena" 
-        to="/dashboard/quiz"
-        onClick={closeSidebar}
-      />
-      <NavItem 
         icon={<HelpCircle size={18} />} 
         label="Support" 
         to="/dashboard/support"

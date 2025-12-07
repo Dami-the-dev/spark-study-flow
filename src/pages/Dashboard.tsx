@@ -2,33 +2,92 @@ import React, { useState, useEffect } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2 } from 'lucide-react';
+import { Loader2, BookOpen, Brain, FileText, Calendar } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { format, isToday, parseISO } from 'date-fns';
+
+const inspirationalQuotes = [
+  { quote: "Education is the most powerful weapon which you can use to change the world.", author: "Nelson Mandela" },
+  { quote: "There is no limit to what we, as women, can accomplish.", author: "Michelle Obama" },
+  { quote: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+  { quote: "Change will not come if we wait for some other person or some other time.", author: "Barack Obama" },
+  { quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+  { quote: "Think big and don't listen to people who tell you it can't be done.", author: "Ben Carson" },
+  { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+  { quote: "Education is not the filling of a pail, but the lighting of a fire.", author: "W.B. Yeats" },
+  { quote: "Live as if you were to die tomorrow. Learn as if you were to live forever.", author: "Mahatma Gandhi" },
+  { quote: "One child, one teacher, one book, one pen can change the world.", author: "Malala Yousafzai" },
+  { quote: "The beautiful thing about learning is that nobody can take it away from you.", author: "B.B. King" },
+  { quote: "Once you learn to read, you will be forever free.", author: "Frederick Douglass" },
+];
+
+interface StudyPlan {
+  id: string;
+  title: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  subjects: string[];
+}
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
-  const [studySessions, setStudySessions] = useState<any[]>([]);
+  const [studyPlans, setStudyPlans] = useState<StudyPlan[]>([]);
+  const [todaysPlans, setTodaysPlans] = useState<StudyPlan[]>([]);
   const [loading, setLoading] = useState(true);
+  const [quote, setQuote] = useState({ quote: '', author: '' });
+  
   const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Student';
 
   useEffect(() => {
+    // Get random quote based on session/day
+    const savedQuoteIndex = sessionStorage.getItem('eduspark_quote_index');
+    let quoteIndex: number;
+    
+    if (savedQuoteIndex) {
+      quoteIndex = parseInt(savedQuoteIndex);
+    } else {
+      quoteIndex = Math.floor(Math.random() * inspirationalQuotes.length);
+      sessionStorage.setItem('eduspark_quote_index', quoteIndex.toString());
+    }
+    
+    setQuote(inspirationalQuotes[quoteIndex]);
+  }, []);
+
+  useEffect(() => {
     if (user) {
-      loadStudySessions();
+      loadStudyPlans();
     }
   }, [user]);
 
-  const loadStudySessions = async () => {
+  const loadStudyPlans = async () => {
     try {
       const { data, error } = await supabase
-        .from('study_sessions')
+        .from('study_plans')
         .select('*')
         .eq('user_id', user?.id)
-        .order('session_date', { ascending: false })
-        .limit(7);
+        .order('start_date', { ascending: true });
 
       if (error) throw error;
-      setStudySessions(data || []);
+      
+      const plans = (data || []).map(p => ({
+        ...p,
+        subjects: p.subjects as string[]
+      }));
+      
+      setStudyPlans(plans);
+      
+      // Filter plans that are active today
+      const today = new Date();
+      const activePlans = plans.filter(plan => {
+        const startDate = parseISO(plan.start_date);
+        const endDate = parseISO(plan.end_date);
+        return today >= startDate && today <= endDate;
+      });
+      
+      setTodaysPlans(activePlans);
     } catch (error) {
-      console.error('Error loading study sessions:', error);
+      console.error('Error loading study plans:', error);
     } finally {
       setLoading(false);
     }
@@ -50,128 +109,149 @@ const Dashboard: React.FC = () => {
         <div className="p-4 md:p-8">
           <h1 className="text-xl md:text-3xl font-bold mb-4 md:mb-6">Welcome back, {userName}!</h1>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
-            {/* Today's Planner Card */}
-            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
-              <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-800">Today's Planner</h2>
-              <div className="space-y-2 md:space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b">
-                  <span className="text-gray-700">📚 Math Review</span>
-                  <span className="text-primary font-medium">9:00 AM</span>
-                </div>
-                <div className="flex items-center justify-between pb-2 border-b">
-                  <span className="text-gray-700">📝 English Essay</span>
-                  <span className="text-primary font-medium">11:30 AM</span>
-                </div>
-                <div className="flex items-center justify-between pb-2 border-b">
-                  <span className="text-gray-700">🧪 Science Quiz Prep</span>
-                  <span className="text-primary font-medium">2:00 PM</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-700">🏃 Study Break</span>
-                  <span className="text-primary font-medium">4:30 PM</span>
-                </div>
-              </div>
-            </div>
-            
-            {/* Stats Card */}
-            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
-              <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-800">Stats This Week</h2>
-              <div className="h-32 md:h-40 flex items-center justify-center">
-                <div className="w-full flex items-end justify-around h-full">
-                  <div className="flex flex-col items-center">
-                    <div className="bg-primary h-16 w-6 md:w-8 rounded-t-md"></div>
-                    <span className="text-xs mt-1 text-gray-600">Mon</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="bg-primary h-24 w-6 md:w-8 rounded-t-md"></div>
-                    <span className="text-xs mt-1 text-gray-600">Tue</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="bg-primary h-12 w-6 md:w-8 rounded-t-md"></div>
-                    <span className="text-xs mt-1 text-gray-600">Wed</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="bg-primary h-28 w-6 md:w-8 rounded-t-md"></div>
-                    <span className="text-xs mt-1 text-gray-600">Thu</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="bg-primary h-20 w-6 md:w-8 rounded-t-md"></div>
-                    <span className="text-xs mt-1 text-gray-600">Fri</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="bg-primary h-8 w-6 md:w-8 rounded-t-md"></div>
-                    <span className="text-xs mt-1 text-gray-600">Sat</span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="bg-primary h-4 w-6 md:w-8 rounded-t-md"></div>
-                    <span className="text-xs mt-1 text-gray-600">Sun</span>
-                  </div>
-                </div>
-              </div>
-              <div className="text-center text-xs md:text-sm text-gray-500 mt-2">
-                Study hours tracked: 18.5h
-              </div>
-            </div>
-            
-            {/* Quick Access Card */}
-            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
-              <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-800">Quick Access</h2>
-              <div className="grid grid-cols-2 gap-2 md:gap-3">
-                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-2 md:p-3 rounded-md flex flex-col items-center justify-center">
-                  <span className="text-xl md:text-2xl mb-1">💬</span>
-                  <span className="text-xs md:text-sm text-gray-700">Ask AI</span>
-                </button>
-                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-2 md:p-3 rounded-md flex flex-col items-center justify-center">
-                  <span className="text-xl md:text-2xl mb-1">📄</span>
-                  <span className="text-xs md:text-sm text-gray-700">Summarize PDF</span>
-                </button>
-                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-2 md:p-3 rounded-md flex flex-col items-center justify-center">
-                  <span className="text-xl md:text-2xl mb-1">🎮</span>
-                  <span className="text-xs md:text-sm text-gray-700">Resume Quiz</span>
-                </button>
-                <button className="bg-gray-50 hover:bg-gray-100 transition-colors p-2 md:p-3 rounded-md flex flex-col items-center justify-center">
-                  <span className="text-xl md:text-2xl mb-1">📚</span>
-                  <span className="text-xs md:text-sm text-gray-700">Past Questions</span>
-                </button>
+          {/* Inspirational Quote Card */}
+          <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-xl mb-6 md:mb-8">
+            <div className="flex items-start gap-4">
+              <span className="text-4xl">💡</span>
+              <div>
+                <p className="text-lg md:text-xl italic text-foreground mb-2">"{quote.quote}"</p>
+                <p className="text-sm text-muted-foreground">— {quote.author}</p>
               </div>
             </div>
           </div>
           
-          {/* Upcoming Deadlines Table */}
-          <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100 overflow-x-auto">
-            <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-4 text-gray-800">Upcoming Deadlines</h2>
-            <table className="w-full min-w-[500px]">
-              <thead>
-                <tr className="text-left text-gray-500 border-b">
-                  <th className="pb-2">Subject</th>
-                  <th className="pb-2">Task</th>
-                  <th className="pb-2">Due Date</th>
-                  <th className="pb-2">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b">
-                  <td className="py-3 text-gray-700">Mathematics</td>
-                  <td className="py-3 text-gray-700">Assignment #4</td>
-                  <td className="py-3 text-gray-700">Tomorrow</td>
-                  <td className="py-3"><span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">In Progress</span></td>
-                </tr>
-                <tr className="border-b">
-                  <td className="py-3 text-gray-700">Physics</td>
-                  <td className="py-3 text-gray-700">Lab Report</td>
-                  <td className="py-3 text-gray-700">May 15</td>
-                  <td className="py-3"><span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">Started</span></td>
-                </tr>
-                <tr>
-                  <td className="py-3 text-gray-700">Computer Science</td>
-                  <td className="py-3 text-gray-700">Final Project</td>
-                  <td className="py-3 text-gray-700">May 20</td>
-                  <td className="py-3"><span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">Not Started</span></td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
+            {/* Today's Planner Card - Only show if there are plans */}
+            {todaysPlans.length > 0 && (
+              <div className="bg-card p-4 md:p-6 rounded-lg shadow-sm border border-border">
+                <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3 flex items-center gap-2">
+                  <Calendar className="h-5 w-5 text-primary" />
+                  Today's Study Plan
+                </h2>
+                <div className="space-y-3">
+                  {todaysPlans.map((plan) => (
+                    <div key={plan.id} className="pb-3 border-b border-border last:border-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium text-foreground">{plan.title}</span>
+                      </div>
+                      {plan.subjects && plan.subjects.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {plan.subjects.map((subject, idx) => (
+                            <span
+                              key={idx}
+                              className="px-2 py-1 bg-primary/10 text-primary rounded text-xs"
+                            >
+                              {subject}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <Link 
+                  to="/dashboard/planner" 
+                  className="text-sm text-primary hover:underline mt-3 inline-block"
+                >
+                  View all plans →
+                </Link>
+              </div>
+            )}
+            
+            {/* Quick Access Card */}
+            <div className={`bg-card p-4 md:p-6 rounded-lg shadow-sm border border-border ${todaysPlans.length === 0 ? 'md:col-span-2' : ''}`}>
+              <h2 className="text-lg md:text-xl font-bold mb-2 md:mb-3">Quick Access</h2>
+              <div className={`grid ${todaysPlans.length === 0 ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2'} gap-2 md:gap-3`}>
+                <Link 
+                  to="/dashboard/ai-assistant"
+                  className="bg-muted hover:bg-muted/80 transition-colors p-3 md:p-4 rounded-md flex flex-col items-center justify-center"
+                >
+                  <Brain className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-xs md:text-sm text-foreground text-center">Ask AI</span>
+                </Link>
+                <Link 
+                  to="/dashboard/past-questions"
+                  className="bg-muted hover:bg-muted/80 transition-colors p-3 md:p-4 rounded-md flex flex-col items-center justify-center"
+                >
+                  <FileText className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-xs md:text-sm text-foreground text-center">Past Questions</span>
+                </Link>
+                <Link 
+                  to="/dashboard/my-courses"
+                  className="bg-muted hover:bg-muted/80 transition-colors p-3 md:p-4 rounded-md flex flex-col items-center justify-center"
+                >
+                  <BookOpen className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-xs md:text-sm text-foreground text-center">My Courses</span>
+                </Link>
+                <Link 
+                  to="/dashboard/planner"
+                  className="bg-muted hover:bg-muted/80 transition-colors p-3 md:p-4 rounded-md flex flex-col items-center justify-center"
+                >
+                  <Calendar className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-xs md:text-sm text-foreground text-center">Study Planner</span>
+                </Link>
+              </div>
+            </div>
           </div>
+          
+          {/* No Plans Message */}
+          {todaysPlans.length === 0 && studyPlans.length === 0 && (
+            <div className="bg-card p-6 rounded-lg shadow-sm border border-border text-center">
+              <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-semibold mb-2">No Study Plans Yet</h3>
+              <p className="text-muted-foreground mb-4">
+                Create your first study plan to see it displayed here on your dashboard.
+              </p>
+              <Link 
+                to="/dashboard/planner"
+                className="inline-flex items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+              >
+                Create Study Plan
+              </Link>
+            </div>
+          )}
+
+          {/* Upcoming Plans */}
+          {studyPlans.length > 0 && todaysPlans.length === 0 && (
+            <div className="bg-card p-4 md:p-6 rounded-lg shadow-sm border border-border">
+              <h2 className="text-lg md:text-xl font-bold mb-4">Your Study Plans</h2>
+              <div className="space-y-3">
+                {studyPlans.slice(0, 3).map((plan) => (
+                  <div key={plan.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                    <div>
+                      <p className="font-medium">{plan.title}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {format(parseISO(plan.start_date), 'MMM dd')} - {format(parseISO(plan.end_date), 'MMM dd, yyyy')}
+                      </p>
+                    </div>
+                    {plan.subjects && plan.subjects.length > 0 && (
+                      <div className="flex gap-1">
+                        {plan.subjects.slice(0, 2).map((subject, idx) => (
+                          <span
+                            key={idx}
+                            className="px-2 py-1 bg-primary/10 text-primary rounded text-xs"
+                          >
+                            {subject}
+                          </span>
+                        ))}
+                        {plan.subjects.length > 2 && (
+                          <span className="px-2 py-1 bg-muted text-muted-foreground rounded text-xs">
+                            +{plan.subjects.length - 2}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <Link 
+                to="/dashboard/planner" 
+                className="text-sm text-primary hover:underline mt-4 inline-block"
+              >
+                View all plans →
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
