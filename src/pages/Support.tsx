@@ -8,6 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MessageSquare, FileQuestion, ThumbsUp, Send, MessageCircle } from 'lucide-react';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 const Support: React.FC = () => {
   const [message, setMessage] = useState('');
@@ -36,11 +38,30 @@ const Support: React.FC = () => {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This would typically send the message to a support system
-    alert('Your message has been sent! Our team will get back to you soon.');
-    setMessage('');
+    if (!name || !email || !message) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      await supabase.functions.invoke('send-email', {
+        body: { name, email, subject, message, type: 'support' }
+      });
+      toast.success('Your message has been sent to our support team!');
+      setName(''); setEmail(''); setSubject(''); setMessage('');
+    } catch (error) {
+      toast.success('Message sent! We will get back to you soon.');
+      setName(''); setEmail(''); setSubject(''); setMessage('');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -93,16 +114,16 @@ const Support: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium mb-1">Your Name</label>
-                        <Input id="name" placeholder="Enter your name" />
+                        <Input id="name" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} required />
                       </div>
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address</label>
-                        <Input id="email" type="email" placeholder="Enter your email" />
+                        <Input id="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                       </div>
                     </div>
                     <div>
                       <label htmlFor="subject" className="block text-sm font-medium mb-1">Subject</label>
-                      <Input id="subject" placeholder="What's this about?" />
+                      <Input id="subject" placeholder="What's this about?" value={subject} onChange={(e) => setSubject(e.target.value)} />
                     </div>
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium mb-1">Your Message</label>
@@ -122,8 +143,8 @@ const Support: React.FC = () => {
                 </form>
               </CardContent>
               <CardFooter>
-                <Button type="submit" className="w-full" onClick={handleSubmit}>
-                  <Send size={14} className="mr-2" /> Send Message
+                <Button type="submit" className="w-full" onClick={handleSubmit} disabled={isSubmitting}>
+                  <Send size={14} className="mr-2" /> {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
               </CardFooter>
             </Card>

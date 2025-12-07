@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -18,16 +19,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 233 95% 58%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 263 100% 75%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
+    --accent: 48 100% 73%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -35,7 +36,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 233 95% 58%;
 
     --radius: 1rem;
 
@@ -59,24 +60,24 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 233 95% 65%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 263 80% 60%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 48 100% 60%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 233 95% 65%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -87,28 +88,61 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   
-  /* Theme color customizations */
+  /* Theme color customizations - use HSL values for proper color function compatibility */
   [data-theme-color="purple"] {
     --primary: 270 50% 60%;
-    --primary-hover: 270 50% 50%;
+    --ring: 270 50% 60%;
+  }
+  
+  [data-theme-color="purple"].dark {
+    --primary: 270 50% 65%;
+    --ring: 270 50% 65%;
   }
   
   [data-theme-color="green"] {
     --primary: 142 70% 45%;
-    --primary-hover: 142 70% 35%;
+    --ring: 142 70% 45%;
+  }
+  
+  [data-theme-color="green"].dark {
+    --primary: 142 70% 50%;
+    --ring: 142 70% 50%;
   }
   
   [data-theme-color="blue"] {
     --primary: 214 100% 50%;
-    --primary-hover: 214 100% 40%;
+    --ring: 214 100% 50%;
+  }
+  
+  [data-theme-color="blue"].dark {
+    --primary: 214 100% 55%;
+    --ring: 214 100% 55%;
   }
   
   /* Font customizations */
-  [data-font="serif"] {
-    font-family: Georgia, Times, 'Times New Roman', serif;
+  [data-font="serif"] body {
+    font-family: 'Merriweather', Georgia, Times, 'Times New Roman', serif;
   }
   
-  [data-font="sans"] {
+  [data-font="serif"] h1, 
+  [data-font="serif"] h2, 
+  [data-font="serif"] h3, 
+  [data-font="serif"] h4, 
+  [data-font="serif"] h5, 
+  [data-font="serif"] h6 {
+    font-family: 'Merriweather', Georgia, serif;
+  }
+  
+  [data-font="sans"] body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  [data-font="sans"] h1, 
+  [data-font="sans"] h2, 
+  [data-font="sans"] h3, 
+  [data-font="sans"] h4, 
+  [data-font="sans"] h5, 
+  [data-font="sans"] h6 {
     font-family: Arial, Helvetica, sans-serif;
   }
 }
@@ -134,7 +168,7 @@
 
 @layer components {
   .feature-card {
-    @apply p-6 bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100;
+    @apply p-6 bg-card rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border border-border;
   }
 
   .hero-gradient-text {
@@ -146,32 +180,7 @@
   }
 }
 
-/* Dark mode transitions */
-.dark body {
-  @apply bg-gray-900 text-gray-100;
-}
-
-.dark .bg-white {
-  @apply bg-gray-800;
-}
-
-.dark .border-gray-100 {
-  @apply border-gray-700;
-}
-
-.dark .text-gray-700 {
-  @apply text-gray-300;
-}
-
-.dark .bg-gray-50 {
-  @apply bg-gray-900;
-}
-
-.dark .text-gray-600 {
-  @apply text-gray-400;
-}
-
 /* Smooth transitions for theme changes */
 *, *::before, *::after {
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
 }

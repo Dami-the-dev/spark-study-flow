@@ -2,3 +2,9 @@ project_id = "eteqojfuqunhjtoplrhj"
 
 [functions.educational-chat]
 verify_jwt = false
+
+[functions.send-email]
+verify_jwt = false
+
+[functions.generate-questions-from-pdf]
+verify_jwt = true
