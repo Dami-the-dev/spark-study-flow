@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Target, Award, Heart, BookOpen, Lightbulb, Rocket } from 'lucide-react';
+import { Users, Target, Award, Heart, BookOpen, Lightbulb, Rocket, GraduationCap } from 'lucide-react';
 
 const About: React.FC = () => {
   return (
@@ -12,18 +12,61 @@ const About: React.FC = () => {
       <main className="flex-1 pt-20">
         <section className="py-16 bg-gradient-to-b from-primary/5 to-transparent">
           <div className="container mx-auto text-center px-4">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">About Study Spark</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">About Study Spark</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Born from a developer's passion to bridge the gap in student learning and make quality education accessible to everyone.
             </p>
           </div>
         </section>
 
+        {/* Who We Serve Section */}
+        <section className="py-12 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <GraduationCap className="h-16 w-16 text-primary mx-auto mb-6" />
+              <h2 className="text-3xl font-bold mb-6 text-foreground">Who We Serve</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card className="bg-card">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-foreground">
+                      <BookOpen className="h-6 w-6 text-primary" />
+                      University Students
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      EduSpark is designed to help university students read and study with ease. Upload your course materials, 
+                      convert them to practice questions, and master your subjects efficiently. Our AI-powered tools adapt to 
+                      your learning style and help you prepare for exams effectively.
+                    </p>
+                  </CardContent>
+                </Card>
+                
+                <Card className="bg-card">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-foreground">
+                      <Award className="h-6 w-6 text-primary" />
+                      JAMB Candidates
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Preparing for JAMB? We've got you covered! Access comprehensive past questions across all subjects, 
+                      practice with our quiz system, and track your progress. Our platform helps you adequately prepare 
+                      for the exam with structured study plans and AI assistance.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <Card className="max-w-4xl mx-auto">
+            <Card className="max-w-4xl mx-auto bg-card">
               <CardHeader>
-                <CardTitle className="text-3xl flex items-center gap-2">
+                <CardTitle className="text-3xl flex items-center gap-2 text-foreground">
                   <Lightbulb className="h-8 w-8 text-primary" />
                   Our Story
                 </CardTitle>
@@ -45,12 +88,12 @@ const About: React.FC = () => {
 
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">What Drives Us</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-foreground">What Drives Us</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card>
+              <Card className="bg-card">
                 <CardHeader>
                   <Target className="h-10 w-10 text-primary mb-2" />
-                  <CardTitle>Our Mission</CardTitle>
+                  <CardTitle className="text-foreground">Our Mission</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
@@ -59,10 +102,10 @@ const About: React.FC = () => {
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="bg-card">
                 <CardHeader>
                   <Rocket className="h-10 w-10 text-primary mb-2" />
-                  <CardTitle>Our Vision</CardTitle>
+                  <CardTitle className="text-foreground">Our Vision</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
@@ -71,10 +114,10 @@ const About: React.FC = () => {
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="bg-card">
                 <CardHeader>
                   <Award className="h-10 w-10 text-primary mb-2" />
-                  <CardTitle>Our Values</CardTitle>
+                  <CardTitle className="text-foreground">Our Values</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
@@ -83,10 +126,10 @@ const About: React.FC = () => {
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="bg-card">
                 <CardHeader>
                   <Heart className="h-10 w-10 text-primary mb-2" />
-                  <CardTitle>Our Promise</CardTitle>
+                  <CardTitle className="text-foreground">Our Promise</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
