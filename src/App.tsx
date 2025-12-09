@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,7 +24,21 @@ import MyCourses from "./pages/MyCourses";
 
 const queryClient = new QueryClient();
 
+// Apply theme on app initialization
+const applyInitialTheme = () => {
+  const userPrefs = JSON.parse(localStorage.getItem('eduspark_user_preferences') || '{}');
+  if (userPrefs.isDarkMode) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+};
+
 const App = () => {
+  useEffect(() => {
+    applyInitialTheme();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
