@@ -11,11 +11,29 @@ serve(async (req) => {
   }
 
   try {
-    const { pdfText, questionCount, courseId } = await req.json();
+    const { pdfText, pdfContent, questionCount, courseId } = await req.json();
     
-    if (!pdfText || !questionCount) {
+    // Support both pdfText (direct text) and pdfContent (base64 encoded)
+    let textContent = pdfText;
+    
+    if (!textContent && pdfContent) {
+      // Decode base64 content - extract text from PDF
+      try {
+        const binaryString = atob(pdfContent);
+        // Simple text extraction from PDF binary (basic approach)
+        textContent = binaryString.replace(/[^\x20-\x7E\n\r\t]/g, ' ').replace(/\s+/g, ' ').trim();
+      } catch (e) {
+        console.error("Error decoding base64:", e);
+        return new Response(
+          JSON.stringify({ error: "Failed to decode PDF content" }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
+        );
+      }
+    }
+    
+    if (!textContent || !questionCount) {
       return new Response(
-        JSON.stringify({ error: "PDF text and question count are required" }),
+        JSON.stringify({ error: "PDF text/content and question count are required" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
       );
     }
@@ -40,7 +58,7 @@ serve(async (req) => {
           },
           {
             role: "user",
-            content: `Generate ${questionCount} educational questions from this text:\n\n${pdfText.substring(0, 15000)}`
+            content: `Generate ${questionCount} educational questions from this text:\n\n${textContent.substring(0, 15000)}`
           }
         ],
         tools: [
