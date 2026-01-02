@@ -13,6 +13,9 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import AIAssistant from "./pages/AIAssistant";
 import PastQuestions from "./pages/PastQuestions";
+import WaecPastQuestions from "./pages/WaecPastQuestions";
+import JambSyllabus from "./pages/JambSyllabus";
+import UploadMaterials from "./pages/UploadMaterials";
 import StudyPlanner from "./pages/StudyPlanner";
 import SuccessStories from "./pages/SuccessStories";
 import Support from "./pages/Support";
@@ -20,7 +23,6 @@ import About from "./pages/About";
 import Settings from "./pages/Settings";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
-import MyCourses from "./pages/MyCourses";
 
 const queryClient = new QueryClient();
 
@@ -72,9 +74,19 @@ const App = () => {
                   <PastQuestions />
                 </ProtectedRoute>
               } />
-              <Route path="/dashboard/my-courses" element={
+              <Route path="/dashboard/waec-questions" element={
                 <ProtectedRoute>
-                  <MyCourses />
+                  <WaecPastQuestions />
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/jamb-syllabus" element={
+                <ProtectedRoute>
+                  <JambSyllabus />
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/upload-materials" element={
+                <ProtectedRoute>
+                  <UploadMaterials />
                 </ProtectedRoute>
               } />
               <Route path="/dashboard/planner" element={

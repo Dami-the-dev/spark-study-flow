@@ -65,14 +65,26 @@ const DashboardSidebar: React.FC = () => {
       />
       <NavItem 
         icon={<Book size={18} />} 
-        label="Past Questions" 
+        label="JAMB Questions" 
         to="/dashboard/past-questions"
         onClick={closeSidebar}
       />
       <NavItem 
+        icon={<Award size={18} />} 
+        label="WAEC Questions" 
+        to="/dashboard/waec-questions"
+        onClick={closeSidebar}
+      />
+      <NavItem 
         icon={<GraduationCap size={18} />} 
-        label="My Courses" 
-        to="/dashboard/my-courses"
+        label="JAMB Syllabus" 
+        to="/dashboard/jamb-syllabus"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<Book size={18} />} 
+        label="Upload Materials" 
+        to="/dashboard/upload-materials"
         onClick={closeSidebar}
       />
       <NavItem 
