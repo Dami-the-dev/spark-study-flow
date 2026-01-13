@@ -30,14 +30,14 @@ const About: React.FC = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-foreground">
                       <BookOpen className="h-6 w-6 text-primary" />
-                      University Students
+                      JAMB Candidates
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">
-                      EduSpark is designed to help university students read and study with ease. Upload your course materials, 
-                      convert them to practice questions, and master your subjects efficiently. Our AI-powered tools adapt to 
-                      your learning style and help you prepare for exams effectively.
+                      Preparing for JAMB? We've got you covered! Access comprehensive past questions across all subjects, 
+                      practice with our quiz system, and track your progress. Our platform helps you adequately prepare 
+                      for the exam with structured study plans, JAMB syllabus access, and AI assistance.
                     </p>
                   </CardContent>
                 </Card>
@@ -46,14 +46,14 @@ const About: React.FC = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-foreground">
                       <Award className="h-6 w-6 text-primary" />
-                      JAMB Candidates
+                      WAEC Students
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">
-                      Preparing for JAMB? We've got you covered! Access comprehensive past questions across all subjects, 
-                      practice with our quiz system, and track your progress. Our platform helps you adequately prepare 
-                      for the exam with structured study plans and AI assistance.
+                      EduSpark is designed to help secondary school students excel in WAEC. Access past questions, 
+                      upload your study materials to generate practice questions, and master your subjects efficiently. 
+                      Our AI-powered tools adapt to your learning style.
                     </p>
                   </CardContent>
                 </Card>

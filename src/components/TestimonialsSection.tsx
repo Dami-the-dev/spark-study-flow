@@ -28,21 +28,21 @@ const Testimonial: React.FC<TestimonialProps> = ({ quote, name, role, imageUrl }
 const TestimonialsSection: React.FC = () => {
   const testimonials = [
     {
-      quote: "EduSpark helped me improve my grades from C's to A's in just one semester. The AI study assistant is like having a tutor available 24/7!",
+      quote: "EduSpark helped me score 320 in JAMB! The past questions and AI assistant made all the difference in my preparation.",
       name: "Favour Okonkwo",
-      role: "University Student",
+      role: "SS3 Student",
       imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80"
     },
     {
-      quote: "The past question bank and study planner features have completely changed how I prepare for exams. I'm more confident and less stressed.",
-      name: "Alex Chen",
-      role: "High School Student",
+      quote: "The WAEC past questions bank and study planner features have completely changed how I prepare for exams. I'm more confident now!",
+      name: "Chidi Nwankwo",
+      role: "JAMB Candidate",
       imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80"
     },
     {
-      quote: "As a teacher, I recommend EduSpark to all my students. It helps them take ownership of their learning journey with smart tools.",
-      name: "Sarah Johnson",
-      role: "Education Professional",
+      quote: "As a teacher, I recommend EduSpark to all my students. It helps them prepare effectively for JAMB and WAEC with smart tools.",
+      name: "Mrs. Adeyemi",
+      role: "Secondary School Teacher",
       imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80"
     }
   ];
