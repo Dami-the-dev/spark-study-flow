@@ -177,11 +177,11 @@ const Dashboard: React.FC = () => {
                   <span className="text-xs md:text-sm text-foreground text-center">Past Questions</span>
                 </Link>
                 <Link 
-                  to="/dashboard/my-courses"
+                  to="/dashboard/upload-materials"
                   className="bg-muted hover:bg-muted/80 transition-colors p-3 md:p-4 rounded-md flex flex-col items-center justify-center"
                 >
                   <BookOpen className="h-8 w-8 mb-2 text-primary" />
-                  <span className="text-xs md:text-sm text-foreground text-center">My Courses</span>
+                  <span className="text-xs md:text-sm text-foreground text-center">Upload Materials</span>
                 </Link>
                 <Link 
                   to="/dashboard/planner"
