@@ -22,7 +22,7 @@ interface SubjectSyllabus {
 const syllabusData: SubjectSyllabus[] = [
   {
     name: 'Mathematics',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/mathematics',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Mathematics-Syllabus.pdf',
     topics: [
       {
         topic: 'Number and Numeration',
@@ -75,7 +75,7 @@ const syllabusData: SubjectSyllabus[] = [
   },
   {
     name: 'English Language',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/english',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Use-of-English-Syllabus.pdf',
     topics: [
       {
         topic: 'Comprehension',
@@ -118,7 +118,7 @@ const syllabusData: SubjectSyllabus[] = [
   },
   {
     name: 'Physics',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/physics',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Physics-Syllabus.pdf',
     topics: [
       {
         topic: 'Mechanics',
@@ -172,7 +172,7 @@ const syllabusData: SubjectSyllabus[] = [
   },
   {
     name: 'Chemistry',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/chemistry',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Chemistry-Syllabus.pdf',
     topics: [
       {
         topic: 'Separation Techniques and Purification',
@@ -232,7 +232,7 @@ const syllabusData: SubjectSyllabus[] = [
   },
   {
     name: 'Biology',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/biology',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Biology-Syllabus.pdf',
     topics: [
       {
         topic: 'Organization of Life',
@@ -287,7 +287,7 @@ const syllabusData: SubjectSyllabus[] = [
   },
   {
     name: 'Government',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/government',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Government-Syllabus.pdf',
     topics: [
       {
         topic: 'Basic Concepts',
@@ -327,7 +327,7 @@ const syllabusData: SubjectSyllabus[] = [
   },
   {
     name: 'Economics',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/economics',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Economics-Syllabus.pdf',
     topics: [
       {
         topic: 'Basic Economic Concepts',
@@ -378,7 +378,7 @@ const syllabusData: SubjectSyllabus[] = [
   },
   {
     name: 'Literature in English',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/literature',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Literature-in-English-Syllabus.pdf',
     topics: [
       {
         topic: 'Literary Terms and Devices',
@@ -420,7 +420,7 @@ const syllabusData: SubjectSyllabus[] = [
   },
   {
     name: 'Geography',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/geography',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Geography-Syllabus.pdf',
     topics: [
       {
         topic: 'Physical Geography',
@@ -461,7 +461,7 @@ const syllabusData: SubjectSyllabus[] = [
   },
   {
     name: 'Accounting',
-    pdfUrl: 'https://www.jamb.gov.ng/syllabus/accounting',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Principles-of-Accounts-Syllabus.pdf',
     topics: [
       {
         topic: 'Basic Accounting Concepts',
