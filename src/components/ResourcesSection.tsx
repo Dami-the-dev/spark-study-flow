@@ -23,12 +23,6 @@ const ResourcesSection: React.FC = () => {
       description: "Test your knowledge and prepare for exams with our practice tests and quizzes.",
       icon: "📝",
       color: "bg-green-100 text-green-700"
-    },
-    {
-      title: "Community Forum",
-      description: "Connect with fellow students to discuss topics, share resources, and solve problems together.",
-      icon: "👥",
-      color: "bg-yellow-100 text-yellow-700"
     }
   ];
 
@@ -42,7 +36,7 @@ const ResourcesSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {resources.map((resource, index) => (
             <Card key={index} className="transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
               <CardHeader className="pb-2">

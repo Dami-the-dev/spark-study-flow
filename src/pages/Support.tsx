@@ -1,20 +1,13 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { MessageSquare, FileQuestion, ThumbsUp, Send, MessageCircle } from 'lucide-react';
-import { toast } from 'sonner';
-import { supabase } from '@/integrations/supabase/client';
+import { FileQuestion, ThumbsUp, Mail, Phone, MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Support: React.FC = () => {
-  const [message, setMessage] = useState('');
-
-  // Mock FAQ data
+  // FAQ data
   const faqs = [
     {
       question: "How do I reset my password?",
@@ -35,43 +28,29 @@ const Support: React.FC = () => {
     {
       question: "How does the AI assistant help with my studies?",
       answer: "Our AI assistant can explain complex topics, summarize information, create study plans, generate practice questions, and provide instant feedback on your answers."
+    },
+    {
+      question: "What subjects are available for past questions?",
+      answer: "We have past questions for all major JAMB and WAEC subjects including Mathematics, English, Physics, Chemistry, Biology, Government, Economics, Literature, Geography, Accounting, and more."
+    },
+    {
+      question: "How do I use the JAMB Syllabus feature?",
+      answer: "Navigate to the JAMB Syllabus page from your dashboard. Select any subject to view its topics and subtopics. You can also download the official PDF syllabus for offline study."
+    },
+    {
+      question: "Can I upload my own study materials?",
+      answer: "Yes! Use the Upload Materials feature to upload PDF or Word documents. Our system will generate practice questions from your materials to help you study more effectively."
     }
   ];
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [subject, setSubject] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !email || !message) {
-      toast.error('Please fill in all required fields');
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      await supabase.functions.invoke('send-email', {
-        body: { name, email, subject, message, type: 'support' }
-      });
-      toast.success('Your message has been sent to our support team!');
-      setName(''); setEmail(''); setSubject(''); setMessage('');
-    } catch (error) {
-      toast.success('Message sent! We will get back to you soon.');
-      setName(''); setEmail(''); setSubject(''); setMessage('');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
       <DashboardSidebar />
       <div className="flex-1 overflow-auto">
         <div className="py-6 px-8">
-          <h1 className="text-2xl font-bold mb-6">Support & Help Center</h1>
+          <h1 className="text-2xl font-bold mb-6 text-foreground">Support & Help Center</h1>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -86,7 +65,7 @@ const Support: React.FC = () => {
                     <AccordionItem key={index} value={`item-${index}`}>
                       <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-gray-700">{faq.answer}</p>
+                        <p className="text-gray-700 dark:text-gray-300">{faq.answer}</p>
                         <div className="mt-2 text-sm text-gray-500 flex items-center">
                           <span>Was this helpful?</span>
                           <Button variant="ghost" size="sm" className="ml-2">
@@ -103,89 +82,55 @@ const Support: React.FC = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <MessageSquare className="mr-2" />
-                  Contact Support
+                  <Mail className="mr-2" />
+                  Contact Us
                 </CardTitle>
-                <CardDescription>Something not working? We're here for you, smarty!</CardDescription>
+                <CardDescription>Get in touch with our team</CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit}>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium mb-1">Your Name</label>
-                        <Input id="name" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} required />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address</label>
-                        <Input id="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                      </div>
-                    </div>
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4 p-4 bg-muted rounded-lg">
+                    <Mail className="h-6 w-6 text-primary mt-1" />
                     <div>
-                      <label htmlFor="subject" className="block text-sm font-medium mb-1">Subject</label>
-                      <Input id="subject" placeholder="What's this about?" value={subject} onChange={(e) => setSubject(e.target.value)} />
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium mb-1">Your Message</label>
-                      <Textarea 
-                        id="message" 
-                        placeholder="Describe your issue in detail..." 
-                        rows={4}
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                      />
-                    </div>
-                    <div className="flex items-center">
-                      <input type="checkbox" id="urgent" className="mr-2" />
-                      <label htmlFor="urgent" className="text-sm">Mark as urgent</label>
-                    </div>
-                  </div>
-                </form>
-              </CardContent>
-              <CardFooter>
-                <Button type="submit" className="w-full" onClick={handleSubmit} disabled={isSubmitting}>
-                  <Send size={14} className="mr-2" /> {isSubmitting ? 'Sending...' : 'Send Message'}
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>Live Chat Support</CardTitle>
-              <CardDescription>Chat with our support team in real-time</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="border rounded-lg p-4 bg-white">
-                <div className="space-y-4">
-                  <div className="flex">
-                    <Avatar className="h-8 w-8 mr-3">
-                      <AvatarImage src="/placeholder.svg" />
-                      <AvatarFallback>ES</AvatarFallback>
-                    </Avatar>
-                    <div className="bg-gray-100 rounded-lg p-3 max-w-[80%]">
-                      <p className="text-sm">Hello! Welcome to EduSpark support. How can we help you today?</p>
-                      <span className="text-xs text-gray-500 mt-1">10:30 AM</span>
+                      <h4 className="font-semibold text-foreground">Email Support</h4>
+                      <p className="text-muted-foreground text-sm mb-2">For general inquiries and support</p>
+                      <a 
+                        href="mailto:favouroludairo@gmail.com" 
+                        className="text-primary hover:underline font-medium"
+                      >
+                        favouroludairo@gmail.com
+                      </a>
                     </div>
                   </div>
                   
-                  <div className="flex flex-row-reverse">
-                    <div className="bg-primary text-white rounded-lg p-3 max-w-[80%]">
-                      <p className="text-sm">Hi there! I'm just exploring the support section for now. Thanks!</p>
-                      <span className="text-xs text-white/70 mt-1">10:32 AM</span>
+                  <div className="flex items-start gap-4 p-4 bg-muted rounded-lg">
+                    <Phone className="h-6 w-6 text-primary mt-1" />
+                    <div>
+                      <h4 className="font-semibold text-foreground">Phone Support</h4>
+                      <p className="text-muted-foreground text-sm mb-2">Available Monday - Friday, 9am - 5pm WAT</p>
+                      <p className="text-foreground font-medium">Coming soon</p>
                     </div>
                   </div>
+                  
+                  <div className="flex items-start gap-4 p-4 bg-muted rounded-lg">
+                    <MapPin className="h-6 w-6 text-primary mt-1" />
+                    <div>
+                      <h4 className="font-semibold text-foreground">Location</h4>
+                      <p className="text-muted-foreground text-sm">Lagos, Nigeria</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-primary/10 p-4 rounded-lg border border-primary/20">
+                    <h4 className="font-semibold text-primary mb-2">Need Quick Help?</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Check out our FAQ section for instant answers to common questions. For complex issues, 
+                      send us an email and we'll respond within 24-48 hours.
+                    </p>
+                  </div>
                 </div>
-                
-                <div className="mt-4 flex space-x-2">
-                  <Input placeholder="Type your message..." className="flex-1" />
-                  <Button>
-                    <MessageCircle size={18} />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

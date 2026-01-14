@@ -7,7 +7,9 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Moon, Sun, User } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { Moon, Sun, User, Type, ZoomIn } from 'lucide-react';
 import { toast } from 'sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -22,6 +24,17 @@ const avatarOptions = [
   { id: 'coder', emoji: '💻', name: 'Coder' },
 ];
 
+const fontOptions = [
+  { id: 'inter', name: 'Inter', family: "'Inter', sans-serif" },
+  { id: 'poppins', name: 'Poppins', family: "'Poppins', sans-serif" },
+  { id: 'montserrat', name: 'Montserrat', family: "'Montserrat', sans-serif" },
+  { id: 'times', name: 'Times New Roman', family: "'Times New Roman', Times, serif" },
+  { id: 'georgia', name: 'Georgia', family: "'Georgia', serif" },
+  { id: 'arial', name: 'Arial', family: "'Arial', sans-serif" },
+  { id: 'verdana', name: 'Verdana', family: "'Verdana', sans-serif" },
+  { id: 'roboto', name: 'Roboto', family: "'Roboto', sans-serif" },
+];
+
 const Settings: React.FC = () => {
   const { user } = useAuth();
   const isMobile = useIsMobile();
@@ -31,14 +44,20 @@ const Settings: React.FC = () => {
   const [selectedAvatar, setSelectedAvatar] = useState('default');
   const [avatarLevel, setAvatarLevel] = useState(1);
   const [readingHours, setReadingHours] = useState(0);
+  const [selectedFont, setSelectedFont] = useState('inter');
+  const [fontSize, setFontSize] = useState(16);
   
   useEffect(() => {
     const userPrefs = JSON.parse(localStorage.getItem('eduspark_user_preferences') || '{}');
     if (userPrefs.isDarkMode !== undefined) setIsDarkMode(userPrefs.isDarkMode);
     if (userPrefs.displayName) setDisplayName(userPrefs.displayName);
     if (userPrefs.selectedAvatar) setSelectedAvatar(userPrefs.selectedAvatar);
+    if (userPrefs.selectedFont) setSelectedFont(userPrefs.selectedFont);
+    if (userPrefs.fontSize) setFontSize(userPrefs.fontSize);
     
     applyTheme(userPrefs.isDarkMode || false);
+    applyFont(userPrefs.selectedFont || 'inter');
+    applyFontSize(userPrefs.fontSize || 16);
     
     if (user) {
       loadProfileData();
@@ -67,11 +86,15 @@ const Settings: React.FC = () => {
     const userPreferences = {
       isDarkMode,
       displayName,
-      selectedAvatar
+      selectedAvatar,
+      selectedFont,
+      fontSize
     };
     localStorage.setItem('eduspark_user_preferences', JSON.stringify(userPreferences));
     
     applyTheme(isDarkMode);
+    applyFont(selectedFont);
+    applyFontSize(fontSize);
     
     if (user) {
       try {
@@ -101,6 +124,18 @@ const Settings: React.FC = () => {
     } else {
       root.classList.remove('dark');
     }
+  };
+
+  const applyFont = (fontId: string) => {
+    const font = fontOptions.find(f => f.id === fontId);
+    if (font) {
+      document.documentElement.style.setProperty('--app-font-family', font.family);
+      document.body.style.fontFamily = font.family;
+    }
+  };
+
+  const applyFontSize = (size: number) => {
+    document.documentElement.style.fontSize = `${size}px`;
   };
 
   const getAvatarDisplay = (avatarId: string) => {
@@ -204,6 +239,71 @@ const Settings: React.FC = () => {
                     applyTheme(checked);
                   }}
                 />
+              </div>
+            </div>
+          </div>
+
+          {/* Font Settings */}
+          <div className="bg-card p-4 sm:p-6 rounded-lg shadow-sm border border-border">
+            <div className="flex items-center gap-2 mb-4">
+              <Type size={isMobile ? 18 : 20} className="text-foreground" />
+              <h2 className="text-lg sm:text-xl font-semibold text-foreground">Font Settings</h2>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="grid gap-2 max-w-md">
+                <Label htmlFor="font-family" className="text-foreground">Font Style</Label>
+                <Select value={selectedFont} onValueChange={(value) => {
+                  setSelectedFont(value);
+                  applyFont(value);
+                }}>
+                  <SelectTrigger id="font-family">
+                    <SelectValue placeholder="Select a font" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {fontOptions.map((font) => (
+                      <SelectItem key={font.id} value={font.id} style={{ fontFamily: font.family }}>
+                        {font.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">Preview: The quick brown fox jumps over the lazy dog.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Font Size Settings */}
+          <div className="bg-card p-4 sm:p-6 rounded-lg shadow-sm border border-border">
+            <div className="flex items-center gap-2 mb-4">
+              <ZoomIn size={isMobile ? 18 : 20} className="text-foreground" />
+              <h2 className="text-lg sm:text-xl font-semibold text-foreground">Accessibility</h2>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="grid gap-4 max-w-md">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="font-size" className="text-foreground">Font Size</Label>
+                  <span className="text-sm font-medium text-primary">{fontSize}px</span>
+                </div>
+                <Slider 
+                  id="font-size"
+                  min={12}
+                  max={24}
+                  step={1}
+                  value={[fontSize]}
+                  onValueChange={(value) => {
+                    setFontSize(value[0]);
+                    applyFontSize(value[0]);
+                  }}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>Small (12px)</span>
+                  <span>Default (16px)</span>
+                  <span>Large (24px)</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Adjust the font size for better readability. Great for students with visual impairments.</p>
               </div>
             </div>
           </div>
