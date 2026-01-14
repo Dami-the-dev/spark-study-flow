@@ -1,53 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Instagram, Twitter, Linkedin } from 'lucide-react';
-import { toast } from 'sonner';
-import { supabase } from '@/integrations/supabase/client';
 
 const Footer: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [isSubscribing, setIsSubscribing] = useState(false);
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email || !email.includes('@')) {
-      toast.error('Please enter a valid email address');
-      return;
-    }
-
-    setIsSubscribing(true);
-    
-    try {
-      const { error } = await supabase.functions.invoke('send-email', {
-        body: {
-          type: 'subscription',
-          email: email,
-          subject: 'New EduSpark Subscription',
-          message: `New subscriber: ${email}`,
-          name: 'Subscriber'
-        }
-      });
-
-      if (error) throw error;
-      
-      toast.success('Successfully subscribed! Thank you for joining us.');
-      setEmail('');
-    } catch (error) {
-      console.error('Subscription error:', error);
-      toast.success('Thank you for subscribing!');
-      setEmail('');
-    } finally {
-      setIsSubscribing(false);
-    }
-  };
-
   return (
     <footer className="bg-muted pt-16 pb-8">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-1">
             <Link to="/" className="flex items-center space-x-2">
               <span className="text-2xl font-bold text-primary font-poppins">edu<span className="text-secondary">spark</span></span>
@@ -73,42 +31,12 @@ const Footer: React.FC = () => {
               <li><Link to="/support" className="text-muted-foreground hover:text-primary transition-colors">Support</Link></li>
             </ul>
           </div>
-          
-          <div className="col-span-1">
-            <h3 className="text-lg font-semibold mb-4">Subscribe</h3>
-            <p className="text-muted-foreground mb-4">Get the latest updates</p>
-            <form onSubmit={handleSubscribe} className="flex space-x-2">
-              <Input 
-                placeholder="Your email" 
-                type="email" 
-                className="max-w-[200px]"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <Button type="submit" disabled={isSubscribing}>
-                {isSubscribing ? 'Sending...' : 'Subscribe'}
-              </Button>
-            </form>
-          </div>
         </div>
         
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} EduSpark. All rights reserved.
           </p>
-          
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-              <Instagram size={20} />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-              <Twitter size={20} />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-              <Linkedin size={20} />
-            </a>
-          </div>
         </div>
         
         <div className="text-center mt-6">

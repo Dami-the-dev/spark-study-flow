@@ -18,9 +18,6 @@ const CTASection: React.FC = () => {
             <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-100" asChild>
               <Link to="/signup">Get Started for Free</Link>
             </Button>
-            <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10" asChild>
-              <Link to="/dashboard">Explore Dashboard</Link>
-            </Button>
           </div>
         </div>
       </div>
