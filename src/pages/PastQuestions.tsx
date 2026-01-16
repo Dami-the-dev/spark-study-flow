@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Loader2, PlayCircle, Youtube, CheckCircle, XCircle, ArrowRight, RotateCcw, BookOpen, Filter, Check } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 
 interface PastQuestion {
   id: string;
@@ -130,6 +131,9 @@ const subjectVideos: Record<string, { title: string; url: string; views: string 
   ],
 };
 
+// Question count options
+const questionCountOptions = [10, 20, 30, 40, 50, 'All'] as const;
+
 const PastQuestions: React.FC = () => {
   const [questions, setQuestions] = useState<PastQuestion[]>([]);
   const [filteredQuestions, setFilteredQuestions] = useState<PastQuestion[]>([]);
@@ -141,6 +145,7 @@ const PastQuestions: React.FC = () => {
   // Subject selection states
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   const [showSubjectSelector, setShowSubjectSelector] = useState(true);
+  const [selectedQuestionCount, setSelectedQuestionCount] = useState<number | 'All'>(20);
   
   // Practice mode states
   const [practiceMode, setPracticeMode] = useState(false);
@@ -233,7 +238,11 @@ const PastQuestions: React.FC = () => {
   const startPractice = (questionsToUse: PastQuestion[]) => {
     // Shuffle questions
     const shuffled = [...questionsToUse].sort(() => Math.random() - 0.5);
-    setPracticeQuestions(shuffled);
+    // Apply question count limit
+    const limitedQuestions = selectedQuestionCount === 'All' 
+      ? shuffled 
+      : shuffled.slice(0, selectedQuestionCount);
+    setPracticeQuestions(limitedQuestions);
     setPracticeMode(true);
     setShowSubjectSelector(false);
     setCurrentQuestionIndex(0);
@@ -484,22 +493,41 @@ const PastQuestions: React.FC = () => {
                   </div>
                 )}
               </CardContent>
-              <CardFooter className="flex flex-col sm:flex-row gap-3">
-                <Button 
-                  className="w-full sm:w-auto" 
-                  onClick={startPracticeWithSelectedSubjects}
-                  disabled={selectedSubjects.length === 0}
-                >
-                  <PlayCircle className="h-4 w-4 mr-2" />
-                  Start Practice ({filteredQuestions.length} questions)
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full sm:w-auto"
-                  onClick={() => setShowSubjectSelector(false)}
-                >
-                  Browse All Questions
-                </Button>
+              <CardFooter className="flex flex-col gap-4">
+                {/* Question Count Selector */}
+                <div className="w-full">
+                  <Label className="text-sm text-muted-foreground mb-2 block">Number of Questions</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {questionCountOptions.map((count) => (
+                      <Button
+                        key={count}
+                        variant={selectedQuestionCount === count ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setSelectedQuestionCount(count)}
+                        className="min-w-[60px]"
+                      >
+                        {count}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 w-full">
+                  <Button 
+                    className="w-full sm:w-auto" 
+                    onClick={startPracticeWithSelectedSubjects}
+                    disabled={selectedSubjects.length === 0}
+                  >
+                    <PlayCircle className="h-4 w-4 mr-2" />
+                    Start Practice ({selectedQuestionCount === 'All' ? filteredQuestions.length : Math.min(selectedQuestionCount, filteredQuestions.length)} questions)
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full sm:w-auto"
+                    onClick={() => setShowSubjectSelector(false)}
+                  >
+                    Browse All Questions
+                  </Button>
+                </div>
               </CardFooter>
             </Card>
 

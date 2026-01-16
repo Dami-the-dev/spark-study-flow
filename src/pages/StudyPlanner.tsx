@@ -167,24 +167,28 @@ const StudyPlanner: React.FC = () => {
                       placeholder="e.g., Mathematics, Physics, Chemistry"
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="grid gap-2">
                       <Label>Start Date</Label>
-                      <Calendar
-                        mode="single"
-                        selected={startDate}
-                        onSelect={setStartDate}
-                        className="rounded-md border"
-                      />
+                      <div className="flex justify-center sm:justify-start">
+                        <Calendar
+                          mode="single"
+                          selected={startDate}
+                          onSelect={setStartDate}
+                          className="rounded-md border w-fit"
+                        />
+                      </div>
                     </div>
                     <div className="grid gap-2">
                       <Label>End Date</Label>
-                      <Calendar
-                        mode="single"
-                        selected={endDate}
-                        onSelect={setEndDate}
-                        className="rounded-md border"
-                      />
+                      <div className="flex justify-center sm:justify-start">
+                        <Calendar
+                          mode="single"
+                          selected={endDate}
+                          onSelect={setEndDate}
+                          className="rounded-md border w-fit"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
