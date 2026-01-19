@@ -501,6 +501,860 @@ const syllabusData: SubjectSyllabus[] = [
       },
     ]
   },
+  {
+    name: 'History',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/History-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Pre-Colonial Nigeria',
+        subtopics: [
+          'Early Nigerian peoples and civilizations',
+          'Major Nigerian kingdoms and empires (Benin, Oyo, Hausa states)',
+          'The Sokoto Caliphate',
+          'Social and political organization',
+        ]
+      },
+      {
+        topic: 'Colonial Nigeria',
+        subtopics: [
+          'European exploration and trade',
+          'British colonization and administration',
+          'Indirect rule system',
+          'Nationalism and independence movements',
+        ]
+      },
+      {
+        topic: 'Post-Colonial Nigeria',
+        subtopics: [
+          'First Republic and its challenges',
+          'Military interventions',
+          'Civil War (1967-1970)',
+          'Return to democratic rule',
+        ]
+      },
+      {
+        topic: 'African History',
+        subtopics: [
+          'Ancient African civilizations (Egypt, Kush, Axum)',
+          'Trans-Saharan trade',
+          'Scramble for Africa and colonization',
+          'Decolonization and independence movements',
+        ]
+      },
+      {
+        topic: 'World History',
+        subtopics: [
+          'Industrial Revolution',
+          'World War I and II',
+          'Cold War',
+          'International organizations (UN, AU)',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Computer Studies',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Computer-Studies-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Introduction to Computers',
+        subtopics: [
+          'History and generations of computers',
+          'Types of computers',
+          'Components of a computer system',
+          'Input and output devices',
+        ]
+      },
+      {
+        topic: 'Computer Hardware',
+        subtopics: [
+          'Central Processing Unit (CPU)',
+          'Memory types (RAM, ROM, Cache)',
+          'Storage devices',
+          'Peripheral devices',
+        ]
+      },
+      {
+        topic: 'Computer Software',
+        subtopics: [
+          'System software (operating systems)',
+          'Application software',
+          'Programming languages',
+          'Software development life cycle',
+        ]
+      },
+      {
+        topic: 'Networking and Internet',
+        subtopics: [
+          'Computer networks (LAN, WAN, MAN)',
+          'Network topologies',
+          'Internet services (WWW, email)',
+          'Cybersecurity basics',
+        ]
+      },
+      {
+        topic: 'Data Processing',
+        subtopics: [
+          'Data representation (binary, hexadecimal)',
+          'Database concepts',
+          'Spreadsheet applications',
+          'Word processing',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'French',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/French-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Grammar (Grammaire)',
+        subtopics: [
+          'Articles (definite, indefinite, partitive)',
+          'Nouns and adjectives (gender, number)',
+          'Pronouns (personal, possessive, relative)',
+          'Verb conjugation (present, past, future)',
+          'Tenses and moods (indicative, subjunctive, conditional)',
+        ]
+      },
+      {
+        topic: 'Vocabulary (Vocabulaire)',
+        subtopics: [
+          'Family and relationships',
+          'Education and school',
+          'Daily activities and routines',
+          'Travel and transportation',
+          'Health and the body',
+        ]
+      },
+      {
+        topic: 'Comprehension (Compréhension)',
+        subtopics: [
+          'Reading comprehension passages',
+          'Listening comprehension',
+          'Text analysis and interpretation',
+          'Vocabulary in context',
+        ]
+      },
+      {
+        topic: 'Written Expression (Expression Écrite)',
+        subtopics: [
+          'Letter writing (formal and informal)',
+          'Essay writing',
+          'Dialogue and conversation',
+          'Translation (French to English)',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Arabic',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Arabic-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Arabic Grammar (النحو)',
+        subtopics: [
+          'Arabic alphabet and pronunciation',
+          'Noun types and declensions',
+          'Verb conjugation (past, present, imperative)',
+          'Sentence structure (nominal and verbal)',
+        ]
+      },
+      {
+        topic: 'Arabic Morphology (الصرف)',
+        subtopics: [
+          'Root system and word patterns',
+          'Derived forms of verbs',
+          'Active and passive participles',
+          'Broken plurals',
+        ]
+      },
+      {
+        topic: 'Comprehension and Translation',
+        subtopics: [
+          'Reading comprehension',
+          'Translation (Arabic to English)',
+          'Translation (English to Arabic)',
+          'Text analysis',
+        ]
+      },
+      {
+        topic: 'Arabic Literature',
+        subtopics: [
+          'Classical Arabic poetry',
+          'Modern Arabic prose',
+          'Literary devices in Arabic',
+          'Selected texts for study',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Islamic Religious Studies',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Islamic-Studies-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Quran Studies',
+        subtopics: [
+          'Recitation and Tajweed',
+          'Tafsir (interpretation) of selected Surahs',
+          'Memorization of selected passages',
+          'Quranic themes and messages',
+        ]
+      },
+      {
+        topic: 'Hadith Studies',
+        subtopics: [
+          'Selected Hadith collections',
+          'Classification of Hadith',
+          'Application of Hadith in daily life',
+          'Major Hadith scholars',
+        ]
+      },
+      {
+        topic: 'Fiqh (Islamic Jurisprudence)',
+        subtopics: [
+          'Pillars of Islam (Arkan al-Islam)',
+          'Pillars of Faith (Arkan al-Iman)',
+          'Islamic worship (Ibadah)',
+          'Family law and inheritance',
+        ]
+      },
+      {
+        topic: 'Islamic History',
+        subtopics: [
+          'Life of Prophet Muhammad (PBUH)',
+          'The Rightly Guided Caliphs',
+          'Spread of Islam in Africa',
+          'Islam in Nigeria',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Christian Religious Studies',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/CRS-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Old Testament Studies',
+        subtopics: [
+          'Creation and the fall of man',
+          'The Patriarchs (Abraham, Isaac, Jacob)',
+          'Moses and the Exodus',
+          'Prophets and their messages',
+          'The Monarchy in Israel',
+        ]
+      },
+      {
+        topic: 'New Testament Studies',
+        subtopics: [
+          'Life and teachings of Jesus Christ',
+          'Miracles and parables',
+          'The early church (Acts of Apostles)',
+          'Pauline epistles',
+          'The Book of Revelation',
+        ]
+      },
+      {
+        topic: 'Christian Ethics',
+        subtopics: [
+          'Love and forgiveness',
+          'Social justice and equality',
+          'Christian family values',
+          'Work and stewardship',
+        ]
+      },
+      {
+        topic: 'Church History',
+        subtopics: [
+          'Early church development',
+          'Christianity in Africa',
+          'Christianity in Nigeria',
+          'Ecumenism and Christian unity',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Agricultural Science',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Agricultural-Science-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Crop Production',
+        subtopics: [
+          'Soil types and properties',
+          'Tillage and land preparation',
+          'Crop propagation methods',
+          'Fertilizers and manures',
+          'Pest and disease control',
+        ]
+      },
+      {
+        topic: 'Animal Production',
+        subtopics: [
+          'Livestock classification',
+          'Animal nutrition and feeding',
+          'Animal reproduction and breeding',
+          'Animal health management',
+          'Poultry and fish farming',
+        ]
+      },
+      {
+        topic: 'Forestry and Wildlife',
+        subtopics: [
+          'Forest types and resources',
+          'Forest conservation',
+          'Wildlife management',
+          'Environmental impact',
+        ]
+      },
+      {
+        topic: 'Agricultural Economics',
+        subtopics: [
+          'Farm management',
+          'Agricultural marketing',
+          'Agricultural finance and credit',
+          'Government agricultural policies',
+        ]
+      },
+      {
+        topic: 'Agricultural Technology',
+        subtopics: [
+          'Farm tools and machinery',
+          'Irrigation systems',
+          'Post-harvest technology',
+          'Biotechnology in agriculture',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Civic Education',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Civic-Education-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Citizenship',
+        subtopics: [
+          'Types of citizenship',
+          'Rights and responsibilities of citizens',
+          'Civic duties and obligations',
+          'National identity and symbols',
+        ]
+      },
+      {
+        topic: 'Democracy and Human Rights',
+        subtopics: [
+          'Principles of democracy',
+          'Electoral process',
+          'Rule of law',
+          'Fundamental human rights',
+        ]
+      },
+      {
+        topic: 'National Values',
+        subtopics: [
+          'Honesty and integrity',
+          'Discipline and self-reliance',
+          'Cooperation and tolerance',
+          'National consciousness and patriotism',
+        ]
+      },
+      {
+        topic: 'Social Issues',
+        subtopics: [
+          'Drug abuse and trafficking',
+          'Human trafficking',
+          'Cultism and violence',
+          'Corruption and its effects',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Commerce',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Commerce-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Trade',
+        subtopics: [
+          'Types of trade (home, foreign)',
+          'Aids to trade',
+          'Balance of trade',
+          'Trade associations',
+        ]
+      },
+      {
+        topic: 'Business Organizations',
+        subtopics: [
+          'Types of business ownership',
+          'Sole proprietorship and partnerships',
+          'Limited liability companies',
+          'Cooperative societies',
+        ]
+      },
+      {
+        topic: 'Banking and Finance',
+        subtopics: [
+          'Types of banks',
+          'Banking services',
+          'Central Bank functions',
+          'Stock exchange',
+        ]
+      },
+      {
+        topic: 'Insurance',
+        subtopics: [
+          'Types of insurance',
+          'Principles of insurance',
+          'Insurance documents',
+          'Claims and settlements',
+        ]
+      },
+      {
+        topic: 'Transportation and Communication',
+        subtopics: [
+          'Modes of transportation',
+          'Importance of transportation',
+          'Communication methods',
+          'Modern communication technology',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Further Mathematics',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Further-Mathematics-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Pure Mathematics',
+        subtopics: [
+          'Complex numbers',
+          'Matrices and determinants',
+          'Mathematical induction',
+          'Binomial theorem',
+          'Partial fractions',
+        ]
+      },
+      {
+        topic: 'Calculus',
+        subtopics: [
+          'Limits and continuity',
+          'Differentiation techniques',
+          'Integration techniques',
+          'Applications of calculus',
+          'Differential equations',
+        ]
+      },
+      {
+        topic: 'Coordinate Geometry',
+        subtopics: [
+          'Conic sections (parabola, ellipse, hyperbola)',
+          'Parametric equations',
+          'Polar coordinates',
+          'Three-dimensional geometry',
+        ]
+      },
+      {
+        topic: 'Trigonometry',
+        subtopics: [
+          'Compound and multiple angles',
+          'Factor formulae',
+          'Inverse trigonometric functions',
+          'Trigonometric equations',
+        ]
+      },
+      {
+        topic: 'Vectors and Mechanics',
+        subtopics: [
+          'Vector algebra',
+          'Scalar and vector products',
+          'Kinematics and dynamics',
+          'Statics and equilibrium',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Music',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Music-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Rudiments of Music',
+        subtopics: [
+          'Staff notation and clefs',
+          'Notes and rests',
+          'Time signatures and rhythm',
+          'Scales and key signatures',
+        ]
+      },
+      {
+        topic: 'Theory of Music',
+        subtopics: [
+          'Intervals and transposition',
+          'Chords and cadences',
+          'Modulation',
+          'Harmony and counterpoint',
+        ]
+      },
+      {
+        topic: 'History of Music',
+        subtopics: [
+          'Music in the Medieval and Renaissance periods',
+          'Baroque and Classical periods',
+          'Romantic period',
+          'Modern and contemporary music',
+        ]
+      },
+      {
+        topic: 'African Music',
+        subtopics: [
+          'Traditional African music and instruments',
+          'Nigerian folk music',
+          'Popular Nigerian music genres',
+          'Art music in Nigeria',
+        ]
+      },
+      {
+        topic: 'Western Classical Music',
+        subtopics: [
+          'Musical forms (sonata, symphony, concerto)',
+          'Opera and oratorio',
+          'Famous composers and their works',
+          'Orchestral instruments',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Fine Arts',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Fine-Arts-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Drawing and Painting',
+        subtopics: [
+          'Elements of art (line, shape, form, color)',
+          'Principles of design',
+          'Still life and figure drawing',
+          'Perspective drawing',
+        ]
+      },
+      {
+        topic: 'Sculpture',
+        subtopics: [
+          'Types of sculpture (relief, in-the-round)',
+          'Sculpting materials and techniques',
+          'Modeling and carving',
+          'Famous sculptors and works',
+        ]
+      },
+      {
+        topic: 'Art History',
+        subtopics: [
+          'Ancient and medieval art',
+          'Renaissance art',
+          'Modern and contemporary art movements',
+          'Nigerian and African art traditions',
+        ]
+      },
+      {
+        topic: 'Nigerian Art',
+        subtopics: [
+          'Nok, Ife, and Benin art',
+          'Traditional crafts and textiles',
+          'Modern Nigerian artists',
+          'Cultural significance of Nigerian art',
+        ]
+      },
+      {
+        topic: 'Graphic Design',
+        subtopics: [
+          'Typography and lettering',
+          'Poster and logo design',
+          'Printmaking techniques',
+          'Digital art basics',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Home Economics',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Home-Economics-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Food and Nutrition',
+        subtopics: [
+          'Classes of food nutrients',
+          'Balanced diet',
+          'Food preservation methods',
+          'Food hygiene and safety',
+        ]
+      },
+      {
+        topic: 'Clothing and Textiles',
+        subtopics: [
+          'Types of fibers and fabrics',
+          'Clothing construction',
+          'Garment care and maintenance',
+          'Fashion and design',
+        ]
+      },
+      {
+        topic: 'Home Management',
+        subtopics: [
+          'Family resource management',
+          'Budgeting and financial planning',
+          'Consumer education',
+          'Work simplification',
+        ]
+      },
+      {
+        topic: 'Child Development',
+        subtopics: [
+          'Stages of child development',
+          'Child care and nutrition',
+          'Immunization and health care',
+          'Nursery and childcare facilities',
+        ]
+      },
+      {
+        topic: 'Housing and Interior Decoration',
+        subtopics: [
+          'Types of housing',
+          'Space planning and furniture arrangement',
+          'Color schemes and lighting',
+          'Home safety and maintenance',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Physical Education',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Physical-Education-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Anatomy and Physiology',
+        subtopics: [
+          'Skeletal system',
+          'Muscular system',
+          'Cardiovascular system',
+          'Respiratory system',
+        ]
+      },
+      {
+        topic: 'Health and Fitness',
+        subtopics: [
+          'Components of physical fitness',
+          'Exercise and training principles',
+          'First aid and injury prevention',
+          'Nutrition for athletes',
+        ]
+      },
+      {
+        topic: 'Sports and Games',
+        subtopics: [
+          'Track and field events',
+          'Ball games (football, basketball, volleyball)',
+          'Racket sports (tennis, table tennis, badminton)',
+          'Swimming and aquatic sports',
+        ]
+      },
+      {
+        topic: 'Recreation and Leisure',
+        subtopics: [
+          'Importance of recreation',
+          'Types of recreational activities',
+          'Organization of recreational programs',
+          'Career opportunities in sports',
+        ]
+      },
+      {
+        topic: 'Sports Administration',
+        subtopics: [
+          'Organization of sports in Nigeria',
+          'Role of sports governing bodies',
+          'Olympic and international sports',
+          'Sports facilities and equipment',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Technical Drawing',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Technical-Drawing-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Basic Drawing Techniques',
+        subtopics: [
+          'Drawing equipment and materials',
+          'Lettering and dimensioning',
+          'Types of lines and their uses',
+          'Freehand sketching',
+        ]
+      },
+      {
+        topic: 'Geometric Construction',
+        subtopics: [
+          'Bisection of lines and angles',
+          'Construction of polygons',
+          'Tangent constructions',
+          'Loci and conic sections',
+        ]
+      },
+      {
+        topic: 'Orthographic Projection',
+        subtopics: [
+          'First and third angle projection',
+          'Sectional views',
+          'Auxiliary views',
+          'True shapes and developments',
+        ]
+      },
+      {
+        topic: 'Pictorial Drawing',
+        subtopics: [
+          'Isometric projection',
+          'Oblique projection',
+          'Perspective drawing',
+          'Exploded views',
+        ]
+      },
+      {
+        topic: 'Building Drawing',
+        subtopics: [
+          'Floor plans and elevations',
+          'Sectional drawings',
+          'Site plans',
+          'Working drawings',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Yoruba',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Yoruba-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Yoruba Grammar (Gírámà)',
+        subtopics: [
+          'Yoruba alphabet and tonal marks',
+          'Parts of speech (noun, verb, adjective)',
+          'Sentence structure',
+          'Proverbs and idioms (Òwe àti Àkànlò Èdè)',
+        ]
+      },
+      {
+        topic: 'Yoruba Literature (Lítíréṣọ̀)',
+        subtopics: [
+          'Traditional poetry (Ewì)',
+          'Prose works (Àròkọ)',
+          'Drama (Eré Oníṣe)',
+          'Set texts for study',
+        ]
+      },
+      {
+        topic: 'Yoruba Culture (Àṣà àti Ìṣe)',
+        subtopics: [
+          'Traditional festivals',
+          'Marriage and naming ceremonies',
+          'Traditional occupations',
+          'Yoruba beliefs and religion',
+        ]
+      },
+      {
+        topic: 'Oral Literature (Lítíréṣọ̀ Àtẹnudénú)',
+        subtopics: [
+          'Folktales (Àlọ́)',
+          'Riddles (Àlọ́ Àpamọ̀)',
+          'Praise poetry (Oríkì)',
+          'Incantations (Ogede)',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Igbo',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Igbo-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Igbo Grammar (Ụtọasụsụ)',
+        subtopics: [
+          'Igbo alphabet and tone marks',
+          'Parts of speech (mkpụrụokwu)',
+          'Sentence construction',
+          'Proverbs and idioms (Ilu na Akpaalaokwu)',
+        ]
+      },
+      {
+        topic: 'Igbo Literature (Agụmagụ)',
+        subtopics: [
+          'Poetry (Abụ)',
+          'Prose (Akụkọ)',
+          'Drama (Ejije)',
+          'Set texts for study',
+        ]
+      },
+      {
+        topic: 'Igbo Culture (Omenala)',
+        subtopics: [
+          'Traditional festivals (Emume)',
+          'Marriage customs (Ọlụlụ)',
+          'Title taking and ceremonies',
+          'Traditional religion and beliefs',
+        ]
+      },
+      {
+        topic: 'Oral Literature (Agụmagụ Ọdịnala)',
+        subtopics: [
+          'Folktales (Akụkọ ala)',
+          'Riddles (Agwụgwa)',
+          'Praise songs (Egwu otito)',
+          'Proverbs (Ilu)',
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Hausa',
+    pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Hausa-Syllabus.pdf',
+    topics: [
+      {
+        topic: 'Hausa Grammar (Nahawu)',
+        subtopics: [
+          'Hausa alphabet and writing system',
+          'Parts of speech (Sassan Jimla)',
+          'Sentence structure',
+          'Proverbs and idioms (Karin Magana)',
+        ]
+      },
+      {
+        topic: 'Hausa Literature (Adabin Hausa)',
+        subtopics: [
+          'Poetry (Waƙa)',
+          'Prose (Rubutaccen Adabi)',
+          'Drama (Wasan Kwaikwayo)',
+          'Set texts for study',
+        ]
+      },
+      {
+        topic: 'Hausa Culture (Al\'adun Hausa)',
+        subtopics: [
+          'Traditional festivals',
+          'Marriage and naming ceremonies',
+          'Traditional occupations',
+          'Hausa institutions and titles',
+        ]
+      },
+      {
+        topic: 'Oral Literature (Adabin Baka)',
+        subtopics: [
+          'Folktales (Tatsuniya)',
+          'Riddles (Kacici-kacici)',
+          'Praise singing (Roko)',
+          'Traditional poetry (Waƙoƙin Gargajiya)',
+        ]
+      },
+    ]
+  },
 ];
 
 const JambSyllabus: React.FC = () => {
