@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,19 +25,19 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#2C3EFA', // Royal Blue
-					foreground: '#F8F9FA',
-					hover: '#2232D1',
+					DEFAULT: '#00B9DC', // EDU SPARK Cyan Blue
+					foreground: '#FFFFFF',
+					hover: '#009BB8',
 				},
 				secondary: {
-					DEFAULT: '#A680FF', // Soft Purple
-					foreground: '#F8F9FA',
-					hover: '#9470E0',
+					DEFAULT: '#0097B8', // Darker Cyan
+					foreground: '#FFFFFF',
+					hover: '#007A96',
 				},
 				accent: {
-					DEFAULT: '#FFE873', // Lemon Yellow
-					foreground: '#2E2E2E',
-					hover: '#FFE050',
+					DEFAULT: '#00D4FF', // Lighter Cyan
+					foreground: '#1A1A1A',
+					hover: '#00BAEB',
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
@@ -120,9 +119,6 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'fade-out': 'fade-out 0.3s ease-out'
-			},
-			backgroundImage: {
-				'gradient-primary': 'linear-gradient(90deg, #2C3EFA, #A680FF)',
 			}
 		}
 	},
