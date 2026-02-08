@@ -121,10 +121,11 @@ serve(async (req) => {
       JSON.stringify(questions),
       { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
     );
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error generating questions:", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to generate questions";
     return new Response(
-      JSON.stringify({ error: error.message || "Failed to generate questions" }),
+      JSON.stringify({ error: errorMessage }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 500 }
     );
   }
