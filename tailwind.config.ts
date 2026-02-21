@@ -24,19 +24,19 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 			primary: {
-					DEFAULT: 'hsl(28, 67%, 44%)', // Warm Brown
-					foreground: 'hsl(40, 40%, 98%)',
-					hover: 'hsl(28, 67%, 38%)',
+					DEFAULT: '#12C8E0',
+					foreground: '#FFFFFF',
+					hover: '#0FB0C6',
 				},
 				secondary: {
-					DEFAULT: 'hsl(35, 45%, 58%)', // Tan
-					foreground: 'hsl(40, 40%, 98%)',
-					hover: 'hsl(35, 45%, 50%)',
+					DEFAULT: 'hsl(188, 40%, 90%)',
+					foreground: 'hsl(188, 85%, 30%)',
+					hover: 'hsl(188, 40%, 85%)',
 				},
 				accent: {
-					DEFAULT: 'hsl(42, 80%, 60%)', // Gold
+					DEFAULT: 'hsl(188, 60%, 92%)',
 					foreground: '#2E2E2E',
-					hover: 'hsl(42, 80%, 52%)',
+					hover: 'hsl(188, 60%, 85%)',
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
@@ -120,7 +120,7 @@ export default {
 				'fade-out': 'fade-out 0.3s ease-out'
 			},
 			backgroundImage: {
-				'gradient-primary': 'linear-gradient(90deg, hsl(28, 67%, 44%), hsl(35, 45%, 58%))',
+				'gradient-primary': 'none',
 			}
 		}
 	},
