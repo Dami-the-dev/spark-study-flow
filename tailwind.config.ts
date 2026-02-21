@@ -23,20 +23,20 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
-				primary: {
-					DEFAULT: '#2C3EFA', // Royal Blue
-					foreground: '#F8F9FA',
-					hover: '#2232D1',
+			primary: {
+					DEFAULT: 'hsl(28, 67%, 44%)', // Warm Brown
+					foreground: 'hsl(40, 40%, 98%)',
+					hover: 'hsl(28, 67%, 38%)',
 				},
 				secondary: {
-					DEFAULT: '#A680FF', // Soft Purple
-					foreground: '#F8F9FA',
-					hover: '#9470E0',
+					DEFAULT: 'hsl(35, 45%, 58%)', // Tan
+					foreground: 'hsl(40, 40%, 98%)',
+					hover: 'hsl(35, 45%, 50%)',
 				},
 				accent: {
-					DEFAULT: '#FFE873', // Lemon Yellow
+					DEFAULT: 'hsl(42, 80%, 60%)', // Gold
 					foreground: '#2E2E2E',
-					hover: '#FFE050',
+					hover: 'hsl(42, 80%, 52%)',
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
@@ -120,7 +120,7 @@ export default {
 				'fade-out': 'fade-out 0.3s ease-out'
 			},
 			backgroundImage: {
-				'gradient-primary': 'linear-gradient(90deg, #2C3EFA, #A680FF)',
+				'gradient-primary': 'linear-gradient(90deg, hsl(28, 67%, 44%), hsl(35, 45%, 58%))',
 			}
 		}
 	},

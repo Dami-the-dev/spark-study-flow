@@ -43,7 +43,7 @@ const Login: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/" className="flex justify-center">
-          <span className="text-3xl font-bold text-primary font-poppins">edu<span className="text-secondary">spark</span></span>
+          <span className="text-3xl font-bold text-primary font-poppins">Spark<span className="text-secondary">Study</span></span>
         </Link>
         <h2 className="mt-6 text-center text-3xl font-bold text-foreground">Sign in to your account</h2>
         <p className="mt-2 text-center text-sm text-muted-foreground">

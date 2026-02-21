@@ -51,7 +51,7 @@ const About: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">
-                      EduSpark is designed to help secondary school students excel in WAEC. Access past questions, 
+                      Spark Study is designed to help secondary school students excel in WAEC. Access past questions, 
                       upload your study materials to generate practice questions, and master your subjects efficiently. 
                       Our AI-powered tools adapt to your learning style.
                     </p>

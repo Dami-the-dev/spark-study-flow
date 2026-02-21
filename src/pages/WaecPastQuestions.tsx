@@ -52,7 +52,7 @@ const subjectVideos: Record<string, { title: string; url: string; views: string 
     { title: 'WAEC Chemistry Complete Course', url: 'https://www.youtube.com/watch?v=9VWmSNGW1Qk', views: '480K' },
   ],
   'Biology': [
-    { title: 'WAEC Biology Full Revision', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '670K' },
+    { title: 'WAEC Biology Full Revision', url: 'https://www.youtube.com/watch?v=8IluKZL2-Tc', views: '670K' },
   ],
 };
 
