@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-1">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-primary font-poppins">edu<span className="text-secondary">spark</span></span>
+              <span className="text-2xl font-bold text-primary font-poppins">Spark<span className="text-secondary">Study</span></span>
             </Link>
             <p className="mt-4 text-muted-foreground max-w-xs">
               Personalized study tools, past questions, AI-powered summaries & more.
@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
         
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} EduSpark. All rights reserved.
+            &copy; {new Date().getFullYear()} Spark Study. All rights reserved.
           </p>
         </div>
         

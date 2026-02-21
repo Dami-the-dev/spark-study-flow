@@ -114,7 +114,7 @@ const DashboardSidebar: React.FC = () => {
       {isMobile && (
         <div className="fixed top-0 left-0 z-50 w-full bg-background border-b p-3 flex items-center justify-between">
           <NavLink to="/" className="text-lg font-bold text-primary font-poppins">
-            edu<span className="text-secondary">spark</span>
+            Spark<span className="text-secondary">Study</span>
           </NavLink>
           <Button 
             variant="ghost" 
@@ -137,7 +137,7 @@ const DashboardSidebar: React.FC = () => {
           <div className="absolute left-0 top-0 h-full w-64 bg-background shadow-lg animate-in slide-in-from-left duration-200">
             <div className="p-4 border-b">
               <NavLink to="/" className="text-lg font-bold text-primary font-poppins" onClick={closeSidebar}>
-                edu<span className="text-secondary">spark</span>
+                Spark<span className="text-secondary">Study</span>
               </NavLink>
             </div>
             <nav className="p-4">
@@ -152,7 +152,7 @@ const DashboardSidebar: React.FC = () => {
         <div className="min-h-screen w-56 lg:w-64 border-r border-border bg-background shrink-0">
           <div className="p-4 border-b">
             <NavLink to="/" className="text-lg lg:text-xl font-bold text-primary font-poppins">
-              edu<span className="text-secondary">spark</span>
+              Spark<span className="text-secondary">Study</span>
             </NavLink>
           </div>
           <nav className="p-3 lg:p-4">

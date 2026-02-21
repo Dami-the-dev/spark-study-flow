@@ -110,24 +110,24 @@ const subjectVideos: Record<string, { title: string; url: string; views: string 
     { title: 'Calculus for JAMB', url: 'https://www.youtube.com/watch?v=WsQQvHm4lSw', views: '380K views' },
   ],
   'Geography': [
-    { title: 'JAMB Geography Tutorial', url: 'https://www.youtube.com/watch?v=geography1', views: '560K views' },
-    { title: 'Physical Geography Explained', url: 'https://www.youtube.com/watch?v=geography2', views: '340K views' },
+    { title: 'JAMB Geography Tutorial', url: 'https://www.youtube.com/watch?v=ClKHBfp5BuA', views: '560K views' },
+    { title: 'Physical Geography Explained', url: 'https://www.youtube.com/watch?v=Di4Bm1CVkG4', views: '340K views' },
   ],
   'History': [
-    { title: 'Nigerian History for JAMB', url: 'https://www.youtube.com/watch?v=history1', views: '420K views' },
-    { title: 'World History Tutorial', url: 'https://www.youtube.com/watch?v=history2', views: '310K views' },
+    { title: 'Nigerian History for JAMB', url: 'https://www.youtube.com/watch?v=hDvLsQd-E-0', views: '420K views' },
+    { title: 'World History Tutorial', url: 'https://www.youtube.com/watch?v=xuCn8ux2gbs', views: '310K views' },
   ],
   'Civic Education': [
-    { title: 'Civic Education for JAMB', url: 'https://www.youtube.com/watch?v=civic1', views: '380K views' },
-    { title: 'Citizenship Tutorial', url: 'https://www.youtube.com/watch?v=civic2', views: '290K views' },
+    { title: 'Civic Education for JAMB', url: 'https://www.youtube.com/watch?v=sCTApD_qZww', views: '380K views' },
+    { title: 'Citizenship Tutorial', url: 'https://www.youtube.com/watch?v=pWq_jrCmiso', views: '290K views' },
   ],
   'Agricultural Science': [
-    { title: 'Agricultural Science for JAMB', url: 'https://www.youtube.com/watch?v=agric1', views: '350K views' },
-    { title: 'Farm Management Tutorial', url: 'https://www.youtube.com/watch?v=agric2', views: '240K views' },
+    { title: 'Agricultural Science for JAMB', url: 'https://www.youtube.com/watch?v=E5EPppEGIAQ', views: '350K views' },
+    { title: 'Farm Management Tutorial', url: 'https://www.youtube.com/watch?v=TnhS-ay4JGk', views: '240K views' },
   ],
   'Computer Studies': [
-    { title: 'Computer Studies for JAMB', url: 'https://www.youtube.com/watch?v=computer1', views: '680K views' },
-    { title: 'Programming Basics', url: 'https://www.youtube.com/watch?v=computer2', views: '520K views' },
+    { title: 'Computer Studies for JAMB', url: 'https://www.youtube.com/watch?v=zOjov-2OZ0E', views: '680K views' },
+    { title: 'Programming Basics', url: 'https://www.youtube.com/watch?v=rfscVS0vtbw', views: '520K views' },
   ],
 };
 

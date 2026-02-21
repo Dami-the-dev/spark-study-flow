@@ -12,7 +12,7 @@ const CTASection: React.FC = () => {
             Ready to Transform Your Study Experience?
           </h2>
           <p className="text-xl text-white/90 mb-8">
-            Join thousands of students already using EduSpark to achieve better grades with less stress.
+            Join thousands of students already using Spark Study to achieve better grades with less stress.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-100" asChild>

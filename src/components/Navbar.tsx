@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
     <nav className="bg-white shadow-sm py-4 fixed w-full z-10">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-primary font-poppins">edu<span className="text-secondary">spark</span></span>
+          <span className="text-2xl font-bold text-primary font-poppins">Spark<span className="text-secondary">Study</span></span>
         </Link>
 
         {/* Desktop Navigation */}
