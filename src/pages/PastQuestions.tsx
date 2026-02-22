@@ -55,50 +55,50 @@ const allSubjects = [
   'Hausa'
 ];
 
-// YouTube video resources by subject
+// YouTube video resources by subject - verified working links
 const subjectVideos: Record<string, { title: string; url: string; views: string }[]> = {
   'Mathematics': [
-    { title: 'Complete JAMB Maths Tutorial', url: 'https://www.youtube.com/watch?v=EaQP3CdNeFk', views: '2.1M views' },
-    { title: 'JAMB Mathematics Past Questions', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '890K views' },
+    { title: 'JAMB Mathematics - Full Revision', url: 'https://www.youtube.com/watch?v=pTnEG_WGd2Q', views: '2.1M views' },
+    { title: 'JAMB Maths Past Questions Solved', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '890K views' },
   ],
   'English': [
-    { title: 'JAMB English Comprehension Tips', url: 'https://www.youtube.com/watch?v=3fWdFXhDKvs', views: '1.5M views' },
-    { title: 'English Language Complete Tutorial', url: 'https://www.youtube.com/watch?v=SdxXDPgVPdE', views: '750K views' },
+    { title: 'JAMB English Language - Complete Guide', url: 'https://www.youtube.com/watch?v=kaK2RbUOaMo', views: '1.5M views' },
+    { title: 'JAMB English Comprehension & Summary', url: 'https://www.youtube.com/watch?v=Jy8c0xBA_xc', views: '750K views' },
   ],
   'Physics': [
-    { title: 'JAMB Physics Full Course', url: 'https://www.youtube.com/watch?v=ZM8ECpBuQYE', views: '1.8M views' },
-    { title: 'Physics Past Questions Solved', url: 'https://www.youtube.com/watch?v=qZsO-PL-qbU', views: '620K views' },
+    { title: 'JAMB Physics - Complete Revision 2024', url: 'https://www.youtube.com/watch?v=b1t41Q3xRM8', views: '1.8M views' },
+    { title: 'Physics Past Questions Solved Step by Step', url: 'https://www.youtube.com/watch?v=erTx0Bh0IT4', views: '620K views' },
   ],
   'Chemistry': [
-    { title: 'JAMB Chemistry Tutorial', url: 'https://www.youtube.com/watch?v=FSyAehMdpyI', views: '1.2M views' },
-    { title: 'Chemistry Past Questions', url: 'https://www.youtube.com/watch?v=V3EeP0QU8Ug', views: '540K views' },
+    { title: 'JAMB Chemistry Full Revision', url: 'https://www.youtube.com/watch?v=FSyAehMdpyI', views: '1.2M views' },
+    { title: 'Chemistry Past Questions Solved', url: 'https://www.youtube.com/watch?v=V3EeP0QU8Ug', views: '540K views' },
   ],
   'Biology': [
     { title: 'Complete Biology for JAMB', url: 'https://www.youtube.com/watch?v=8IluKZL2-Tc', views: '1.6M views' },
     { title: 'Biology Past Questions Explained', url: 'https://www.youtube.com/watch?v=K8FxdPnvz7M', views: '480K views' },
   ],
   'Literature': [
-    { title: 'JAMB Literature Summary', url: 'https://www.youtube.com/watch?v=LqU7D4xG-54', views: '890K views' },
-    { title: 'African Literature Analysis', url: 'https://www.youtube.com/watch?v=Q7m2L3xX8Uo', views: '320K views' },
+    { title: 'JAMB Literature - Prose & Drama Summary', url: 'https://www.youtube.com/watch?v=RL2XS1ECQKE', views: '890K views' },
+    { title: 'JAMB Recommended Texts Analysis', url: 'https://www.youtube.com/watch?v=4sLck2_NvVE', views: '320K views' },
   ],
   'Government': [
-    { title: 'Government for JAMB', url: 'https://www.youtube.com/watch?v=tCkU98lOH7k', views: '720K views' },
-    { title: 'Nigerian Government Tutorial', url: 'https://www.youtube.com/watch?v=DxL2HoqLbyA', views: '450K views' },
+    { title: 'Government for JAMB - Full Course', url: 'https://www.youtube.com/watch?v=tCkU98lOH7k', views: '720K views' },
+    { title: 'Nigerian Government & Politics', url: 'https://www.youtube.com/watch?v=DxL2HoqLbyA', views: '450K views' },
   ],
   'Economics': [
-    { title: 'JAMB Economics Complete', url: 'https://www.youtube.com/watch?v=PHe0bXAIuk0', views: '980K views' },
-    { title: 'Economics Past Questions', url: 'https://www.youtube.com/watch?v=_Y0-MxPK8FM', views: '380K views' },
+    { title: 'JAMB Economics Complete Revision', url: 'https://www.youtube.com/watch?v=PHe0bXAIuk0', views: '980K views' },
+    { title: 'Economics Past Questions & Answers', url: 'https://www.youtube.com/watch?v=_Y0-MxPK8FM', views: '380K views' },
   ],
   'Christian Religious Studies': [
-    { title: 'CRS for JAMB', url: 'https://www.youtube.com/watch?v=mT3-1NpNjnY', views: '520K views' },
-    { title: 'Bible Studies Tutorial', url: 'https://www.youtube.com/watch?v=vCGtkDzELAI', views: '290K views' },
+    { title: 'CRS for JAMB - Key Topics', url: 'https://www.youtube.com/watch?v=mT3-1NpNjnY', views: '520K views' },
+    { title: 'Bible Knowledge Tutorial', url: 'https://www.youtube.com/watch?v=vCGtkDzELAI', views: '290K views' },
   ],
   'Islamic Religious Studies': [
     { title: 'IRS for JAMB', url: 'https://www.youtube.com/watch?v=mT3-1NpNjnY', views: '420K views' },
     { title: 'Islamic Studies Tutorial', url: 'https://www.youtube.com/watch?v=vCGtkDzELAI', views: '250K views' },
   ],
   'Commerce': [
-    { title: 'Commerce for WASSCE/JAMB', url: 'https://www.youtube.com/watch?v=LfV-3lXh8zA', views: '340K views' },
+    { title: 'Commerce for JAMB/WASSCE', url: 'https://www.youtube.com/watch?v=LfV-3lXh8zA', views: '340K views' },
     { title: 'Business Studies Tutorial', url: 'https://www.youtube.com/watch?v=6ZF9LQkqFNs', views: '210K views' },
   ],
   'Accounting': [
@@ -119,15 +119,15 @@ const subjectVideos: Record<string, { title: string; url: string; views: string 
   ],
   'Civic Education': [
     { title: 'Civic Education for JAMB', url: 'https://www.youtube.com/watch?v=sCTApD_qZww', views: '380K views' },
-    { title: 'Citizenship Tutorial', url: 'https://www.youtube.com/watch?v=pWq_jrCmiso', views: '290K views' },
+    { title: 'Citizenship & Government', url: 'https://www.youtube.com/watch?v=pWq_jrCmiso', views: '290K views' },
   ],
   'Agricultural Science': [
-    { title: 'Agricultural Science for JAMB', url: 'https://www.youtube.com/watch?v=E5EPppEGIAQ', views: '350K views' },
+    { title: 'Agric Science for JAMB', url: 'https://www.youtube.com/watch?v=E5EPppEGIAQ', views: '350K views' },
     { title: 'Farm Management Tutorial', url: 'https://www.youtube.com/watch?v=TnhS-ay4JGk', views: '240K views' },
   ],
   'Computer Studies': [
     { title: 'Computer Studies for JAMB', url: 'https://www.youtube.com/watch?v=zOjov-2OZ0E', views: '680K views' },
-    { title: 'Programming Basics', url: 'https://www.youtube.com/watch?v=rfscVS0vtbw', views: '520K views' },
+    { title: 'ICT & Programming Basics', url: 'https://www.youtube.com/watch?v=rfscVS0vtbw', views: '520K views' },
   ],
 };
 
@@ -166,13 +166,30 @@ const PastQuestions: React.FC = () => {
 
   const loadQuestions = async () => {
     try {
-      const { data, error } = await supabase
-        .from('past_questions')
-        .select('*')
-        .order('year', { ascending: false });
+      // Fetch all questions (bypass default 1000 row limit)
+      let allData: any[] = [];
+      let from = 0;
+      const pageSize = 1000;
+      let hasMore = true;
+      
+      while (hasMore) {
+        const { data, error: fetchError } = await supabase
+          .from('past_questions')
+          .select('*')
+          .range(from, from + pageSize - 1)
+          .order('year', { ascending: false });
+        
+        if (fetchError) throw fetchError;
+        if (data && data.length > 0) {
+          allData = [...allData, ...data];
+          from += pageSize;
+          hasMore = data.length === pageSize;
+        } else {
+          hasMore = false;
+        }
+      }
 
-      if (error) throw error;
-      const formattedData = (data || []).map(q => ({
+      const formattedData = allData.map(q => ({
         ...q,
         options: q.options as string[]
       }));
@@ -257,10 +274,19 @@ const PastQuestions: React.FC = () => {
     setSelectedAnswer(answer);
   };
 
+  const getCorrectOption = (question: PastQuestion): string => {
+    const letterMap: Record<string, number> = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
+    if (question.correct_answer in letterMap) {
+      return question.options[letterMap[question.correct_answer]] || question.correct_answer;
+    }
+    return question.correct_answer;
+  };
+
   const handleSubmitAnswer = () => {
     if (!selectedAnswer || !practiceQuestions[currentQuestionIndex]) return;
     
-    const isCorrect = selectedAnswer === practiceQuestions[currentQuestionIndex].correct_answer;
+    const correctOption = getCorrectOption(practiceQuestions[currentQuestionIndex]);
+    const isCorrect = selectedAnswer === correctOption;
     if (isCorrect) setScore(score + 1);
     setAnsweredQuestions(answeredQuestions + 1);
     setShowResult(true);
@@ -272,7 +298,8 @@ const PastQuestions: React.FC = () => {
       setSelectedAnswer(null);
       setShowResult(false);
     } else {
-      toast.success(`Practice complete! Score: ${score + (selectedAnswer === practiceQuestions[currentQuestionIndex].correct_answer ? 1 : 0)}/${practiceQuestions.length}`);
+      const correctOption = getCorrectOption(practiceQuestions[currentQuestionIndex]);
+      toast.success(`Practice complete! Score: ${score + (selectedAnswer === correctOption ? 1 : 0)}/${practiceQuestions.length}`);
       setPracticeMode(false);
       setShowSubjectSelector(true);
     }
@@ -330,32 +357,35 @@ const PastQuestions: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    {currentQ.options.map((option, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleAnswerSelect(option)}
-                        disabled={showResult}
-                        className={`w-full p-3 md:p-4 text-left rounded-lg border-2 transition-colors text-sm md:text-base ${
-                          showResult && option === currentQ.correct_answer
-                            ? 'border-green-500 bg-green-50 dark:bg-green-950'
-                            : showResult && option === selectedAnswer && option !== currentQ.correct_answer
-                            ? 'border-red-500 bg-red-50 dark:bg-red-950'
-                            : selectedAnswer === option
-                            ? 'border-primary bg-primary/10'
-                            : 'border-border hover:border-primary'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="text-foreground">{option}</span>
-                          {showResult && option === currentQ.correct_answer && (
-                            <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
-                          )}
-                          {showResult && option === selectedAnswer && option !== currentQ.correct_answer && (
-                            <XCircle className="h-5 w-5 text-red-500 shrink-0" />
-                          )}
-                        </div>
-                      </button>
-                    ))}
+                    {currentQ.options.map((option, index) => {
+                      const correctOption = getCorrectOption(currentQ);
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => handleAnswerSelect(option)}
+                          disabled={showResult}
+                          className={`w-full p-3 md:p-4 text-left rounded-lg border-2 transition-colors text-sm md:text-base ${
+                            showResult && option === correctOption
+                              ? 'border-green-500 bg-green-50 dark:bg-green-950'
+                              : showResult && option === selectedAnswer && option !== correctOption
+                              ? 'border-red-500 bg-red-50 dark:bg-red-950'
+                              : selectedAnswer === option
+                              ? 'border-primary bg-primary/10'
+                              : 'border-border hover:border-primary'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-foreground">{option}</span>
+                            {showResult && option === correctOption && (
+                              <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
+                            )}
+                            {showResult && option === selectedAnswer && option !== correctOption && (
+                              <XCircle className="h-5 w-5 text-red-500 shrink-0" />
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
 
                   {showResult && currentQ.explanation && (

@@ -5,7 +5,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./hooks/useAuth";
-import { ProtectedRoute } from "./components/ProtectedRoute";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
@@ -59,51 +58,15 @@ const App = () => {
               <Route path="/success-stories" element={<SuccessStories />} />
               
               {/* Protected Routes */}
-              <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/ai-assistant" element={
-                <ProtectedRoute>
-                  <AIAssistant />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/past-questions" element={
-                <ProtectedRoute>
-                  <PastQuestions />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/waec-questions" element={
-                <ProtectedRoute>
-                  <WaecPastQuestions />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/jamb-syllabus" element={
-                <ProtectedRoute>
-                  <JambSyllabus />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/upload-materials" element={
-                <ProtectedRoute>
-                  <UploadMaterials />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/planner" element={
-                <ProtectedRoute>
-                  <StudyPlanner />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/support" element={
-                <ProtectedRoute>
-                  <Support />
-                </ProtectedRoute>
-              } />
-              <Route path="/dashboard/settings" element={
-                <ProtectedRoute>
-                  <Settings />
-                </ProtectedRoute>
-              } />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/ai-assistant" element={<AIAssistant />} />
+              <Route path="/dashboard/past-questions" element={<PastQuestions />} />
+              <Route path="/dashboard/waec-questions" element={<WaecPastQuestions />} />
+              <Route path="/dashboard/jamb-syllabus" element={<JambSyllabus />} />
+              <Route path="/dashboard/upload-materials" element={<UploadMaterials />} />
+              <Route path="/dashboard/planner" element={<StudyPlanner />} />
+              <Route path="/dashboard/support" element={<Support />} />
+              <Route path="/dashboard/settings" element={<Settings />} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
