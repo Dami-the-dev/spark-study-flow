@@ -22,7 +22,7 @@ const HeroSection: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
               <Button size={isMobile ? "default" : "lg"} className="sm:w-auto" asChild>
-                <Link to="/signup">Get Started</Link>
+                <Link to="/dashboard">Get Started</Link>
               </Button>
             </div>
           </div>

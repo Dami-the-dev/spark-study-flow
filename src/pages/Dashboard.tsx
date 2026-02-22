@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, BookOpen, Brain, FileText, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -31,13 +30,12 @@ interface StudyPlan {
 }
 
 const Dashboard: React.FC = () => {
-  const { user } = useAuth();
   const [studyPlans, setStudyPlans] = useState<StudyPlan[]>([]);
   const [todaysPlans, setTodaysPlans] = useState<StudyPlan[]>([]);
   const [loading, setLoading] = useState(true);
   const [quote, setQuote] = useState({ quote: '', author: '' });
   
-  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Student';
+  const userName = 'Student';
 
   useEffect(() => {
     // Get random quote based on session/day
@@ -55,17 +53,14 @@ const Dashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      loadStudyPlans();
-    }
-  }, [user]);
+    loadStudyPlans();
+  }, []);
 
   const loadStudyPlans = async () => {
     try {
       const { data, error } = await supabase
         .from('study_plans')
         .select('*')
-        .eq('user_id', user?.id)
         .order('start_date', { ascending: true });
 
       if (error) throw error;

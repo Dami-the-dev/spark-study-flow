@@ -89,18 +89,37 @@ const WaecPastQuestions: React.FC = () => {
 
     setLoading(true);
     try {
-      let query = supabase
-        .from('past_questions')
-        .select('*')
-        .eq('exam_name', 'WAEC')
-        .in('subject', selectedSubjects)
-        .order('year', { ascending: false });
+      let allData: any[] = [];
+      let from = 0;
+      const pageSize = 1000;
+      let hasMore = true;
+      
+      while (hasMore) {
+        let query = supabase
+          .from('past_questions')
+          .select('*')
+          .eq('exam_name', 'WAEC')
+          .in('subject', selectedSubjects)
+          .range(from, from + pageSize - 1)
+          .order('year', { ascending: false });
 
-      if (selectedYear !== 'all') {
-        query = query.eq('year', parseInt(selectedYear));
+        if (selectedYear !== 'all') {
+          query = query.eq('year', parseInt(selectedYear));
+        }
+
+        const { data, error: fetchError } = await query;
+        if (fetchError) throw fetchError;
+        if (data && data.length > 0) {
+          allData = [...allData, ...data];
+          from += pageSize;
+          hasMore = data.length === pageSize;
+        } else {
+          hasMore = false;
+        }
       }
-
-      const { data, error } = await query;
+      
+      const error = null;
+      const data = allData;
 
       if (error) throw error;
       
