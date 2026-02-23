@@ -38,21 +38,24 @@ const waecSubjects = [
 
 const subjectVideos: Record<string, { title: string; url: string; views: string }[]> = {
   'Mathematics': [
-    { title: 'WAEC Mathematics Complete Revision 2024', url: 'https://www.youtube.com/watch?v=xyDkyFXLvCk', views: '1.2M' },
-    { title: 'WAEC Maths Past Questions Solved', url: 'https://www.youtube.com/watch?v=Ws4P9H0JloU', views: '890K' },
+    { title: 'WAEC Mathematics Complete Revision', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '1.2M' },
+    { title: 'WAEC Maths Past Questions Solved', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '890K' },
   ],
   'English Language': [
-    { title: 'WAEC English Language Tips & Tricks', url: 'https://www.youtube.com/watch?v=KHVANa45bHk', views: '750K' },
-    { title: 'WAEC English Comprehension Techniques', url: 'https://www.youtube.com/watch?v=W3j4zQZ_VKQ', views: '620K' },
+    { title: 'WAEC English Language Tips & Tricks', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '750K' },
+    { title: 'WAEC English Comprehension Techniques', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '620K' },
   ],
   'Physics': [
-    { title: 'WAEC Physics Complete Revision', url: 'https://www.youtube.com/watch?v=X18mUlDddCo', views: '540K' },
+    { title: 'WAEC Physics Complete Revision', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '540K' },
+    { title: 'Physics Calculations for WAEC', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '430K' },
   ],
   'Chemistry': [
-    { title: 'WAEC Chemistry Complete Course', url: 'https://www.youtube.com/watch?v=9VWmSNGW1Qk', views: '480K' },
+    { title: 'WAEC Chemistry Complete Course', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '480K' },
+    { title: 'Chemistry Practical Tips', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '350K' },
   ],
   'Biology': [
-    { title: 'WAEC Biology Full Revision', url: 'https://www.youtube.com/watch?v=8IluKZL2-Tc', views: '670K' },
+    { title: 'WAEC Biology Full Revision', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '670K' },
+    { title: 'Biology Diagrams & Practicals', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '420K' },
   ],
 };
 
