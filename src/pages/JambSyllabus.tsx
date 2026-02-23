@@ -29,48 +29,65 @@ const syllabusData: SubjectSyllabus[] = [
       {
         topic: 'Number and Numeration',
         subtopics: [
-          'Number bases (operations in different bases)',
+          'Number bases (operations in different number bases from 2 to 10)',
           'Fractions, decimals and approximation',
           'Indices, logarithms and surds',
-          'Sets and Venn diagrams',
+          'Sets (types, Venn diagrams, operations)',
+          'Ratio and proportion',
+          'Percentages and simple interest',
         ]
       },
       {
         topic: 'Algebra',
         subtopics: [
-          'Polynomials and factorization',
-          'Change of subject of formula',
-          'Quadratic equations',
+          'Polynomials (addition, subtraction, multiplication, factorization)',
+          'Change of subject of formula/relation',
+          'Quadratic equations (factorization, formula, completing the square)',
           'Linear and quadratic inequalities',
-          'Arithmetic and geometric progressions',
+          'Arithmetic and geometric progressions (nth term, sum)',
           'Binary operations',
+          'Matrices and determinants (2×2)',
+          'Variation (direct, inverse, joint, partial)',
+          'Simultaneous linear equations',
+          'Remainder and factor theorem',
         ]
       },
       {
         topic: 'Geometry and Trigonometry',
         subtopics: [
-          'Euclidean geometry (angles, triangles, polygons)',
-          'Circle theorems',
-          'Trigonometric ratios and identities',
-          'Mensuration (areas and volumes)',
-          'Coordinate geometry',
+          'Euclidean geometry (angles, triangles, polygons, circles)',
+          'Circle theorems (tangent, chord, segment)',
+          'Trigonometric ratios (sine, cosine, tangent) and identities',
+          'Sine and cosine rules',
+          'Angles of elevation and depression',
+          'Bearings and distances',
+          'Mensuration (areas and volumes of regular shapes and solids)',
+          'Coordinate geometry (distance, midpoint, gradient, equation of lines)',
+          'Loci in two dimensions',
         ]
       },
       {
         topic: 'Calculus',
         subtopics: [
-          'Differentiation of algebraic functions',
-          'Integration and area under curves',
-          'Applications of differentiation',
+          'Differentiation of algebraic functions from first principles',
+          'Differentiation of polynomials (sum, product, quotient rules)',
+          'Integration as the reverse of differentiation',
+          'Integration of polynomial functions',
+          'Application of differentiation (maxima, minima, rate of change)',
+          'Area under curves using integration',
+          'Velocity and acceleration problems',
         ]
       },
       {
         topic: 'Statistics and Probability',
         subtopics: [
-          'Measures of central tendency',
-          'Measures of dispersion',
-          'Probability concepts',
+          'Measures of central tendency (mean, median, mode for grouped/ungrouped data)',
+          'Measures of dispersion (range, mean deviation, variance, standard deviation)',
+          'Frequency distribution tables and histograms',
+          'Cumulative frequency curves (ogives)',
+          'Probability (simple, compound, conditional events)',
           'Permutation and combination',
+          'Addition and multiplication rules of probability',
         ]
       },
     ]
@@ -86,34 +103,53 @@ const syllabusData: SubjectSyllabus[] = [
           'Making inferences and deductions',
           'Identifying main ideas and supporting details',
           'Understanding vocabulary in context',
+          'Summarizing and paraphrasing passages',
+          'Distinguishing between facts and opinions',
         ]
       },
       {
         topic: 'Lexis and Structure',
         subtopics: [
-          'Synonyms and antonyms',
-          'Sentence patterns and structure',
-          'Word classes and their functions',
-          'Idioms and expressions',
-          'Collocations',
+          'Synonyms, antonyms, and homonyms',
+          'Sentence patterns and structure (SVO, SVC, SVOA)',
+          'Word classes and their functions (nouns, verbs, adjectives, adverbs)',
+          'Idioms, expressions, and phrasal verbs',
+          'Collocations and word associations',
+          'Affixation (prefixes and suffixes)',
+          'Clause types (noun, adjectival, adverbial)',
+          'Concord (subject-verb agreement)',
+          'Question tags',
         ]
       },
       {
         topic: 'Oral English',
         subtopics: [
-          'Vowel sounds (monophthongs and diphthongs)',
-          'Consonant sounds',
-          'Stress patterns (word and sentence stress)',
-          'Intonation patterns',
-          'Sound contrasts',
+          'Vowel sounds (pure vowels and diphthongs)',
+          'Consonant sounds (plosives, fricatives, affricates, nasals)',
+          'Stress patterns (word stress and sentence stress)',
+          'Intonation patterns (falling, rising, fall-rise)',
+          'Sound contrasts and minimal pairs',
+          'Syllable structure and phonetic transcription',
+          'Connected speech (assimilation, elision, linking)',
         ]
       },
       {
         topic: 'Register and Style',
         subtopics: [
           'Formal and informal language',
-          'Technical vocabulary',
-          'Appropriateness of language use',
+          'Technical/specialized vocabulary',
+          'Appropriateness of language use in context',
+          'Figurative language vs literal language',
+        ]
+      },
+      {
+        topic: 'Essay and Letter Writing',
+        subtopics: [
+          'Types of essays (narrative, descriptive, argumentative, expository)',
+          'Formal and informal letter writing',
+          'Speech writing',
+          'Report writing',
+          'Article writing for publication',
         ]
       },
     ]
@@ -123,51 +159,81 @@ const syllabusData: SubjectSyllabus[] = [
     pdfUrl: 'https://www.jamb.gov.ng/wp-content/uploads/2024/01/Physics-Syllabus.pdf',
     topics: [
       {
+        topic: 'Measurements and Units',
+        subtopics: [
+          'Fundamental and derived quantities',
+          'Units and dimensions',
+          'Measurement of mass, length, time, and temperature',
+          'Errors and accuracy of measurement',
+          'Use of measuring instruments (vernier caliper, micrometer)',
+        ]
+      },
+      {
         topic: 'Mechanics',
         subtopics: [
-          'Measurements and units',
-          'Scalars and vectors',
-          'Motion (linear, projectile, circular)',
-          'Newton\'s laws of motion',
-          'Work, energy and power',
-          'Simple harmonic motion',
+          'Scalars and vectors (addition, resolution of vectors)',
+          'Linear motion (speed, velocity, acceleration, equations of motion)',
+          'Projectile motion',
+          'Circular motion (centripetal force and acceleration)',
+          'Newton\'s laws of motion and applications',
+          'Friction (static, kinetic, laws of friction)',
+          'Work, energy and power (kinetic and potential energy)',
+          'Simple machines (mechanical advantage, velocity ratio, efficiency)',
+          'Equilibrium of forces (moments, couple, centre of gravity)',
+          'Simple harmonic motion (pendulum, spring)',
+          'Gravitational field (acceleration due to gravity, escape velocity)',
         ]
       },
       {
         topic: 'Thermal Physics',
         subtopics: [
-          'Temperature and thermometers',
+          'Temperature and thermometers (types and calibration)',
           'Heat transfer (conduction, convection, radiation)',
-          'Thermal expansion',
-          'Gas laws and kinetic theory',
-          'Latent heat and specific heat capacity',
+          'Linear and volume expansion of solids, liquids, and gases',
+          'Gas laws (Boyle\'s, Charles\', Pressure, General gas equation)',
+          'Kinetic theory of gases',
+          'Specific heat capacity and latent heat',
+          'Evaporation, boiling, and vapour pressure',
+          'Calorimetry',
         ]
       },
       {
-        topic: 'Waves',
+        topic: 'Waves and Optics',
         subtopics: [
-          'Wave types and properties',
-          'Sound waves and acoustics',
-          'Light waves and optics',
-          'Electromagnetic spectrum',
+          'Wave types (transverse, longitudinal) and properties',
+          'Wave equations (v = fλ)',
+          'Reflection, refraction, diffraction, and interference of waves',
+          'Sound waves (speed, echo, resonance, vibration in pipes)',
+          'Light waves (reflection, refraction, total internal reflection)',
+          'Mirrors and lenses (concave, convex, applications)',
+          'Dispersion of light and electromagnetic spectrum',
+          'Optical instruments (microscope, telescope, camera)',
         ]
       },
       {
         topic: 'Electricity and Magnetism',
         subtopics: [
-          'Electrostatics',
-          'Current electricity and circuits',
-          'Electromagnetic induction',
-          'Magnetic fields and forces',
+          'Electrostatics (charge, electric field, capacitance)',
+          'Current electricity (Ohm\'s law, resistors in series and parallel)',
+          'Electrical energy and power',
+          'Kirchhoff\'s laws and circuit analysis',
+          'Magnetic fields and forces on current-carrying conductors',
+          'Electromagnetic induction (Faraday\'s and Lenz\'s laws)',
+          'Transformers (step-up, step-down, efficiency)',
+          'A.C. and D.C. circuits',
+          'Electrical measuring instruments (galvanometer, ammeter, voltmeter)',
         ]
       },
       {
         topic: 'Modern Physics',
         subtopics: [
-          'Atomic structure',
-          'Radioactivity',
-          'Nuclear reactions',
-          'Photoelectric effect',
+          'Atomic structure (Bohr\'s model, electron configuration)',
+          'Radioactivity (types, half-life, decay equations)',
+          'Nuclear reactions (fission, fusion)',
+          'Photoelectric effect (threshold frequency, work function)',
+          'Wave-particle duality',
+          'X-rays (production, properties, uses)',
+          'Energy quantization (Planck\'s constant)',
         ]
       },
     ]
@@ -179,55 +245,111 @@ const syllabusData: SubjectSyllabus[] = [
       {
         topic: 'Separation Techniques and Purification',
         subtopics: [
-          'Filtration, evaporation, distillation',
-          'Chromatography',
-          'Crystallization',
+          'Pure and impure substances',
+          'Filtration, evaporation, distillation (simple and fractional)',
+          'Chromatography (paper, column, thin layer)',
+          'Crystallization and recrystallization',
           'Sublimation',
+          'Separating funnel (immiscible liquids)',
+          'Centrifugation and decantation',
         ]
       },
       {
-        topic: 'Chemical Bonding',
+        topic: 'Atomic Structure and Bonding',
         subtopics: [
-          'Ionic bonding',
-          'Covalent bonding',
+          'Structure of the atom (protons, neutrons, electrons)',
+          'Atomic number, mass number, isotopes',
+          'Electronic configuration and orbitals',
+          'Periodic table (periods, groups, trends)',
+          'Ionic bonding and electrovalent compounds',
+          'Covalent bonding (single, double, triple, dative)',
           'Metallic bonding',
-          'Van der Waals forces',
-          'Hydrogen bonding',
+          'Van der Waals forces and hydrogen bonding',
+          'Shapes of molecules (VSEPR theory)',
         ]
       },
       {
-        topic: 'Stoichiometry',
+        topic: 'Stoichiometry and Chemical Reactions',
         subtopics: [
-          'Mole concept',
+          'Mole concept and Avogadro\'s number',
           'Chemical equations and balancing',
-          'Mass relationships in reactions',
-          'Limiting reagents',
+          'Mass, molar mass, and molar volume',
+          'Empirical and molecular formulae',
+          'Limiting reagents and percentage yield',
+          'Chemical laws (conservation of mass, definite proportions)',
+        ]
+      },
+      {
+        topic: 'States of Matter',
+        subtopics: [
+          'Properties of solids, liquids, and gases',
+          'Kinetic theory of matter',
+          'Gas laws (Boyle\'s, Charles\', Dalton\'s, Graham\'s)',
+          'Ideal and real gases',
+          'Changes of state and phase diagrams',
         ]
       },
       {
         topic: 'Acids, Bases and Salts',
         subtopics: [
-          'Properties of acids and bases',
-          'pH and indicators',
-          'Neutralization reactions',
-          'Salt preparation',
+          'Properties and types of acids and bases',
+          'pH scale and indicators',
+          'Neutralization reactions and titration calculations',
+          'Salt preparation methods',
+          'Buffer solutions',
+          'Water of crystallization',
+        ]
+      },
+      {
+        topic: 'Redox Reactions and Electrochemistry',
+        subtopics: [
+          'Oxidation and reduction (electron transfer)',
+          'Oxidation numbers/states',
+          'Electrolysis (of brine, water, molten compounds)',
+          'Electrochemical cells (voltaic, electrolytic)',
+          'Faraday\'s laws of electrolysis',
+          'Corrosion and its prevention',
+        ]
+      },
+      {
+        topic: 'Energy Changes in Reactions',
+        subtopics: [
+          'Exothermic and endothermic reactions',
+          'Enthalpy changes (combustion, formation, neutralization)',
+          'Hess\'s law and energy cycle diagrams',
+          'Bond energy calculations',
+        ]
+      },
+      {
+        topic: 'Rates of Reaction and Equilibrium',
+        subtopics: [
+          'Factors affecting reaction rate',
+          'Collision theory and activation energy',
+          'Catalysis (types and examples)',
+          'Chemical equilibrium and Le Chatelier\'s principle',
+          'Equilibrium constants',
         ]
       },
       {
         topic: 'Organic Chemistry',
         subtopics: [
-          'Hydrocarbons (alkanes, alkenes, alkynes)',
-          'Functional groups',
-          'Petroleum and petrochemicals',
-          'Polymers',
+          'Hydrocarbons: alkanes, alkenes, alkynes (nomenclature, reactions)',
+          'Isomerism (structural, geometric)',
+          'Functional groups (alcohols, carboxylic acids, esters, amines)',
+          'Petrochemicals and fractional distillation of crude oil',
+          'Polymers (addition and condensation)',
+          'Fats, oils, proteins, and carbohydrates',
+          'Soaps and detergents',
         ]
       },
       {
-        topic: 'Electrochemistry',
+        topic: 'Chemistry and Industry',
         subtopics: [
-          'Electrolysis',
-          'Electrochemical cells',
-          'Faraday\'s laws',
+          'Metals and their extraction',
+          'Alloys and their uses',
+          'Chemical industries in Nigeria',
+          'Environmental pollution (air, water, soil)',
+          'Biotechnology and fermentation',
         ]
       },
     ]
@@ -239,50 +361,73 @@ const syllabusData: SubjectSyllabus[] = [
       {
         topic: 'Organization of Life',
         subtopics: [
-          'Cell structure and function',
+          'Cell structure and function (plant and animal cells)',
+          'Cell organelles and their functions',
           'Cell division (mitosis and meiosis)',
-          'Levels of organization',
-          'Classification of living organisms',
+          'Levels of organization (cells, tissues, organs, systems)',
+          'Classification of living organisms (five kingdoms)',
+          'Viruses (structure, types, diseases)',
+          'Use of microscope',
         ]
       },
       {
         topic: 'Plant Biology',
         subtopics: [
-          'Plant nutrition (photosynthesis)',
-          'Transport in plants',
-          'Plant hormones',
-          'Plant reproduction',
+          'Plant nutrition (photosynthesis – light and dark reactions)',
+          'Mineral nutrition and deficiency symptoms',
+          'Transport in plants (osmosis, diffusion, transpiration)',
+          'Translocation of organic solutes',
+          'Plant hormones (auxins, gibberellins, abscisic acid)',
+          'Tropisms and nastic movements',
+          'Plant reproduction (asexual and sexual)',
+          'Pollination and fertilization',
+          'Seed and fruit formation, dispersal, and germination',
         ]
       },
       {
         topic: 'Animal Biology',
         subtopics: [
-          'Nutrition in animals',
-          'Circulatory system',
-          'Respiratory system',
-          'Excretory system',
-          'Nervous system',
-          'Reproductive system',
+          'Nutrition in animals (holozoic, saprophytic, parasitic)',
+          'Digestive system and enzymes',
+          'Circulatory system (blood, heart, blood vessels, lymph)',
+          'Respiratory system (gas exchange, breathing mechanism)',
+          'Excretory system (kidney structure and function)',
+          'Nervous system (central and peripheral, reflex arc)',
+          'Sense organs (eye, ear)',
+          'Endocrine system and hormones',
+          'Reproductive system (male and female)',
+          'Skeletal and muscular systems',
+          'Homeostasis (temperature, blood sugar regulation)',
         ]
       },
       {
         topic: 'Genetics and Evolution',
         subtopics: [
           'Heredity and variation',
-          'Mendelian genetics',
-          'Sex determination',
-          'Mutation',
-          'Evolution theories',
+          'Mendelian genetics (monohybrid and dihybrid crosses)',
+          'Sex determination and sex-linked traits',
+          'Mutation (gene and chromosomal)',
+          'Blood groups and genotypes',
+          'Probability in genetics',
+          'Evolution theories (Lamarck, Darwin)',
+          'Evidence of evolution (fossils, comparative anatomy)',
+          'Natural selection and adaptation',
+          'Genetic engineering and biotechnology basics',
         ]
       },
       {
         topic: 'Ecology',
         subtopics: [
-          'Ecosystems and biomes',
-          'Food chains and webs',
-          'Population dynamics',
+          'Ecosystems and biomes (aquatic, terrestrial)',
+          'Components of an ecosystem (biotic and abiotic)',
+          'Food chains, food webs, and trophic levels',
+          'Energy flow and nutrient cycling',
+          'Population dynamics (growth, carrying capacity)',
+          'Ecological succession',
           'Conservation of natural resources',
-          'Pollution and its effects',
+          'Pollution (types, effects, control)',
+          'Waste management and recycling',
+          'Climate change and its effects',
         ]
       },
     ]
@@ -385,37 +530,66 @@ const syllabusData: SubjectSyllabus[] = [
       {
         topic: 'Literary Terms and Devices',
         subtopics: [
-          'Figures of speech (metaphor, simile, personification)',
-          'Literary devices (irony, symbolism, imagery)',
-          'Narrative techniques',
-          'Themes and motifs',
+          'Figures of speech (metaphor, simile, personification, irony, hyperbole)',
+          'Literary devices (symbolism, imagery, allegory, foreshadowing)',
+          'Narrative techniques (point of view, flashback, stream of consciousness)',
+          'Themes, motifs, and subject matter',
+          'Tone, mood, and atmosphere',
+          'Satire, parody, and sarcasm',
+          'Diction, register, and style',
         ]
       },
       {
         topic: 'Drama',
         subtopics: [
-          'Elements of drama',
-          'Types of drama (tragedy, comedy)',
-          'Characterization in drama',
-          'Set texts for drama',
+          'Elements of drama (plot, character, dialogue, setting, conflict)',
+          'Types of drama (tragedy, comedy, tragicomedy, melodrama)',
+          'Dramatic techniques (soliloquy, aside, dramatic irony)',
+          'Characterization and character development',
+          'Stage directions and stagecraft',
+          'Recommended Text: "The Blood of a Stranger" by Dele Charley',
+          'Recommended Text: "The Lion and the Jewel" by Wole Soyinka',
         ]
       },
       {
         topic: 'Poetry',
         subtopics: [
-          'Types of poetry',
-          'Poetic devices',
-          'Analysis of poems',
-          'Set poems for study',
+          'Types of poetry (lyric, narrative, dramatic, epic, ode, sonnet, elegy)',
+          'Poetic devices (rhyme, rhythm, meter, alliteration, assonance)',
+          'Stanza forms and verse patterns',
+          'Analysis and interpretation of poems',
+          'Recommended: "The Panic of Growing Older" by Lenrie Peters',
+          'Recommended: "Piano and Drums" by Gabriel Okara',
+          'Recommended: "The Casualties" by J.P. Clark',
+          'Recommended: "Crossing the Bar" by Alfred Lord Tennyson',
+          'Recommended: "Journey of the Magi" by T.S. Eliot',
+          'Recommended: "Bat" by D.H. Lawrence',
+          'Recommended: "The Anvil and the Hammer" by Kofi Awoonor',
+          'Recommended: "Ambush" by Gbemisola Adeoti',
+          'Recommended: "Refugee Mother and Child" by Chinua Achebe',
+          'Recommended: "Not My Business" by Niyi Osundare',
         ]
       },
       {
         topic: 'Prose',
         subtopics: [
-          'Types of prose (fiction, non-fiction)',
-          'Narrative techniques',
-          'Character development',
-          'Set novels for study',
+          'Types of prose (fiction, non-fiction, novel, novella, short story)',
+          'Narrative techniques (first person, third person, omniscient)',
+          'Character development and portrayal',
+          'Plot structure (exposition, rising action, climax, denouement)',
+          'Setting and its significance',
+          'Recommended Text: "The Life Changer" by Khadija Abubakar Jalli',
+          'Recommended Text: "Unexpected Joy at Dawn" by Alex Agyei-Agyiri',
+        ]
+      },
+      {
+        topic: 'General Literary Appreciation',
+        subtopics: [
+          'Historical and social context of literary works',
+          'Comparative analysis of texts',
+          'Critical evaluation of themes and style',
+          'Relationship between literature and society',
+          'African literary tradition and oral literature',
         ]
       },
     ]
@@ -1422,7 +1596,7 @@ const JambSyllabus: React.FC = () => {
       // Footer
       doc.setFontSize(8);
       doc.setFont('helvetica', 'italic');
-      doc.text('Generated by EduSpark - www.eduspark.com', pageWidth / 2, 285, { align: 'center' });
+      doc.text('Generated by Spark Study - www.sparkstudy.com', pageWidth / 2, 285, { align: 'center' });
 
       // Save the PDF
       doc.save(`JAMB_${subject.name}_Syllabus.pdf`);

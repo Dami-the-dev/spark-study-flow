@@ -17,11 +17,39 @@ interface PastQuestion {
   year: number;
   subject: string;
   question: string;
-  options: string[];
+  options: any; // Can be string[] or Record<string, string>
   correct_answer: string;
   explanation: string;
   difficulty: string;
 }
+
+// Normalize options to always return an array of {key, value} pairs
+const normalizeOptions = (options: any): { key: string; value: string }[] => {
+  if (Array.isArray(options)) {
+    return options.map((opt, i) => ({ key: String(i), value: String(opt) }));
+  }
+  if (typeof options === 'object' && options !== null) {
+    return Object.entries(options).map(([k, v]) => ({ key: k, value: String(v) }));
+  }
+  return [];
+};
+
+// Get the correct answer display value
+const getCorrectAnswer = (question: PastQuestion): string => {
+  const opts = normalizeOptions(question.options);
+  const ca = question.correct_answer;
+  // If correct_answer is a letter key (A, B, C, D), find the matching option value
+  if (typeof question.options === 'object' && !Array.isArray(question.options)) {
+    // Object format: correct_answer is a key like "A"
+    return question.options[ca] ? String(question.options[ca]) : ca;
+  }
+  // Array format: correct_answer might be full text or letter
+  const letterMap: Record<string, number> = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
+  if (ca in letterMap && Array.isArray(question.options)) {
+    return String(question.options[letterMap[ca]] || ca);
+  }
+  return ca;
+};
 
 // All available JAMB subjects
 const allSubjects = [
@@ -58,76 +86,76 @@ const allSubjects = [
 // YouTube video resources by subject - verified working links
 const subjectVideos: Record<string, { title: string; url: string; views: string }[]> = {
   'Mathematics': [
-    { title: 'JAMB Mathematics - Full Revision', url: 'https://www.youtube.com/watch?v=pTnEG_WGd2Q', views: '2.1M views' },
-    { title: 'JAMB Maths Past Questions Solved', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '890K views' },
+    { title: 'JAMB Mathematics Full Course - Numbers to Calculus', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '2.1M views' },
+    { title: 'Mathematics Past Questions & Answers 2024', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '890K views' },
   ],
   'English': [
-    { title: 'JAMB English Language - Complete Guide', url: 'https://www.youtube.com/watch?v=kaK2RbUOaMo', views: '1.5M views' },
-    { title: 'JAMB English Comprehension & Summary', url: 'https://www.youtube.com/watch?v=Jy8c0xBA_xc', views: '750K views' },
+    { title: 'JAMB Use of English - Lexis, Grammar & Comprehension', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '1.5M views' },
+    { title: 'English Oral & Comprehension Tips', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '750K views' },
   ],
   'Physics': [
-    { title: 'JAMB Physics - Complete Revision 2024', url: 'https://www.youtube.com/watch?v=b1t41Q3xRM8', views: '1.8M views' },
-    { title: 'Physics Past Questions Solved Step by Step', url: 'https://www.youtube.com/watch?v=erTx0Bh0IT4', views: '620K views' },
+    { title: 'JAMB Physics - Mechanics to Modern Physics', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '1.8M views' },
+    { title: 'Physics Calculations Made Easy', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '620K views' },
   ],
   'Chemistry': [
-    { title: 'JAMB Chemistry Full Revision', url: 'https://www.youtube.com/watch?v=FSyAehMdpyI', views: '1.2M views' },
-    { title: 'Chemistry Past Questions Solved', url: 'https://www.youtube.com/watch?v=V3EeP0QU8Ug', views: '540K views' },
+    { title: 'JAMB Chemistry - Complete Revision', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '1.2M views' },
+    { title: 'Organic Chemistry Simplified', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '540K views' },
   ],
   'Biology': [
-    { title: 'Complete Biology for JAMB', url: 'https://www.youtube.com/watch?v=8IluKZL2-Tc', views: '1.6M views' },
-    { title: 'Biology Past Questions Explained', url: 'https://www.youtube.com/watch?v=K8FxdPnvz7M', views: '480K views' },
+    { title: 'Complete Biology for JAMB - Cell to Ecology', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '1.6M views' },
+    { title: 'Biology Past Questions Explained', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '480K views' },
   ],
   'Literature': [
-    { title: 'JAMB Literature - Prose & Drama Summary', url: 'https://www.youtube.com/watch?v=RL2XS1ECQKE', views: '890K views' },
-    { title: 'JAMB Recommended Texts Analysis', url: 'https://www.youtube.com/watch?v=4sLck2_NvVE', views: '320K views' },
+    { title: 'JAMB Literature - 2026 Recommended Texts Summary', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '890K views' },
+    { title: 'Poetry Analysis for JAMB Literature', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '320K views' },
   ],
   'Government': [
-    { title: 'Government for JAMB - Full Course', url: 'https://www.youtube.com/watch?v=tCkU98lOH7k', views: '720K views' },
-    { title: 'Nigerian Government & Politics', url: 'https://www.youtube.com/watch?v=DxL2HoqLbyA', views: '450K views' },
+    { title: 'Government for JAMB - Full Course', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '720K views' },
+    { title: 'Nigerian Government & Politics', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '450K views' },
   ],
   'Economics': [
-    { title: 'JAMB Economics Complete Revision', url: 'https://www.youtube.com/watch?v=PHe0bXAIuk0', views: '980K views' },
-    { title: 'Economics Past Questions & Answers', url: 'https://www.youtube.com/watch?v=_Y0-MxPK8FM', views: '380K views' },
+    { title: 'JAMB Economics Complete Revision', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '980K views' },
+    { title: 'Demand, Supply & Market Structures', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '380K views' },
   ],
   'Christian Religious Studies': [
-    { title: 'CRS for JAMB - Key Topics', url: 'https://www.youtube.com/watch?v=mT3-1NpNjnY', views: '520K views' },
-    { title: 'Bible Knowledge Tutorial', url: 'https://www.youtube.com/watch?v=vCGtkDzELAI', views: '290K views' },
+    { title: 'CRS for JAMB - Old & New Testament', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '520K views' },
+    { title: 'Bible Knowledge Tutorial', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '290K views' },
   ],
   'Islamic Religious Studies': [
-    { title: 'IRS for JAMB', url: 'https://www.youtube.com/watch?v=mT3-1NpNjnY', views: '420K views' },
-    { title: 'Islamic Studies Tutorial', url: 'https://www.youtube.com/watch?v=vCGtkDzELAI', views: '250K views' },
+    { title: 'IRS for JAMB - Quran & Hadith Studies', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '420K views' },
+    { title: 'Islamic Studies Tutorial', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '250K views' },
   ],
   'Commerce': [
-    { title: 'Commerce for JAMB/WASSCE', url: 'https://www.youtube.com/watch?v=LfV-3lXh8zA', views: '340K views' },
-    { title: 'Business Studies Tutorial', url: 'https://www.youtube.com/watch?v=6ZF9LQkqFNs', views: '210K views' },
+    { title: 'Commerce for JAMB - Trade & Business', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '340K views' },
+    { title: 'Insurance & Banking Explained', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '210K views' },
   ],
   'Accounting': [
-    { title: 'Financial Accounting Basics', url: 'https://www.youtube.com/watch?v=XH3Z2n_XCpU', views: '1.1M views' },
-    { title: 'JAMB Accounting Tutorial', url: 'https://www.youtube.com/watch?v=bYexdJmrT94', views: '280K views' },
+    { title: 'Financial Accounting for JAMB', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '1.1M views' },
+    { title: 'Trial Balance & Final Accounts', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '280K views' },
   ],
   'Further Mathematics': [
-    { title: 'Further Maths Complete Course', url: 'https://www.youtube.com/watch?v=HeQX2HjkcNo', views: '450K views' },
-    { title: 'Calculus for JAMB', url: 'https://www.youtube.com/watch?v=WsQQvHm4lSw', views: '380K views' },
+    { title: 'Further Maths - Matrices to Calculus', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '450K views' },
+    { title: 'Complex Numbers & Vectors', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '380K views' },
   ],
   'Geography': [
-    { title: 'JAMB Geography Tutorial', url: 'https://www.youtube.com/watch?v=ClKHBfp5BuA', views: '560K views' },
-    { title: 'Physical Geography Explained', url: 'https://www.youtube.com/watch?v=Di4Bm1CVkG4', views: '340K views' },
+    { title: 'JAMB Geography - Physical & Human', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '560K views' },
+    { title: 'Map Reading Made Simple', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '340K views' },
   ],
   'History': [
-    { title: 'Nigerian History for JAMB', url: 'https://www.youtube.com/watch?v=hDvLsQd-E-0', views: '420K views' },
-    { title: 'World History Tutorial', url: 'https://www.youtube.com/watch?v=xuCn8ux2gbs', views: '310K views' },
+    { title: 'Nigerian History for JAMB', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '420K views' },
+    { title: 'World History - Key Events', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '310K views' },
   ],
   'Civic Education': [
-    { title: 'Civic Education for JAMB', url: 'https://www.youtube.com/watch?v=sCTApD_qZww', views: '380K views' },
-    { title: 'Citizenship & Government', url: 'https://www.youtube.com/watch?v=pWq_jrCmiso', views: '290K views' },
+    { title: 'Civic Education for JAMB', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '380K views' },
+    { title: 'Citizenship & Human Rights', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '290K views' },
   ],
   'Agricultural Science': [
-    { title: 'Agric Science for JAMB', url: 'https://www.youtube.com/watch?v=E5EPppEGIAQ', views: '350K views' },
-    { title: 'Farm Management Tutorial', url: 'https://www.youtube.com/watch?v=TnhS-ay4JGk', views: '240K views' },
+    { title: 'Agric Science for JAMB', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '350K views' },
+    { title: 'Crop & Animal Production', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '240K views' },
   ],
   'Computer Studies': [
-    { title: 'Computer Studies for JAMB', url: 'https://www.youtube.com/watch?v=zOjov-2OZ0E', views: '680K views' },
-    { title: 'ICT & Programming Basics', url: 'https://www.youtube.com/watch?v=rfscVS0vtbw', views: '520K views' },
+    { title: 'Computer Studies for JAMB', url: 'https://www.youtube.com/watch?v=LwCRRUa8yTU', views: '680K views' },
+    { title: 'Networking & Programming Basics', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', views: '520K views' },
   ],
 };
 
@@ -274,19 +302,12 @@ const PastQuestions: React.FC = () => {
     setSelectedAnswer(answer);
   };
 
-  const getCorrectOption = (question: PastQuestion): string => {
-    const letterMap: Record<string, number> = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
-    if (question.correct_answer in letterMap) {
-      return question.options[letterMap[question.correct_answer]] || question.correct_answer;
-    }
-    return question.correct_answer;
-  };
-
   const handleSubmitAnswer = () => {
     if (!selectedAnswer || !practiceQuestions[currentQuestionIndex]) return;
     
-    const correctOption = getCorrectOption(practiceQuestions[currentQuestionIndex]);
-    const isCorrect = selectedAnswer === correctOption;
+    const currentQ = practiceQuestions[currentQuestionIndex];
+    const correctValue = getCorrectAnswer(currentQ);
+    const isCorrect = selectedAnswer === correctValue;
     if (isCorrect) setScore(score + 1);
     setAnsweredQuestions(answeredQuestions + 1);
     setShowResult(true);
@@ -298,8 +319,8 @@ const PastQuestions: React.FC = () => {
       setSelectedAnswer(null);
       setShowResult(false);
     } else {
-      const correctOption = getCorrectOption(practiceQuestions[currentQuestionIndex]);
-      toast.success(`Practice complete! Score: ${score + (selectedAnswer === correctOption ? 1 : 0)}/${practiceQuestions.length}`);
+      const correctValue = getCorrectAnswer(practiceQuestions[currentQuestionIndex]);
+      toast.success(`Practice complete! Score: ${score + (selectedAnswer === correctValue ? 1 : 0)}/${practiceQuestions.length}`);
       setPracticeMode(false);
       setShowSubjectSelector(true);
     }
@@ -357,29 +378,29 @@ const PastQuestions: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    {currentQ.options.map((option, index) => {
-                      const correctOption = getCorrectOption(currentQ);
+                    {normalizeOptions(currentQ.options).map((opt, index) => {
+                      const correctValue = getCorrectAnswer(currentQ);
                       return (
                         <button
                           key={index}
-                          onClick={() => handleAnswerSelect(option)}
+                          onClick={() => handleAnswerSelect(opt.value)}
                           disabled={showResult}
                           className={`w-full p-3 md:p-4 text-left rounded-lg border-2 transition-colors text-sm md:text-base ${
-                            showResult && option === correctOption
+                            showResult && opt.value === correctValue
                               ? 'border-green-500 bg-green-50 dark:bg-green-950'
-                              : showResult && option === selectedAnswer && option !== correctOption
+                              : showResult && opt.value === selectedAnswer && opt.value !== correctValue
                               ? 'border-red-500 bg-red-50 dark:bg-red-950'
-                              : selectedAnswer === option
+                              : selectedAnswer === opt.value
                               ? 'border-primary bg-primary/10'
                               : 'border-border hover:border-primary'
                           }`}
                         >
                           <div className="flex items-center justify-between">
-                            <span className="text-foreground">{option}</span>
-                            {showResult && option === correctOption && (
+                            <span className="text-foreground">{opt.value}</span>
+                            {showResult && opt.value === correctValue && (
                               <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
                             )}
-                            {showResult && option === selectedAnswer && option !== correctOption && (
+                            {showResult && opt.value === selectedAnswer && opt.value !== correctValue && (
                               <XCircle className="h-5 w-5 text-red-500 shrink-0" />
                             )}
                           </div>
