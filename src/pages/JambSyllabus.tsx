@@ -152,6 +152,16 @@ const syllabusData: SubjectSyllabus[] = [
           'Article writing for publication',
         ]
       },
+      {
+        topic: 'Recommended Reading Text — 2026',
+        subtopics: [
+          '"The Lekki Headmaster" — Recommended prose text for JAMB 2026 Use of English',
+          'Reading comprehension passages drawn from the text',
+          'Vocabulary in context: character names, settings, social themes',
+          'Summary and inference questions based on the text',
+          'Understanding the author\'s purpose, tone, and style',
+        ]
+      },
     ]
   },
   {
