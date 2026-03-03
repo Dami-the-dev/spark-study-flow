@@ -228,6 +228,13 @@ export type Database = {
             referencedRelation: "quiz_questions"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "quiz_attempts_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_questions_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       quiz_questions: {
@@ -331,10 +338,43 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      quiz_questions_safe: {
+        Row: {
+          created_at: string | null
+          difficulty: string | null
+          explanation: string | null
+          id: string | null
+          options: Json | null
+          question: string | null
+          subject: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          difficulty?: string | null
+          explanation?: string | null
+          id?: string | null
+          options?: Json | null
+          question?: string | null
+          subject?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          difficulty?: string | null
+          explanation?: string | null
+          id?: string | null
+          options?: Json | null
+          question?: string | null
+          subject?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      check_quiz_answer: {
+        Args: { _question_id: string; _selected_answer: string }
+        Returns: boolean
+      }
+      get_correct_answer: { Args: { _question_id: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never

@@ -14,8 +14,8 @@ interface Question {
   difficulty: string;
   question: string;
   options: string[];
-  correct_answer: string;
   explanation: string;
+  // correct_answer is NOT fetched client-side; checked server-side via RPC
 }
 
 // YouTube resources for learning
@@ -36,6 +36,7 @@ const QuizArena: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [totalAnswered, setTotalAnswered] = useState(0);
+  const [correctAnswer, setCorrectAnswer] = useState<string | null>(null);
 
   useEffect(() => {
     loadQuestions();
@@ -43,13 +44,14 @@ const QuizArena: React.FC = () => {
 
   const loadQuestions = async () => {
     try {
+      // Use the safe view that excludes correct_answer
       const { data, error } = await supabase
-        .from('quiz_questions')
+        .from('quiz_questions_safe' as any)
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      const formattedData = (data || []).map(q => ({
+      const formattedData = (data || []).map((q: any) => ({
         ...q,
         options: q.options as string[]
       }));
@@ -72,14 +74,27 @@ const QuizArena: React.FC = () => {
   const handleSubmitAnswer = async () => {
     if (!selectedAnswer || !currentQuestion) return;
 
-    const isCorrect = selectedAnswer === currentQuestion.correct_answer;
-    if (isCorrect) {
-      setScore(score + 1);
+    // Check answer server-side via RPC
+    const { data: isCorrect, error: checkError } = await supabase
+      .rpc('check_quiz_answer', {
+        _question_id: currentQuestion.id,
+        _selected_answer: selectedAnswer,
+      });
+
+    if (checkError) {
+      toast.error('Failed to check answer');
+      return;
     }
+
+    // Fetch the correct answer for display purposes only after submission
+    const { data: correct } = await supabase
+      .rpc('get_correct_answer', { _question_id: currentQuestion.id });
+    setCorrectAnswer(correct);
+
+    if (isCorrect) setScore(score + 1);
     setTotalAnswered(totalAnswered + 1);
     setShowResult(true);
 
-    // Save attempt to database
     if (user) {
       try {
         await supabase.from('quiz_attempts').insert({
@@ -100,6 +115,7 @@ const QuizArena: React.FC = () => {
     setCurrentQuestion(questions[nextIndex]);
     setSelectedAnswer(null);
     setShowResult(false);
+    setCorrectAnswer(null);
   };
 
   if (loading) {
@@ -142,9 +158,9 @@ const QuizArena: React.FC = () => {
                         onClick={() => handleAnswerSelect(option)}
                         disabled={showResult}
                         className={`w-full p-3 md:p-4 text-left rounded-lg border-2 transition-colors text-sm md:text-base ${
-                          showResult && option === currentQuestion.correct_answer
+                          showResult && option === correctAnswer
                             ? 'border-green-500 bg-green-50 dark:bg-green-950'
-                            : showResult && option === selectedAnswer && option !== currentQuestion.correct_answer
+                            : showResult && option === selectedAnswer && option !== correctAnswer
                             ? 'border-red-500 bg-red-50 dark:bg-red-950'
                             : selectedAnswer === option
                             ? 'border-primary bg-primary/10'
@@ -153,10 +169,10 @@ const QuizArena: React.FC = () => {
                       >
                         <div className="flex items-center justify-between">
                           <span>{option}</span>
-                          {showResult && option === currentQuestion.correct_answer && (
+                          {showResult && option === correctAnswer && (
                             <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
                           )}
-                          {showResult && option === selectedAnswer && option !== currentQuestion.correct_answer && (
+                          {showResult && option === selectedAnswer && option !== correctAnswer && (
                             <XCircle className="h-5 w-5 text-red-500 shrink-0" />
                           )}
                         </div>
@@ -165,7 +181,7 @@ const QuizArena: React.FC = () => {
                   </div>
                   
                   {showResult && (
-                    <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                    <div className="mt-6 p-4 bg-muted rounded-lg">
                       <p className="font-semibold mb-2">Explanation:</p>
                       <p className="text-sm text-muted-foreground">{currentQuestion.explanation}</p>
                     </div>
