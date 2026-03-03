@@ -157,9 +157,9 @@ const QuizArena: React.FC = () => {
                         onClick={() => handleAnswerSelect(option)}
                         disabled={showResult}
                         className={`w-full p-3 md:p-4 text-left rounded-lg border-2 transition-colors text-sm md:text-base ${
-                          showResult && option === currentQuestion.correct_answer
+                          showResult && option === correctAnswer
                             ? 'border-green-500 bg-green-50 dark:bg-green-950'
-                            : showResult && option === selectedAnswer && option !== currentQuestion.correct_answer
+                            : showResult && option === selectedAnswer && option !== correctAnswer
                             ? 'border-red-500 bg-red-50 dark:bg-red-950'
                             : selectedAnswer === option
                             ? 'border-primary bg-primary/10'
@@ -168,10 +168,10 @@ const QuizArena: React.FC = () => {
                       >
                         <div className="flex items-center justify-between">
                           <span>{option}</span>
-                          {showResult && option === currentQuestion.correct_answer && (
+                          {showResult && option === correctAnswer && (
                             <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
                           )}
-                          {showResult && option === selectedAnswer && option !== currentQuestion.correct_answer && (
+                          {showResult && option === selectedAnswer && option !== correctAnswer && (
                             <XCircle className="h-5 w-5 text-red-500 shrink-0" />
                           )}
                         </div>
@@ -180,7 +180,7 @@ const QuizArena: React.FC = () => {
                   </div>
                   
                   {showResult && (
-                    <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                    <div className="mt-6 p-4 bg-muted rounded-lg">
                       <p className="font-semibold mb-2">Explanation:</p>
                       <p className="text-sm text-muted-foreground">{currentQuestion.explanation}</p>
                     </div>
