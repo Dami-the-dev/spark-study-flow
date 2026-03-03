@@ -36,6 +36,7 @@ const QuizArena: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [totalAnswered, setTotalAnswered] = useState(0);
+  const [correctAnswer, setCorrectAnswer] = useState<string | null>(null);
 
   useEffect(() => {
     loadQuestions();
@@ -43,13 +44,14 @@ const QuizArena: React.FC = () => {
 
   const loadQuestions = async () => {
     try {
+      // Use the safe view that excludes correct_answer
       const { data, error } = await supabase
-        .from('quiz_questions')
+        .from('quiz_questions_safe' as any)
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      const formattedData = (data || []).map(q => ({
+      const formattedData = (data || []).map((q: any) => ({
         ...q,
         options: q.options as string[]
       }));
@@ -72,14 +74,27 @@ const QuizArena: React.FC = () => {
   const handleSubmitAnswer = async () => {
     if (!selectedAnswer || !currentQuestion) return;
 
-    const isCorrect = selectedAnswer === currentQuestion.correct_answer;
-    if (isCorrect) {
-      setScore(score + 1);
+    // Check answer server-side via RPC
+    const { data: isCorrect, error: checkError } = await supabase
+      .rpc('check_quiz_answer', {
+        _question_id: currentQuestion.id,
+        _selected_answer: selectedAnswer,
+      });
+
+    if (checkError) {
+      toast.error('Failed to check answer');
+      return;
     }
+
+    // Fetch the correct answer for display purposes only after submission
+    const { data: correct } = await supabase
+      .rpc('get_correct_answer', { _question_id: currentQuestion.id });
+    setCorrectAnswer(correct);
+
+    if (isCorrect) setScore(score + 1);
     setTotalAnswered(totalAnswered + 1);
     setShowResult(true);
 
-    // Save attempt to database
     if (user) {
       try {
         await supabase.from('quiz_attempts').insert({
