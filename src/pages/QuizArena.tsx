@@ -14,8 +14,8 @@ interface Question {
   difficulty: string;
   question: string;
   options: string[];
-  correct_answer: string;
   explanation: string;
+  // correct_answer is NOT fetched client-side; checked server-side via RPC
 }
 
 // YouTube resources for learning
