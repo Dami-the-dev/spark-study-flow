@@ -115,6 +115,7 @@ const QuizArena: React.FC = () => {
     setCurrentQuestion(questions[nextIndex]);
     setSelectedAnswer(null);
     setShowResult(false);
+    setCorrectAnswer(null);
   };
 
   if (loading) {
