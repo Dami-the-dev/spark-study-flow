@@ -195,7 +195,7 @@ const PastQuestions: React.FC = () => {
 
   const loadQuestions = async () => {
     try {
-      // Fetch all questions (bypass default 1000 row limit)
+      // Fetch only JAMB questions with pagination
       let allData: any[] = [];
       let from = 0;
       const pageSize = 1000;
@@ -205,8 +205,9 @@ const PastQuestions: React.FC = () => {
         const { data, error: fetchError } = await supabase
           .from('past_questions')
           .select('*')
+          .eq('exam_name', 'JAMB')
           .range(from, from + pageSize - 1)
-          .order('year', { ascending: false });
+          .order('subject', { ascending: true });
         
         if (fetchError) throw fetchError;
         if (data && data.length > 0) {
@@ -218,10 +219,10 @@ const PastQuestions: React.FC = () => {
         }
       }
 
-      const formattedData = allData.map(q => ({
-        ...q,
-        options: q.options as string[]
-      }));
+      // Defensive: filter out any rows with null/missing critical fields
+      const formattedData = allData
+        .filter(q => q && q.question && q.options && q.correct_answer)
+        .map(q => ({ ...q, options: q.options }));
       setQuestions(formattedData);
       setFilteredQuestions(formattedData);
     } catch (error: any) {
