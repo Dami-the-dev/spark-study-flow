@@ -6,7 +6,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: './', // Added for Capacitor
+  // Note: base must be '/' (not './') for SPA routing to work on published URLs.
+  // Capacitor handles asset paths differently — keep base as '/' for web builds.
+  base: '/',
   build: {
     outDir: 'dist' // Ensuring output directory is 'dist'
   },
