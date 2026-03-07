@@ -23,35 +23,36 @@ interface PastQuestion {
   difficulty: string;
 }
 
-// Normalize options to always return an array of {key, value} pairs
+// Normalize options to always return an array of {key, value} pairs - crash-safe
 const normalizeOptions = (options: any): { key: string; value: string }[] => {
+  if (!options) return [];
   if (Array.isArray(options)) {
-    return options.map((opt, i) => ({ key: String(i), value: String(opt) }));
+    return options.map((opt, i) => ({ key: String(i), value: String(opt ?? '') }));
   }
-  if (typeof options === 'object' && options !== null) {
-    return Object.entries(options).map(([k, v]) => ({ key: k, value: String(v) }));
+  if (typeof options === 'object') {
+    return Object.entries(options).map(([k, v]) => ({ key: k, value: String(v ?? '') }));
   }
   return [];
 };
 
-// Get the correct answer display value
+// Get the correct answer display value - crash-safe
 const getCorrectAnswer = (question: PastQuestion): string => {
-  const opts = normalizeOptions(question.options);
+  if (!question || !question.correct_answer) return '';
   const ca = question.correct_answer;
-  // If correct_answer is a letter key (A, B, C, D), find the matching option value
+  if (!question.options) return ca;
+  // Object format: correct_answer is a key like "A"
   if (typeof question.options === 'object' && !Array.isArray(question.options)) {
-    // Object format: correct_answer is a key like "A"
     return question.options[ca] ? String(question.options[ca]) : ca;
   }
   // Array format: correct_answer might be full text or letter
   const letterMap: Record<string, number> = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
   if (ca in letterMap && Array.isArray(question.options)) {
-    return String(question.options[letterMap[ca]] || ca);
+    return String(question.options[letterMap[ca]] ?? ca);
   }
   return ca;
 };
 
-// All available JAMB subjects
+// All available JAMB subjects - only those with questions in the database
 const allSubjects = [
   'Mathematics',
   'English',
