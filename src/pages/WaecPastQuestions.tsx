@@ -25,15 +25,15 @@ interface WaecQuestion {
   difficulty: string | null;
 }
 
+// Only subjects that have actual WAEC questions in the database
 const waecSubjects = [
   'Mathematics', 'English Language', 'Physics', 'Chemistry', 'Biology',
-  'Further Mathematics', 'Technical Drawing', 'Agricultural Science',
+  'Further Mathematics', 'Agricultural Science',
   'Economics', 'Government', 'Literature in English', 'Geography',
   'Civic Education', 'Commerce', 'Accounting', 'Book Keeping',
   'Christian Religious Studies', 'Islamic Religious Studies',
   'History', 'French', 'Yoruba', 'Igbo', 'Hausa',
-  'Food and Nutrition', 'Home Management', 'Computer Studies',
-  'Data Processing', 'Marketing', 'Office Practice'
+  'Computer Studies'
 ];
 
 const subjectVideos: Record<string, { title: string; url: string; views: string }[]> = {
