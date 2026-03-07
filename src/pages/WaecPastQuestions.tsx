@@ -25,15 +25,15 @@ interface WaecQuestion {
   difficulty: string | null;
 }
 
+// Only subjects that have actual WAEC questions in the database
 const waecSubjects = [
   'Mathematics', 'English Language', 'Physics', 'Chemistry', 'Biology',
-  'Further Mathematics', 'Technical Drawing', 'Agricultural Science',
+  'Further Mathematics', 'Agricultural Science',
   'Economics', 'Government', 'Literature in English', 'Geography',
   'Civic Education', 'Commerce', 'Accounting', 'Book Keeping',
   'Christian Religious Studies', 'Islamic Religious Studies',
   'History', 'French', 'Yoruba', 'Igbo', 'Hausa',
-  'Food and Nutrition', 'Home Management', 'Computer Studies',
-  'Data Processing', 'Marketing', 'Office Practice'
+  'Computer Studies'
 ];
 
 const subjectVideos: Record<string, { title: string; url: string; views: string }[]> = {
@@ -330,40 +330,71 @@ const WaecPastQuestions: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {Object.entries(currentQuestion.options).map(([key, value]) => {
-                    const isSelected = selectedAnswer === key;
-                    const isCorrect = key === currentQuestion.correct_answer;
-                    
-                    let bgClass = 'bg-background hover:bg-muted';
-                    if (showResult) {
-                      if (isCorrect) bgClass = 'bg-green-100 dark:bg-green-900/30 border-green-500';
-                      else if (isSelected && !isCorrect) bgClass = 'bg-red-100 dark:bg-red-900/30 border-red-500';
-                    } else if (isSelected) {
-                      bgClass = 'bg-primary/20 border-primary';
-                    }
+                  {currentQuestion.options && typeof currentQuestion.options === 'object' && !Array.isArray(currentQuestion.options)
+                    ? Object.entries(currentQuestion.options).map(([key, value]) => {
+                        const isSelected = selectedAnswer === key;
+                        const isCorrect = key === currentQuestion.correct_answer;
+                        
+                        let bgClass = 'bg-background hover:bg-muted';
+                        if (showResult) {
+                          if (isCorrect) bgClass = 'bg-green-100 dark:bg-green-900/30 border-green-500';
+                          else if (isSelected && !isCorrect) bgClass = 'bg-red-100 dark:bg-red-900/30 border-red-500';
+                        } else if (isSelected) {
+                          bgClass = 'bg-primary/20 border-primary';
+                        }
 
-                    return (
-                      <button
-                        key={key}
-                        onClick={() => handleAnswerSelect(key)}
-                        disabled={showResult}
-                        className={`w-full text-left p-4 rounded-lg border-2 transition-all ${bgClass} ${
-                          !showResult ? 'cursor-pointer' : ''
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="font-bold text-primary">{key}.</span>
-                          <span className="text-foreground">{String(value)}</span>
-                          {showResult && isCorrect && (
-                            <CheckCircle className="h-5 w-5 text-green-500 ml-auto" />
-                          )}
-                          {showResult && isSelected && !isCorrect && (
-                            <XCircle className="h-5 w-5 text-red-500 ml-auto" />
-                          )}
-                        </div>
-                      </button>
-                    );
-                  })}
+                        return (
+                          <button
+                            key={key}
+                            onClick={() => handleAnswerSelect(key)}
+                            disabled={showResult}
+                            className={`w-full text-left p-4 rounded-lg border-2 transition-all ${bgClass} ${
+                              !showResult ? 'cursor-pointer' : ''
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className="font-bold text-primary">{key}.</span>
+                              <span className="text-foreground">{String(value ?? '')}</span>
+                              {showResult && isCorrect && (
+                                <CheckCircle className="h-5 w-5 text-green-500 ml-auto" />
+                              )}
+                              {showResult && isSelected && !isCorrect && (
+                                <XCircle className="h-5 w-5 text-red-500 ml-auto" />
+                              )}
+                            </div>
+                          </button>
+                        );
+                      })
+                    : Array.isArray(currentQuestion.options)
+                    ? (currentQuestion.options as string[]).map((value, idx) => {
+                        const key = ['A','B','C','D'][idx] ?? String(idx);
+                        const isSelected = selectedAnswer === key;
+                        const isCorrect = key === currentQuestion.correct_answer;
+                        let bgClass = 'bg-background hover:bg-muted';
+                        if (showResult) {
+                          if (isCorrect) bgClass = 'bg-green-100 dark:bg-green-900/30 border-green-500';
+                          else if (isSelected && !isCorrect) bgClass = 'bg-red-100 dark:bg-red-900/30 border-red-500';
+                        } else if (isSelected) {
+                          bgClass = 'bg-primary/20 border-primary';
+                        }
+                        return (
+                          <button
+                            key={key}
+                            onClick={() => handleAnswerSelect(key)}
+                            disabled={showResult}
+                            className={`w-full text-left p-4 rounded-lg border-2 transition-all ${bgClass} ${!showResult ? 'cursor-pointer' : ''}`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className="font-bold text-primary">{key}.</span>
+                              <span className="text-foreground">{String(value ?? '')}</span>
+                              {showResult && isCorrect && <CheckCircle className="h-5 w-5 text-green-500 ml-auto" />}
+                              {showResult && isSelected && !isCorrect && <XCircle className="h-5 w-5 text-red-500 ml-auto" />}
+                            </div>
+                          </button>
+                        );
+                      })
+                    : null
+                  }
                 </div>
 
                 {/* Explanation */}
