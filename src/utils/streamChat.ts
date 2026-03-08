@@ -1,6 +1,29 @@
 type Message = { role: "user" | "assistant"; content: string };
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/educational-chat`;
+const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY as string;
+
+const SYSTEM_PROMPT = `You are an educational AI study assistant for Study Spark. Your purpose is STRICTLY educational.
+CORE RESPONSIBILITIES:
+- Answer questions about academic subjects, study techniques, and educational topics
+- Help students understand concepts and solve problems
+- Provide explanations, summaries, and study guidance
+- Be encouraging, empathetic, and motivating
+- Break down complex topics into understandable parts
+STRICT LIMITATIONS:
+- ONLY respond to educational and academic queries
+- DO NOT engage in conversations about non-educational topics
+- If asked about non-educational topics, politely redirect to educational subjects
+- DO NOT provide personal advice unrelated to studies
+- DO NOT discuss topics like politics, religion, or controversial subjects
+TONE & APPROACH:
+- Be friendly, patient, and encouraging
+- Celebrate progress and effort
+- Acknowledge when topics are challenging
+- Use simple language and examples
+- Ask clarifying questions when needed
+If a user asks something non-educational, respond with:
+"I'm here to help you with your studies and academic questions. Let's focus on educational topics! What would you like to learn about today?"`;
 
 export async function streamChat({
   messages,
@@ -14,13 +37,25 @@ export async function streamChat({
   onError?: (error: string) => void;
 }) {
   try {
-    const resp = await fetch(CHAT_URL, {
+    if (!GROQ_API_KEY) {
+      onError?.("Groq API key is not configured. Please set VITE_GROQ_API_KEY.");
+      return;
+    }
+
+    const resp = await fetch(GROQ_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        Authorization: `Bearer ${GROQ_API_KEY}`,
       },
-      body: JSON.stringify({ messages }),
+      body: JSON.stringify({
+        model: "llama3-8b-8192",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...messages,
+        ],
+        stream: true,
+      }),
     });
 
     if (!resp.ok) {
@@ -31,11 +66,7 @@ export async function streamChat({
           onError?.("Rate limit exceeded. Please wait a moment and try again.");
           return;
         }
-        if (resp.status === 402) {
-          onError?.("AI credits have been used up. Please add credits in workspace settings to continue.");
-          return;
-        }
-        errorMsg = errorData.error || errorMsg;
+        errorMsg = errorData?.error?.message || errorMsg;
       } catch {
         // ignore JSON parse errors
       }
@@ -53,7 +84,7 @@ export async function streamChat({
     while (!streamDone) {
       const { done, value } = await reader.read();
       if (done) break;
-      
+
       textBuffer += decoder.decode(value, { stream: true });
 
       let newlineIndex: number;
