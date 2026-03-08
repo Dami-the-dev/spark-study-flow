@@ -24,18 +24,23 @@ export async function streamChat({
     });
 
     if (!resp.ok) {
-      const errorData = await resp.json().catch(() => ({}));
-      
-      if (resp.status === 429) {
-        onError?.("Rate limit exceeded. Please try again in a moment.");
-        return;
+      let errorMsg = "Failed to connect to AI service.";
+      try {
+        const errorData = await resp.json();
+        if (resp.status === 429) {
+          onError?.("Rate limit exceeded. Please wait a moment and try again.");
+          return;
+        }
+        if (resp.status === 402) {
+          onError?.("AI credits have been used up. Please add credits in workspace settings to continue.");
+          return;
+        }
+        errorMsg = errorData.error || errorMsg;
+      } catch {
+        // ignore JSON parse errors
       }
-      if (resp.status === 402) {
-        onError?.("Service temporarily unavailable. Please try again later.");
-        return;
-      }
-      
-      throw new Error(errorData.error || "Failed to start stream");
+      onError?.(errorMsg);
+      return;
     }
 
     if (!resp.body) throw new Error("No response body");
