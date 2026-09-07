@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import AIAssistant from "./pages/AIAssistant";
 import PastQuestions from "./pages/PastQuestions";
 import WaecPastQuestions from "./pages/WaecPastQuestions";
+import CbtExam from "./pages/CbtExam";
 import JambSyllabus from "./pages/JambSyllabus";
 import UploadMaterials from "./pages/UploadMaterials";
 import StudyPlanner from "./pages/StudyPlanner";
@@ -62,6 +63,7 @@ const App = () => {
               <Route path="/dashboard/ai-assistant" element={<AIAssistant />} />
               <Route path="/dashboard/past-questions" element={<PastQuestions />} />
               <Route path="/dashboard/waec-questions" element={<WaecPastQuestions />} />
+              <Route path="/dashboard/cbt-exam" element={<CbtExam />} />
               <Route path="/dashboard/jamb-syllabus" element={<JambSyllabus />} />
               <Route path="/dashboard/upload-materials" element={<UploadMaterials />} />
               <Route path="/dashboard/planner" element={<StudyPlanner />} />
