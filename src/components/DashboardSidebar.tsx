@@ -10,7 +10,8 @@ import {
   HelpCircle,
   Menu,
   X,
-  GraduationCap
+  GraduationCap,
+  Timer
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
@@ -73,6 +74,12 @@ const DashboardSidebar: React.FC = () => {
         icon={<Award size={18} />} 
         label="WAEC Questions" 
         to="/dashboard/waec-questions"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<Timer size={18} />} 
+        label="CBT Exam Hall" 
+        to="/dashboard/cbt-exam"
         onClick={closeSidebar}
       />
       <NavItem 
