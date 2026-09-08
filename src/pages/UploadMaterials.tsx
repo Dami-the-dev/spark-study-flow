@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
+import { extractTextFromFile } from '@/lib/documentText';
 import { toast } from 'sonner';
 import { Loader2, Upload, FileUp, Sparkles, FileText, BookOpen, File } from 'lucide-react';
 
@@ -17,7 +17,6 @@ const jambSubjects = [
 ];
 
 const UploadMaterials: React.FC = () => {
-  const { user } = useAuth();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedSubject, setSelectedSubject] = useState('');
   const [questionCount, setQuestionCount] = useState('50');
@@ -69,49 +68,40 @@ const UploadMaterials: React.FC = () => {
 
     setIsGenerating(true);
     setGeneratedQuestions([]);
-    
+
     try {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        const base64Content = (e.target?.result as string)?.split(',')[1];
-        
-        if (!base64Content) {
-          toast.error('Failed to read file');
-          setIsGenerating(false);
-          return;
-        }
+      const text = await extractTextFromFile(selectedFile);
 
-        try {
-          const { data, error } = await supabase.functions.invoke('generate-questions-from-pdf', {
-            body: {
-              pdfContent: base64Content,
-              subject: selectedSubject,
-              questionCount: parseInt(questionCount),
-              fileName: selectedFile.name,
-              examType: 'JAMB'
-            }
-          });
+      if (!text || text.length < 200) {
+        toast.error('We could not read enough text from this file. Try a text-based PDF, Word (.docx) or .txt file.');
+        setIsGenerating(false);
+        return;
+      }
 
-          if (error) throw error;
-          
-          if (data?.questions && data.questions.length > 0) {
-            setGeneratedQuestions(data.questions);
-            toast.success(`Generated ${data.questions.length} practice questions!`);
-          } else {
-            toast.error('No questions could be generated from this file');
-          }
-        } catch (error: any) {
-          console.error('Error generating questions:', error);
-          toast.error(error.message || 'Failed to generate questions');
-        } finally {
-          setIsGenerating(false);
-        }
-      };
-      
-      reader.readAsDataURL(selectedFile);
+      const { data, error } = await supabase.functions.invoke('generate-questions-from-pdf', {
+        body: {
+          pdfText: text.slice(0, 20000),
+          subject: selectedSubject,
+          questionCount: parseInt(questionCount),
+          fileName: selectedFile.name,
+          examType: 'JAMB',
+        },
+      });
+
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+
+      const questions = Array.isArray(data?.questions) ? data.questions : [];
+      if (questions.length > 0) {
+        setGeneratedQuestions(questions);
+        toast.success(`Generated ${questions.length} practice questions!`);
+      } else {
+        toast.error('No questions could be generated from this file');
+      }
     } catch (error: any) {
-      console.error('Error reading file:', error);
-      toast.error('Failed to read file');
+      console.error('Error generating questions:', error);
+      toast.error(error.message || 'Failed to generate questions');
+    } finally {
       setIsGenerating(false);
     }
   };
