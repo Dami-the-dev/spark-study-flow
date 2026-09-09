@@ -98,11 +98,12 @@ const JambSyllabus: React.FC = () => {
           <div className="mb-6">
             <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2 text-foreground">
               <BookOpen className="h-6 w-6 text-primary" />
-              JAMB Syllabus
+              2025 JAMB Syllabus
             </h1>
             <p className="text-sm text-muted-foreground">
-              View and download the official JAMB syllabus for all subjects
+              The full 2025 UTME syllabus for every subject — view, download, and practise questions on the exact topics you are examined on
             </p>
+
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
