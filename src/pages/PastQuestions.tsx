@@ -185,9 +185,23 @@ const PastQuestions: React.FC = () => {
   const [answeredQuestions, setAnsweredQuestions] = useState(0);
   const [practiceQuestions, setPracticeQuestions] = useState<PastQuestion[]>([]);
 
+  const [searchParams] = useSearchParams();
+
   useEffect(() => {
     loadQuestions();
   }, []);
+
+  // Deep link from the syllabus page: /dashboard/past-questions?subject=Physics
+  useEffect(() => {
+    const fromSyllabus = searchParams.get('subject');
+    if (!fromSyllabus) return;
+    const match = allSubjects.find(
+      s => s.toLowerCase() === fromSyllabus.toLowerCase() ||
+           fromSyllabus.toLowerCase().startsWith(s.toLowerCase())
+    );
+    if (match) setSelectedSubjects([match]);
+  }, [searchParams]);
+
 
   useEffect(() => {
     filterQuestions();
