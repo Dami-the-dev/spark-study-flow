@@ -223,8 +223,12 @@ const PastQuestions: React.FC = () => {
       const formattedData = allData
         .filter(q => q && q.question && q.options && q.correct_answer)
         .map(q => ({ ...q, options: q.options }));
-      setQuestions(formattedData);
-      setFilteredQuestions(formattedData);
+      // Merge in questions the student generated from their own uploads
+      const uploaded = getUploadedQuestions('JAMB') as unknown as PastQuestion[];
+      const combined = [...uploaded, ...formattedData];
+      setQuestions(combined);
+      setFilteredQuestions(combined);
+
     } catch (error: any) {
       toast.error(error.message || 'Failed to load questions');
     } finally {
