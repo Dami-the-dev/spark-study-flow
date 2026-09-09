@@ -152,11 +152,11 @@ const JambSyllabus: React.FC = () => {
               {selectedSubject ? (
                 <Card className="bg-card">
                   <CardHeader>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                       <div>
-                        <CardTitle className="text-xl text-foreground">{selectedSubject.name} Syllabus</CardTitle>
+                        <CardTitle className="text-xl text-foreground">{selectedSubject.name} Syllabus (2025)</CardTitle>
                         <CardDescription>
-                          Topics and subtopics for JAMB {selectedSubject.name}
+                          {selectedSubject.topics.length} examinable topics for JAMB {selectedSubject.name}
                         </CardDescription>
                       </div>
                       <Button variant="outline" onClick={() => downloadSyllabusPDF(selectedSubject)}>
@@ -164,7 +164,20 @@ const JambSyllabus: React.FC = () => {
                           Download PDF
                       </Button>
                     </div>
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <Button size="sm" asChild>
+                        <Link to={`/dashboard/past-questions?subject=${encodeURIComponent(selectedSubject.name)}`}>
+                          Practise {selectedSubject.name} questions
+                        </Link>
+                      </Button>
+                      <Button size="sm" variant="secondary" asChild>
+                        <Link to={`/dashboard/cbt-exam?subject=${encodeURIComponent(selectedSubject.name)}`}>
+                          Take a CBT mock
+                        </Link>
+                      </Button>
+                    </div>
                   </CardHeader>
+
                   <CardContent>
                     <Accordion type="multiple" className="w-full">
                       {selectedSubject.topics.map((topic, index) => (
