@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,8 +7,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { extractTextFromFile } from '@/lib/documentText';
+import { saveUploadedQuestions } from '@/lib/generatedQuestions';
+import { getSyllabusForSubject } from '@/data/jambSyllabus';
+import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { Loader2, Upload, FileUp, Sparkles, FileText, BookOpen, File } from 'lucide-react';
+import { Loader2, Upload, FileUp, Sparkles, FileText, BookOpen, File, ArrowRight } from 'lucide-react';
 
 const jambSubjects = [
   'Mathematics', 'English', 'Physics', 'Chemistry', 'Biology',
@@ -16,12 +20,24 @@ const jambSubjects = [
   'Islamic Religious Studies', 'History', 'French', 'Arabic', 'Igbo', 'Yoruba', 'Hausa'
 ];
 
+const waecSubjects = [
+  'Mathematics', 'English Language', 'Physics', 'Chemistry', 'Biology',
+  'Further Mathematics', 'Agricultural Science', 'Economics', 'Government',
+  'Literature in English', 'Geography', 'Civic Education', 'Commerce', 'Accounting',
+  'Christian Religious Studies', 'Islamic Religious Studies', 'History', 'French',
+  'Yoruba', 'Igbo', 'Hausa', 'Computer Studies'
+];
+
 const UploadMaterials: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [examType, setExamType] = useState<'JAMB' | 'WAEC'>('JAMB');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [questionCount, setQuestionCount] = useState('50');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedQuestions, setGeneratedQuestions] = useState<any[]>([]);
+  const [savedCount, setSavedCount] = useState(0);
+
+  const subjectList = examType === 'JAMB' ? jambSubjects : waecSubjects;
 
   const acceptedFileTypes = '.pdf,.doc,.docx,.txt,.rtf';
   const acceptedMimeTypes = [
@@ -31,6 +47,7 @@ const UploadMaterials: React.FC = () => {
     'text/plain',
     'application/rtf'
   ];
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

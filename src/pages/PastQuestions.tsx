@@ -10,6 +10,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Loader2, PlayCircle, Youtube, CheckCircle, XCircle, ArrowRight, RotateCcw, BookOpen, Filter, Check } from 'lucide-react';
 import { Label } from '@/components/ui/label';
+import { useSearchParams, Link } from 'react-router-dom';
+import { getUploadedQuestions } from '@/lib/generatedQuestions';
+import { getSyllabusForSubject } from '@/data/jambSyllabus';
 
 interface PastQuestion {
   id: string;
@@ -185,9 +188,23 @@ const PastQuestions: React.FC = () => {
   const [answeredQuestions, setAnsweredQuestions] = useState(0);
   const [practiceQuestions, setPracticeQuestions] = useState<PastQuestion[]>([]);
 
+  const [searchParams] = useSearchParams();
+
   useEffect(() => {
     loadQuestions();
   }, []);
+
+  // Deep link from the syllabus page: /dashboard/past-questions?subject=Physics
+  useEffect(() => {
+    const fromSyllabus = searchParams.get('subject');
+    if (!fromSyllabus) return;
+    const match = allSubjects.find(
+      s => s.toLowerCase() === fromSyllabus.toLowerCase() ||
+           fromSyllabus.toLowerCase().startsWith(s.toLowerCase())
+    );
+    if (match) setSelectedSubjects([match]);
+  }, [searchParams]);
+
 
   useEffect(() => {
     filterQuestions();
@@ -223,8 +240,12 @@ const PastQuestions: React.FC = () => {
       const formattedData = allData
         .filter(q => q && q.question && q.options && q.correct_answer)
         .map(q => ({ ...q, options: q.options }));
-      setQuestions(formattedData);
-      setFilteredQuestions(formattedData);
+      // Merge in questions the student generated from their own uploads
+      const uploaded = getUploadedQuestions('JAMB') as unknown as PastQuestion[];
+      const combined = [...uploaded, ...formattedData];
+      setQuestions(combined);
+      setFilteredQuestions(combined);
+
     } catch (error: any) {
       toast.error(error.message || 'Failed to load questions');
     } finally {
@@ -543,8 +564,34 @@ const PastQuestions: React.FC = () => {
                         </Badge>
                       ))}
                     </div>
+
+                    {/* 2025 syllabus topics covered by the selected subjects */}
+                    <div className="mt-4 space-y-3">
+                      {selectedSubjects.map(subject => {
+                        const syllabus = getSyllabusForSubject(subject);
+                        if (!syllabus) return null;
+                        return (
+                          <div key={`syl-${subject}`} className="rounded-lg border border-border p-3 bg-background">
+                            <div className="flex items-center justify-between gap-2 mb-2">
+                              <p className="text-sm font-medium text-foreground">
+                                {subject} — 2025 syllabus topics ({syllabus.topics.length})
+                              </p>
+                              <Button variant="link" size="sm" className="h-auto p-0" asChild>
+                                <Link to="/dashboard/jamb-syllabus">View full syllabus</Link>
+                              </Button>
+                            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              {syllabus.topics.map(t => (
+                                <Badge key={t.topic} variant="outline" className="text-xs font-normal">{t.topic}</Badge>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
+
               </CardContent>
               <CardFooter className="flex flex-col gap-4">
                 {/* Question Count Selector */}
