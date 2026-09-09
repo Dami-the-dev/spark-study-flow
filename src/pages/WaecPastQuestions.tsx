@@ -122,18 +122,22 @@ const WaecPastQuestions: React.FC = () => {
       }
       
       const error = null;
-      const data = allData;
+      const uploaded = getUploadedQuestions('WAEC').filter(q => selectedSubjects.includes(q.subject));
+      const data = [...allData, ...uploaded];
 
       if (error) throw error;
       
       // Shuffle questions for practice
       const shuffled = (data || []).sort(() => Math.random() - 0.5);
-      setQuestions(shuffled);
+      setQuestions(shuffled as any);
       setShowSubjectSelection(false);
       
       if (shuffled.length === 0) {
         toast.info('No WAEC questions found for selected subjects. More questions coming soon!');
+      } else if (uploaded.length > 0) {
+        toast.success(`Included ${uploaded.length} question(s) from your uploaded materials`);
       }
+
     } catch (error: any) {
       toast.error('Failed to load questions');
     } finally {
