@@ -564,8 +564,34 @@ const PastQuestions: React.FC = () => {
                         </Badge>
                       ))}
                     </div>
+
+                    {/* 2025 syllabus topics covered by the selected subjects */}
+                    <div className="mt-4 space-y-3">
+                      {selectedSubjects.map(subject => {
+                        const syllabus = getSyllabusForSubject(subject);
+                        if (!syllabus) return null;
+                        return (
+                          <div key={`syl-${subject}`} className="rounded-lg border border-border p-3 bg-background">
+                            <div className="flex items-center justify-between gap-2 mb-2">
+                              <p className="text-sm font-medium text-foreground">
+                                {subject} — 2025 syllabus topics ({syllabus.topics.length})
+                              </p>
+                              <Button variant="link" size="sm" className="h-auto p-0" asChild>
+                                <Link to="/dashboard/jamb-syllabus">View full syllabus</Link>
+                              </Button>
+                            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              {syllabus.topics.map(t => (
+                                <Badge key={t.topic} variant="outline" className="text-xs font-normal">{t.topic}</Badge>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
+
               </CardContent>
               <CardFooter className="flex flex-col gap-4">
                 {/* Question Count Selector */}
