@@ -148,26 +148,35 @@ const UploadMaterials: React.FC = () => {
           </div>
 
           {/* Upload Section */}
-          <Card className="mb-6 bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+          <Card className="mb-6 bg-primary/5 border-primary/20">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-primary" />
                 <CardTitle className="text-lg text-foreground">Generate Questions from Documents</CardTitle>
               </div>
               <CardDescription>
-                Upload your study materials (PDF, Word, or text files) and let AI convert them into JAMB-style practice questions
+                Upload your study materials (PDF, Word, or text files) and let AI turn them into exam-style practice questions
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* Subject Selection */}
               <div className="space-y-2">
-                <Label className="text-foreground">Select JAMB Subject</Label>
+                <Label className="text-foreground">Exam</Label>
+                <div className="flex gap-2">
+                  {(['JAMB', 'WAEC'] as const).map(t => (
+                    <Button key={t} type="button" variant={examType === t ? 'default' : 'outline'} onClick={() => { setExamType(t); setSelectedSubject(''); }}>
+                      {t}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-foreground">Select {examType} Subject</Label>
                 <Select value={selectedSubject} onValueChange={setSelectedSubject}>
                   <SelectTrigger>
                     <SelectValue placeholder="Choose a subject" />
                   </SelectTrigger>
                   <SelectContent>
-                    {jambSubjects.map((subject) => (
+                    {subjectList.map((subject) => (
                       <SelectItem key={subject} value={subject}>{subject}</SelectItem>
                     ))}
                   </SelectContent>
@@ -265,8 +274,13 @@ const UploadMaterials: React.FC = () => {
                   Generated Questions ({generatedQuestions.length})
                 </CardTitle>
                 <CardDescription>
-                  Practice questions generated from your {selectedSubject} material
+                  {savedCount} saved to your {examType} {selectedSubject} practice questions on this device
                 </CardDescription>
+                <Button size="sm" className="w-fit mt-2" asChild>
+                  <Link to={examType === 'JAMB' ? '/dashboard/past-questions' : '/dashboard/waec-questions'}>
+                    Practise them in {examType} <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </Button>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
