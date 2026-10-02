@@ -95,23 +95,29 @@ const UploadMaterials: React.FC = () => {
         return;
       }
 
-      const { data, error } = await supabase.functions.invoke('generate-questions-from-pdf', {
-        body: {
-          pdfText: text.slice(0, 20000),
-          subject: selectedSubject,
-          questionCount: parseInt(questionCount),
-          fileName: selectedFile.name,
-          examType: 'JAMB',
-        },
-      });
-
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-
-      const questions = Array.isArray(data?.questions) ? data.questions : [];
-      if (questions.length > 0) {
-        setGeneratedQuestions(questions);
-        toast.success(`Generated ${questions.length} practice questions!`);
+      const total = parseInt(questionCount);
+      const batchSize = 20;
+      const batches = Math.ceil(total / batchSize);
+      const chunkLen = Math.ceil(Math.min(text.length, 60000) / batches);
+      const questions: any[] = [];
+      for (let b = 0; b < batches; b++) {
+        const n = Math.min(batchSize, total - b * batchSize);
+        const slice = text.slice(b * chunkLen, b * chunkLen + Math.max(chunkLen, 4000)) || text.slice(0, 15000);
+        const { data, error } = await supabase.functions.invoke('generate-questions-from-pdf', {
+          body: { pdfText: slice, subject: selectedSubject, questionCount: n, examType },
+        });
+        if (error || data?.error) {
+          if (questions.length === 0 && b === batches - 1) throw new Error(data?.error || error?.message || 'Generation failed');
+          continue;
+        }
+        if (Array.isArray(data?.questions)) questions.push(...data.questions);
+      }
+      const valid = questions.filter(q => q?.question && q?.options && q?.correct_answer);
+      if (valid.length > 0) {
+        setGeneratedQuestions(valid);
+        const saved = saveUploadedQuestions(valid, { examName: examType, subject: selectedSubject, fileName: selectedFile.name });
+        setSavedCount(saved.length);
+        toast.success(`Generated ${valid.length} questions and added them to your ${examType} practice bank!`);
       } else {
         toast.error('No questions could be generated from this file');
       }
@@ -138,30 +144,39 @@ const UploadMaterials: React.FC = () => {
               <Upload className="h-6 w-6 text-primary" />
               Upload Materials
             </h1>
-            <p className="text-sm text-muted-foreground">Upload JAMB study materials and generate practice questions</p>
+            <p className="text-sm text-muted-foreground">Upload study materials and generate JAMB or WAEC practice questions</p>
           </div>
 
           {/* Upload Section */}
-          <Card className="mb-6 bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+          <Card className="mb-6 bg-primary/5 border-primary/20">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-primary" />
                 <CardTitle className="text-lg text-foreground">Generate Questions from Documents</CardTitle>
               </div>
               <CardDescription>
-                Upload your study materials (PDF, Word, or text files) and let AI convert them into JAMB-style practice questions
+                Upload your study materials (PDF, Word, or text files) and let AI turn them into exam-style practice questions
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* Subject Selection */}
               <div className="space-y-2">
-                <Label className="text-foreground">Select JAMB Subject</Label>
+                <Label className="text-foreground">Exam</Label>
+                <div className="flex gap-2">
+                  {(['JAMB', 'WAEC'] as const).map(t => (
+                    <Button key={t} type="button" variant={examType === t ? 'default' : 'outline'} onClick={() => { setExamType(t); setSelectedSubject(''); }}>
+                      {t}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-foreground">Select {examType} Subject</Label>
                 <Select value={selectedSubject} onValueChange={setSelectedSubject}>
                   <SelectTrigger>
                     <SelectValue placeholder="Choose a subject" />
                   </SelectTrigger>
                   <SelectContent>
-                    {jambSubjects.map((subject) => (
+                    {subjectList.map((subject) => (
                       <SelectItem key={subject} value={subject}>{subject}</SelectItem>
                     ))}
                   </SelectContent>
@@ -238,7 +253,7 @@ const UploadMaterials: React.FC = () => {
                 {isGenerating ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Generating JAMB-Style Questions...
+                    Generating {examType}-Style Questions...
                   </>
                 ) : (
                   <>
@@ -259,8 +274,13 @@ const UploadMaterials: React.FC = () => {
                   Generated Questions ({generatedQuestions.length})
                 </CardTitle>
                 <CardDescription>
-                  Practice questions generated from your {selectedSubject} material
+                  {savedCount} saved to your {examType} {selectedSubject} practice questions on this device
                 </CardDescription>
+                <Button size="sm" className="w-fit mt-2" asChild>
+                  <Link to={examType === 'JAMB' ? '/dashboard/past-questions' : '/dashboard/waec-questions'}>
+                    Practise them in {examType} <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </Button>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -304,7 +324,7 @@ const UploadMaterials: React.FC = () => {
                 <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2 text-foreground">No Questions Yet</h3>
                 <p className="text-muted-foreground">
-                  Upload a document above to generate JAMB-style practice questions
+                  Upload a document above to generate exam-style practice questions
                 </p>
               </CardContent>
             </Card>

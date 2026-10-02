@@ -40,7 +40,7 @@ serve(async (req) => {
       throw new Error("GROQ_API_KEY is not configured");
     }
 
-    const systemPrompt = `You are an educational question generator. Generate ${questionCount} multiple-choice questions based on the provided text. Each question must have 4 options (A, B, C, D) and indicate the correct answer. You MUST respond with ONLY a valid JSON array, no markdown, no explanation. Format: [{"question":"...","options":{"A":"...","B":"...","C":"...","D":"..."},"correct_answer":"A","explanation":"..."}]`;
+    const systemPrompt = `You are a JAMB/WAEC exam question writer. Generate ${questionCount} distinct multiple-choice questions based on the provided text. Each question must have 4 options (A, B, C, D) and the correct answer letter. Respond with ONLY a JSON object, no markdown. Format: {"questions":[{"question":"...","options":{"A":"...","B":"...","C":"...","D":"..."},"correct_answer":"A","explanation":"..."}]}`;
 
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
