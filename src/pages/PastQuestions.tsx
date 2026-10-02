@@ -304,12 +304,7 @@ const PastQuestions: React.FC = () => {
   };
 
   const startPractice = (questionsToUse: PastQuestion[]) => {
-    // Shuffle questions
-    const shuffled = [...questionsToUse].sort(() => Math.random() - 0.5);
-    // Apply question count limit
-    const limitedQuestions = selectedQuestionCount === 'All' 
-      ? shuffled 
-      : shuffled.slice(0, selectedQuestionCount);
+    const limitedQuestions = pickFreshQuestions(questionsToUse, selectedQuestionCount as any, 'sparkstudy_seen_jamb');
     setPracticeQuestions(limitedQuestions);
     setPracticeMode(true);
     setShowSubjectSelector(false);
@@ -474,7 +469,7 @@ const PastQuestions: React.FC = () => {
                       {subjectVideos[currentQ.subject].map((video, index) => (
                         <a
                           key={index}
-                          href={video.url}
+                          href={youtubeSearchUrl(video.title)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted transition-colors"

@@ -128,8 +128,8 @@ const WaecPastQuestions: React.FC = () => {
 
       if (error) throw error;
       
-      // Shuffle questions for practice
-      const shuffled = (data || []).sort(() => Math.random() - 0.5);
+      // Remove duplicates and prefer questions not seen recently
+      const shuffled = pickFreshQuestions((data || []) as any[], 'All', 'sparkstudy_seen_waec');
       setQuestions(shuffled as any);
       setShowSubjectSelection(false);
       
@@ -447,7 +447,7 @@ const WaecPastQuestions: React.FC = () => {
                     {subjectVideos[currentQuestion.subject].map((video, index) => (
                       <a
                         key={index}
-                        href={video.url}
+                        href={youtubeSearchUrl(video.title)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-between p-2 rounded hover:bg-muted transition-colors"
