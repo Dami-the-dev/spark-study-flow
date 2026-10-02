@@ -144,7 +144,7 @@ const UploadMaterials: React.FC = () => {
               <Upload className="h-6 w-6 text-primary" />
               Upload Materials
             </h1>
-            <p className="text-sm text-muted-foreground">Upload JAMB study materials and generate practice questions</p>
+            <p className="text-sm text-muted-foreground">Upload study materials and generate JAMB or WAEC practice questions</p>
           </div>
 
           {/* Upload Section */}
@@ -253,7 +253,7 @@ const UploadMaterials: React.FC = () => {
                 {isGenerating ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Generating JAMB-Style Questions...
+                    Generating {examType}-Style Questions...
                   </>
                 ) : (
                   <>
@@ -324,7 +324,7 @@ const UploadMaterials: React.FC = () => {
                 <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2 text-foreground">No Questions Yet</h3>
                 <p className="text-muted-foreground">
-                  Upload a document above to generate JAMB-style practice questions
+                  Upload a document above to generate exam-style practice questions
                 </p>
               </CardContent>
             </Card>
