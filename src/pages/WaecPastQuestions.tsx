@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { pickFreshQuestions, youtubeSearchUrl } from '@/lib/questionVariety';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
