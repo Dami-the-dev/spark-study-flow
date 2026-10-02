@@ -214,7 +214,7 @@ const Privacy: React.FC = () => {
               </CardHeader>
               <CardContent className="space-y-4 text-muted-foreground">
                 <p>
-                  Our platform may contain links to third-party websites. We are not responsible for the privacy practices of these external sites. We encourage you to read the privacy policies of any third-party sites you visit.
+                  Our platform may contain links to third-party websites, including YouTube videos. We do not own or claim ownership of any linked videos; all rights belong to their creators. We are not responsible for the privacy practices of these external sites. We encourage you to read the privacy policies of any third-party sites you visit.
                 </p>
               </CardContent>
             </Card>

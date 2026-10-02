@@ -111,6 +111,20 @@ const Terms: React.FC = () => {
 
             <Card>
               <CardHeader>
+                <CardTitle>6b. Third-Party Videos and Content</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-muted-foreground">
+                <p>
+                  Spark Study links to videos on YouTube and other third-party platforms for learning purposes only. We do not own, host, or claim ownership of any of these videos. All rights belong to their original creators and owners.
+                </p>
+                <p>
+                  We are not responsible for the content, accuracy, or availability of third-party videos. If you own a video linked on our site and want it removed, contact us at favouroludairo@gmail.com.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
                 <CardTitle>7. Prohibited Activities</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 text-muted-foreground">

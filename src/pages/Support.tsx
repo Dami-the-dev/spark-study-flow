@@ -10,36 +10,40 @@ const Support: React.FC = () => {
   // FAQ data
   const faqs = [
     {
-      question: "How do I reset my password?",
-      answer: "To reset your password, click on the 'Forgot Password' link on the login page. You'll receive an email with instructions to create a new password."
+      question: "Do I need an account to use Spark Study?",
+      answer: "No. Everything is free and open — just open the dashboard and start studying. Your study plans, mock history and uploaded questions are saved on your device."
     },
     {
-      question: "Can I download past questions for offline study?",
-      answer: "Yes! On the Past Questions page, you'll see a download button for each question pack. Click it to save the questions as a PDF for offline access."
+      question: "How does the CBT Exam Hall work?",
+      answer: "Pick three subjects (English is compulsory), choose a time limit, and sit a full 180-question UTME mock with a timer, calculator, question grid and flag-for-review. When time runs out it submits automatically and shows your score per subject and an estimated UTME score out of 400."
     },
     {
-      question: "How is my study progress tracked?",
-      answer: "Your study progress is tracked automatically when you complete quizzes, practice past questions, or mark study tasks as done in your planner."
+      question: "How do I practise JAMB or WAEC past questions?",
+      answer: "Open JAMB Past Questions or WAEC Questions, select your subjects and how many questions you want (10 to All). Questions are shuffled and the app prefers ones you haven't seen recently."
     },
     {
-      question: "Can I get notifications for planned study sessions?",
-      answer: "Absolutely! In the Study Planner, you can enable email or SMS notifications for upcoming study sessions by adjusting your reminder settings."
+      question: "How do I turn my notes into practice questions?",
+      answer: "Go to Upload Materials, choose JAMB or WAEC and a subject, upload a PDF, Word (.docx) or text file, and pick how many questions you want. The questions are added to your JAMB or WAEC practice bank. Scanned/image PDFs can't be read — use text-based files."
     },
     {
-      question: "How does the AI assistant help with my studies?",
-      answer: "Our AI assistant can explain complex topics, summarize information, create study plans, generate practice questions, and provide instant feedback on your answers."
+      question: "Where can I find the JAMB syllabus?",
+      answer: "Open JAMB Syllabus from the menu. Pick a subject to see every examinable topic, download it as a PDF, or jump straight into practice questions or a CBT mock for that subject."
     },
     {
-      question: "What subjects are available for past questions?",
-      answer: "We have past questions for all major JAMB and WAEC subjects including Mathematics, English, Physics, Chemistry, Biology, Government, Economics, Literature, Geography, Accounting, and more."
+      question: "How do I use the Study Planner?",
+      answer: "Open Study Planner, pick a date and time, add your subject and task, and tick it off when done. Plans are stored on your device."
     },
     {
-      question: "How do I use the JAMB Syllabus feature?",
-      answer: "Navigate to the JAMB Syllabus page from your dashboard. Select any subject to view its topics and subtopics. You can also download the official PDF syllabus for offline study."
+      question: "What can the AI Study Buddy help with?",
+      answer: "It explains topics, solves and explains past questions, and gives study tips for JAMB and WAEC subjects. It only answers educational questions."
     },
     {
-      question: "Can I upload my own study materials?",
-      answer: "Yes! Use the Upload Materials feature to upload PDF or Word documents. Our system will generate practice questions from your materials to help you study more effectively."
+      question: "Who owns the videos linked on the site?",
+      answer: "We don't. Video links open on YouTube and belong to their creators. We don't claim ownership of any linked video."
+    },
+    {
+      question: "Can I change the font size or switch to dark mode?",
+      answer: "Yes. Go to Settings to turn on dark mode, adjust the font size and choose a font style."
     }
   ];
 
