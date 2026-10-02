@@ -95,23 +95,29 @@ const UploadMaterials: React.FC = () => {
         return;
       }
 
-      const { data, error } = await supabase.functions.invoke('generate-questions-from-pdf', {
-        body: {
-          pdfText: text.slice(0, 20000),
-          subject: selectedSubject,
-          questionCount: parseInt(questionCount),
-          fileName: selectedFile.name,
-          examType: 'JAMB',
-        },
-      });
-
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-
-      const questions = Array.isArray(data?.questions) ? data.questions : [];
-      if (questions.length > 0) {
-        setGeneratedQuestions(questions);
-        toast.success(`Generated ${questions.length} practice questions!`);
+      const total = parseInt(questionCount);
+      const batchSize = 20;
+      const batches = Math.ceil(total / batchSize);
+      const chunkLen = Math.ceil(Math.min(text.length, 60000) / batches);
+      const questions: any[] = [];
+      for (let b = 0; b < batches; b++) {
+        const n = Math.min(batchSize, total - b * batchSize);
+        const slice = text.slice(b * chunkLen, b * chunkLen + Math.max(chunkLen, 4000)) || text.slice(0, 15000);
+        const { data, error } = await supabase.functions.invoke('generate-questions-from-pdf', {
+          body: { pdfText: slice, subject: selectedSubject, questionCount: n, examType },
+        });
+        if (error || data?.error) {
+          if (questions.length === 0 && b === batches - 1) throw new Error(data?.error || error?.message || 'Generation failed');
+          continue;
+        }
+        if (Array.isArray(data?.questions)) questions.push(...data.questions);
+      }
+      const valid = questions.filter(q => q?.question && q?.options && q?.correct_answer);
+      if (valid.length > 0) {
+        setGeneratedQuestions(valid);
+        const saved = saveUploadedQuestions(valid, { examName: examType, subject: selectedSubject, fileName: selectedFile.name });
+        setSavedCount(saved.length);
+        toast.success(`Generated ${valid.length} questions and added them to your ${examType} practice bank!`);
       } else {
         toast.error('No questions could be generated from this file');
       }
