@@ -99,10 +99,10 @@ const Support: React.FC = () => {
                       <h4 className="font-semibold text-foreground">Email Support</h4>
                       <p className="text-muted-foreground text-sm mb-2">For general inquiries and support</p>
                       <a 
-                        href="mailto:favouroludairo@gmail.com" 
+                        href="mailto:SparkStudyus@gmail.com" 
                         className="text-primary hover:underline font-medium"
                       >
-                        favouroludairo@gmail.com
+                        SparkStudyus@gmail.com
                       </a>
                     </div>
                   </div>
