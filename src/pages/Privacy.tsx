@@ -250,7 +250,7 @@ const Privacy: React.FC = () => {
               </CardHeader>
               <CardContent className="space-y-4 text-muted-foreground">
                 <p>
-                  If you have any questions about this Privacy Policy, please contact us through our <Link to="/support" className="text-primary hover:underline">support page</Link>.
+                  If you have any questions about this Privacy Policy, email us at <a href="mailto:SparkStudyus@gmail.com" className="text-primary hover:underline">SparkStudyus@gmail.com</a> or visit our <Link to="/support" className="text-primary hover:underline">support page</Link>.
                 </p>
               </CardContent>
             </Card>
