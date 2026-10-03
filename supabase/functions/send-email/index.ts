@@ -18,12 +18,12 @@ serve(async (req) => {
     console.log("Email submission received:", { name, email, subject, message, type });
 
     // You would integrate with an email service here
-    // For now, return success - emails go to favouroludairo@gmail.com
+    // For now, return success - emails go to SparkStudyus@gmail.com
     
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Your message has been sent to favouroludairo@gmail.com" 
+        message: "Your message has been sent to SparkStudyus@gmail.com" 
       }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
