@@ -11,7 +11,8 @@ import {
   Menu,
   X,
   GraduationCap,
-  Timer
+  Timer,
+  Crown
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
@@ -98,6 +99,12 @@ const DashboardSidebar: React.FC = () => {
         icon={<Calendar size={18} />} 
         label="Study Planner" 
         to="/dashboard/planner"
+        onClick={closeSidebar}
+      />
+      <NavItem 
+        icon={<Crown size={18} />} 
+        label="Spark Premium" 
+        to="/dashboard/premium"
         onClick={closeSidebar}
       />
       <NavItem 

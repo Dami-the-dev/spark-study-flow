@@ -23,6 +23,8 @@ import About from "./pages/About";
 import Settings from "./pages/Settings";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import Premium from "./pages/Premium";
+import InstallPrompt from "./components/InstallPrompt";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +49,7 @@ const App = () => {
         <AuthProvider>
           <TooltipProvider>
             <Toaster />
+            <InstallPrompt />
             <Sonner />
             <Routes>
               <Route path="/" element={<Index />} />
@@ -69,6 +72,7 @@ const App = () => {
               <Route path="/dashboard/planner" element={<StudyPlanner />} />
               <Route path="/dashboard/support" element={<Support />} />
               <Route path="/dashboard/settings" element={<Settings />} />
+              <Route path="/dashboard/premium" element={<Premium />} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

@@ -33,14 +33,13 @@ const Footer: React.FC = () => {
           </div>
         </div>
         
-        <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-3">
           <p className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} Spark Study. All rights reserved.
           </p>
-        </div>
-        
-        <div className="text-center mt-6">
-          <p className="text-xs text-muted-foreground/60">Made with codes, coffee, and a little holy hustle.</p>
+          <p className="text-sm text-muted-foreground">
+            Contact us: <a href="mailto:SparkStudyus@gmail.com" className="text-primary hover:underline">SparkStudyus@gmail.com</a>
+          </p>
         </div>
       </div>
     </footer>
