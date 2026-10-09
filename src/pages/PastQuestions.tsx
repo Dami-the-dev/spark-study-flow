@@ -165,7 +165,7 @@ const subjectVideos: Record<string, { title: string; url: string; views: string 
 };
 
 // Question count options
-const questionCountOptions = [10, 20, 30, 40, 50, 'All'] as const;
+const questionCountOptions = [10, 20, 30, 40, 50, 100] as const;
 
 const PastQuestions: React.FC = () => {
   const [questions, setQuestions] = useState<PastQuestion[]>([]);
@@ -594,18 +594,21 @@ const PastQuestions: React.FC = () => {
                 <div className="w-full">
                   <Label className="text-sm text-muted-foreground mb-2 block">Number of Questions</Label>
                   <div className="flex flex-wrap gap-2">
-                    {questionCountOptions.map((count) => (
+                    {questionCountOptions.map((count) => {
+                      const locked = !premium && count === 100;
+                      return (
                       <Button
                         key={count}
                         variant={selectedQuestionCount === count ? "default" : "outline"}
                         size="sm"
-                        onClick={() => setSelectedQuestionCount(count)}
+                        onClick={() => locked ? navigate('/dashboard/premium') : setSelectedQuestionCount(count)}
                         className="min-w-[60px]"
                       >
-                        {count}
+                        {count}{locked ? ' 👑' : ''}
                       </Button>
-                    ))}
+                    );})}
                   </div>
+                  {!premium && <p className="text-xs text-muted-foreground mt-2">Free plan: up to {FREE_LIMITS.jambPerSubject} questions per subject. Premium unlocks 100.</p>}
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 w-full">
                   <Button 
