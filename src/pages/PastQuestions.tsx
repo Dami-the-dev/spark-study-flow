@@ -11,7 +11,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Loader2, PlayCircle, Youtube, CheckCircle, XCircle, ArrowRight, RotateCcw, BookOpen, Filter, Check } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
+import { isPremium, FREE_LIMITS } from '@/lib/premium';
 import { getUploadedQuestions } from '@/lib/generatedQuestions';
 import { getSyllabusForSubject } from '@/data/jambSyllabus';
 
@@ -179,6 +180,8 @@ const PastQuestions: React.FC = () => {
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   const [showSubjectSelector, setShowSubjectSelector] = useState(true);
   const [selectedQuestionCount, setSelectedQuestionCount] = useState<number | 'All'>(20);
+  const premium = isPremium();
+  const navigate = useNavigate();
   
   // Practice mode states
   const [practiceMode, setPracticeMode] = useState(false);

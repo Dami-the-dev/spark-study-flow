@@ -30,6 +30,7 @@ const waecSubjects = [
 ];
 
 const UploadMaterials: React.FC = () => {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [examType, setExamType] = useState<'JAMB' | 'WAEC'>('JAMB');
   const [selectedSubject, setSelectedSubject] = useState('');
