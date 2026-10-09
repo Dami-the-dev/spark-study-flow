@@ -7,6 +7,8 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { streamChat } from '@/utils/streamChat';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { canUse, recordUse, FREE_LIMITS } from '@/lib/premium';
 
 interface Message {
   id: number;
@@ -16,6 +18,7 @@ interface Message {
 }
 
 const AIAssistant: React.FC = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -38,6 +41,13 @@ const AIAssistant: React.FC = () => {
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+    if (!canUse('aiQuestions')) {
+      toast.error(`Free plan allows ${FREE_LIMITS.aiQuestions} questions. Go Premium for unlimited AI help.`);
+      navigate('/dashboard/premium');
+      return;
+    }
+    recordUse('aiQuestions');
+
     
     const userMsg = inputMessage.trim();
     const newUserMessage: Message = {

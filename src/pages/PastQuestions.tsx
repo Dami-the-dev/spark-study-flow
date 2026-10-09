@@ -11,7 +11,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Loader2, PlayCircle, Youtube, CheckCircle, XCircle, ArrowRight, RotateCcw, BookOpen, Filter, Check } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
+import { isPremium, FREE_LIMITS } from '@/lib/premium';
 import { getUploadedQuestions } from '@/lib/generatedQuestions';
 import { getSyllabusForSubject } from '@/data/jambSyllabus';
 
@@ -165,7 +166,7 @@ const subjectVideos: Record<string, { title: string; url: string; views: string 
 };
 
 // Question count options
-const questionCountOptions = [10, 20, 30, 40, 50, 'All'] as const;
+const questionCountOptions = [10, 20, 30, 40, 50, 100] as const;
 
 const PastQuestions: React.FC = () => {
   const [questions, setQuestions] = useState<PastQuestion[]>([]);
@@ -179,6 +180,8 @@ const PastQuestions: React.FC = () => {
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   const [showSubjectSelector, setShowSubjectSelector] = useState(true);
   const [selectedQuestionCount, setSelectedQuestionCount] = useState<number | 'All'>(20);
+  const premium = isPremium();
+  const navigate = useNavigate();
   
   // Practice mode states
   const [practiceMode, setPracticeMode] = useState(false);
@@ -594,18 +597,21 @@ const PastQuestions: React.FC = () => {
                 <div className="w-full">
                   <Label className="text-sm text-muted-foreground mb-2 block">Number of Questions</Label>
                   <div className="flex flex-wrap gap-2">
-                    {questionCountOptions.map((count) => (
+                    {questionCountOptions.map((count) => {
+                      const locked = !premium && count === 100;
+                      return (
                       <Button
                         key={count}
                         variant={selectedQuestionCount === count ? "default" : "outline"}
                         size="sm"
-                        onClick={() => setSelectedQuestionCount(count)}
+                        onClick={() => locked ? navigate('/dashboard/premium') : setSelectedQuestionCount(count)}
                         className="min-w-[60px]"
                       >
-                        {count}
+                        {count}{locked ? ' 👑' : ''}
                       </Button>
-                    ))}
+                    );})}
                   </div>
+                  {!premium && <p className="text-xs text-muted-foreground mt-2">Free plan: up to {FREE_LIMITS.jambPerSubject} questions per subject. Premium unlocks 100.</p>}
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 w-full">
                   <Button 

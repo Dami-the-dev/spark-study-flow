@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { canUse, recordUse, FREE_LIMITS } from '@/lib/premium';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,7 @@ const waecSubjects = [
 ];
 
 const UploadMaterials: React.FC = () => {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [examType, setExamType] = useState<'JAMB' | 'WAEC'>('JAMB');
   const [selectedSubject, setSelectedSubject] = useState('');
@@ -82,6 +84,12 @@ const UploadMaterials: React.FC = () => {
       toast.error('Please select a file and subject');
       return;
     }
+    if (!canUse('uploads')) {
+      toast.error(`Free plan allows ${FREE_LIMITS.uploads} uploads. Go Premium for unlimited uploads.`);
+      navigate('/dashboard/premium');
+      return;
+    }
+    recordUse('uploads');
 
     setIsGenerating(true);
     setGeneratedQuestions([]);
